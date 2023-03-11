@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base{
+  html{
+    font-size: 10px;
+  }
+}
+
+@layer components{
+  .header-button {
+    @apply active:scale-90 hover:bg-grayHover duration-[.25s] rounded-xl text-textLightGray cursor-pointer inline-flex items-center justify-center
+  }
+}
