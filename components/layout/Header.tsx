@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 function Header() {
   const [settingModal, setSettingModal] = useRecoilState(settingModalState);
   return (
-    <header className="bg-black p-[5px] h-[54px] flex items-center gap-2">
+    <header className="dark:bg-black bg-lightBackground p-[5px] h-[54px] flex items-center gap-2">
       <Link
         href="/"
         className="gray-button text-[2rem] font-bold h-full tracking-tight px-[1.8rem]"
@@ -18,7 +18,7 @@ function Header() {
         className="!w-[4.4rem] !h-[4.4rem] gray-button"
         onClick={() => setSettingModal(true)}
       >
-        <Settings className="text-textLightGray !text-5xl" />
+        <Settings className="dark:text-textLightGray !text-5xl" />
       </div>
     </header>
   );

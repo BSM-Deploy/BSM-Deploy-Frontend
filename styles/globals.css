@@ -8,11 +8,12 @@
   }
   body{
     font-size: 1.5rem;
+    @apply text-text
   }
 }
 
 @layer components{
   .gray-button {
-    @apply active:scale-90 hover:bg-grayHover duration-250 rounded-xl text-textLightGray cursor-pointer inline-flex items-center justify-center
+    @apply active:scale-90 dark:hover:bg-darkHover hover:bg-lightHover duration-250 rounded-xl dark:text-textLightGray cursor-pointer inline-flex items-center justify-center
   }
 }
