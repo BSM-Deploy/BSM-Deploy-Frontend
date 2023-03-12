@@ -9,9 +9,18 @@ function SettingModal() {
   const [mount, setMount] = useState(false);
   useEffect(() => {
     setMount(true);
-
     return () => setMount(false);
   }, []);
+
+  const changeTheme = () => {
+    if (localStorage.theme === "dark") {
+      localStorage.setItem("theme", "white");
+      document.documentElement.classList.remove("dark");
+    } else {
+      localStorage.setItem("theme", "dark");
+      document.documentElement.classList.add("dark");
+    }
+  };
   return (
     <Modal open={settingModal} onClose={() => setSettingModal(false)}>
       <div className="w-[40rem] flex p-6 rounded-3xl flex-col bg-modalBackground top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 absolute">
@@ -30,8 +39,15 @@ function SettingModal() {
           </h3>
           <div className="px-6 flex justify-between rounded-4xl bg-modalBlack h-[46px] items-center">
             <span className="text-textLightGray font-bold">다크 모드</span>
-            <div className="w-16 h-[2.2rem] rounded-full bg-blue relative cursor-pointer">
-              <div className="w-[1.6rem] h-[1.6rem] bg-white rounded-full absolute left-[0.3rem] top-[0.3rem]" />
+            <div
+              className="w-16 h-[2.2rem] rounded-full dark:bg-blue relative cursor-pointer bg-[#808080]"
+              onClick={() => {
+                if (mount) {
+                  changeTheme();
+                }
+              }}
+            >
+              <div className="w-[1.6rem] h-[1.6rem] bg-white rounded-full absolute left-[0.3rem] dark:right-[0.3rem] dark:left-[unset] top-[0.3rem]" />
             </div>
           </div>
         </div>
