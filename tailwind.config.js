@@ -20,6 +20,9 @@ module.exports = {
       borderRadius: {
         "4xl": "2rem",
       },
+      transitionDuration: {
+        250: "250ms",
+      },
     },
   },
   plugins: [],

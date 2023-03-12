@@ -13,6 +13,6 @@
 
 @layer components{
   .gray-button {
-    @apply active:scale-90 hover:bg-grayHover duration-[.25s] rounded-xl text-textLightGray cursor-pointer inline-flex items-center justify-center
+    @apply active:scale-90 hover:bg-grayHover duration-250 rounded-xl text-textLightGray cursor-pointer inline-flex items-center justify-center
   }
 }
