@@ -28,6 +28,9 @@ module.exports = {
       transitionDuration: {
         250: "250ms",
       },
+      width: {
+        100: "25rem",
+      },
     },
   },
   plugins: [],
