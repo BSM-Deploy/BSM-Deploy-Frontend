@@ -7,3 +7,13 @@ export const getAccessToken = () => {
     }
   );
 };
+
+export const getRefreshToken = () => {
+  return (
+    localStorage.refreshToken && {
+      headers: {
+        "BSM-DEPLOY-REFRESH-TOKEN": localStorage.refreshToken,
+      },
+    }
+  );
+};
