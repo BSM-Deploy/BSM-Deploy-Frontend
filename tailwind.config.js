@@ -22,6 +22,8 @@ module.exports = {
         lightHover: "#C2C2C2",
         modalBackground: "#242528",
         modalBlack: "#303134",
+        lightBlock: "#EDEDED",
+        deepGrayButton: "#383838",
       },
       borderRadius: {
         "4xl": "2rem",
