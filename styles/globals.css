@@ -16,4 +16,7 @@
   .gray-button {
     @apply active:scale-90 dark:hover:bg-darkHover hover:bg-lightHover duration-250 rounded-xl dark:text-textLightGray cursor-pointer inline-flex items-center justify-center;
   }
+  .main-section {
+    @apply rounded-tl-2xl absolute top-[5.4rem] left-[25rem] bg-lightBack dark:bg-darkGray flex items-center justify-center flex-col w-[calc(100vw-25rem)] h-[calc(100vh-5.4rem)] font-bold text-4xl dark:text-white;
+  }
 }

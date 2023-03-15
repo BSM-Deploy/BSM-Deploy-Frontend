@@ -1,7 +1,7 @@
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/header/Header";
 import Sidebar from "@/components/layout/sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
-import Main from "@/components/layout/main";
+import Main from "@/components/layout/section/main";
 import { useMutation } from "react-query";
 import { refresh } from "@/utils/api/auth";
 import { AxiosError, AxiosResponse } from "axios";

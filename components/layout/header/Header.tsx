@@ -3,14 +3,16 @@ import React from "react";
 import { Settings } from "@mui/icons-material";
 import { settingModalState } from "@/store/atoms/modals/settingModal";
 import { useRecoilState } from "recoil";
+import { titleState } from "@/store/atoms/layout/title";
 
 function Header() {
   const [settingModal, setSettingModal] = useRecoilState(settingModalState);
+  const [title, setTitle] = useRecoilState(titleState);
   return (
     <header className="z-50 dark:bg-black bg-lightBackground p-[5px] h-[54px] flex items-center gap-2 fixed top-0 w-full">
       <Link
         href="/"
-        className="gray-button text-[2rem] font-bold h-full tracking-tight px-[1.8rem]"
+        className="gray-button text-[2rem] font-bold h-full tracking-tight px-[1.8rem] w-[144.48px]"
       >
         BSM Deploy
       </Link>
@@ -19,6 +21,9 @@ function Header() {
         onClick={() => setSettingModal(true)}
       >
         <Settings className="dark:text-textLightGray !text-5xl" />
+      </div>
+      <div className="dark:text-textLightGray text-center w-[calc(100%-198.48px)] text-[2rem] font-bold cursor-default">
+        {title}
       </div>
     </header>
   );
