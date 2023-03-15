@@ -18,7 +18,7 @@
   }
 
   .setting-input{
-    @apply pl-10 pr-10 bg-lightBlock text-black placeholder-black w-[30%] h-[8%] rounded-4xl mb-[50px] font-[1rem]
+    @apply pl-10 pr-10 bg-lightBlock text-black w-[100%] h-[80%] rounded-4xl font-[1rem]
   }
   
   .main-container{
@@ -33,5 +33,17 @@
     -webkit-appearance:none; /* 크롬 화살표 없애기 */
     -moz-appearance:none; /* 파이어폭스 화살표 없애기 */
     appearance:none; /* 화살표 없애기 */
+  }
+
+  .focusInteraction{
+    @apply outline-blue !shadow-none bg-lightBack animate-focusAnimation
+  }
+
+  .textStyle{
+    @apply pl-3 pr-3 bg-white translate-y-[-150%] duration-200
+  }
+
+  .arrowStyle{
+    @apply rotate-[180deg]
   }
 }
