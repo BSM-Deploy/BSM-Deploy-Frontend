@@ -33,8 +33,8 @@ export default function Home() {
         localStorage.setItem("accessToken", refreshMutation.data.accessToken);
       } else if (refreshMutation.isError) {
         console.log(refreshMutation);
-        // localStorage.removeItem("accessToken");
-        // localStorage.removeItem("refreshToken");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
       }
     }
 

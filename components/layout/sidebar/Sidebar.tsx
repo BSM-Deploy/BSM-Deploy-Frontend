@@ -1,14 +1,21 @@
 import { getUserInfo } from "@/utils/api/user";
 import Link from "next/link";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SidebarItems from "./SidebarItems";
 import { useQuery, useMutation } from "react-query";
 import { Logout, PersonOutline } from "@mui/icons-material";
 import { logout } from "@/utils/api/auth";
 
 function Sidebar() {
-  const userQuery = useQuery("user", () => getUserInfo());
+  const [mount, setMount] = useState(false);
+  useEffect(() => {
+    setMount(true);
+    return () => setMount(false);
+  }, []);
+  const userQuery = useQuery("user", () => getUserInfo(), {
+    enabled: mount && localStorage.accessToken !== undefined,
+  });
   const [userDropdown, setUserDropdown] = useState(false);
 
   const logoutMutation = useMutation(() => logout());
