@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  // mode: "jit", 
   darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -9,6 +10,7 @@ module.exports = {
     extend: {
       colors: {
         blue: "#61CDFE",
+        accentBlue: "#1188BB",
         darkGray: "#282828",
         lightGray: "#858585",
         lightBack: "#FAFAFA",
@@ -22,12 +24,16 @@ module.exports = {
         lightHover: "#C2C2C2",
         modalBackground: "#242528",
         modalBlack: "#303134",
+        sidebarLightText: "#606164",
       },
       borderRadius: {
         "4xl": "2rem",
       },
       transitionDuration: {
         250: "250ms",
+      },
+      width: {
+        100: "25rem",
       },
     },
   },
