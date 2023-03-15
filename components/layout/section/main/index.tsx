@@ -2,7 +2,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export default function Main() {
   return (
-    <div className="main-section">
+    <div className="main-section flex items-center justify-center flex-col font-bold text-4xl">
       <h1 className="text-[7rem] mb-[12rem]">BSM Deploy</h1>
       <p className="mb-6">
         BSM Deploy는 정적/동적 사이트, 백엔드 프로젝트의 배포를 도와주는

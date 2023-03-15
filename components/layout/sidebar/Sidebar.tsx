@@ -2,7 +2,7 @@ import { getUserInfo } from "@/utils/api/user";
 import Link from "next/link";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import SidebarItems from "./SidebarItems";
+import SidebarItems from "./SidebarItem";
 import { useQuery, useMutation } from "react-query";
 import { Logout, PersonOutline } from "@mui/icons-material";
 import { logout } from "@/utils/api/auth";
