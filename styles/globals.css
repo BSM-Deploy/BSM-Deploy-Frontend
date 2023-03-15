@@ -18,7 +18,7 @@
   }
 
   .setting-input{
-    @apply pl-10 pr-10 bg-lightBlock text-black w-[100%] h-[80%] rounded-4xl font-[1rem]
+    @apply pl-10 pr-10 bg-lightBlock text-black w-[100%] h-[80%] rounded-4xl font-[1rem] dark:bg-lightGray dark:text-white outline-none
   }
   
   .main-container{
@@ -36,11 +36,11 @@
   }
 
   .focusInteraction{
-    @apply outline-blue !shadow-none bg-lightBack animate-focusAnimation
+    @apply !shadow-in bg-lightBack animate-focusAnimation dark:bg-darkGray
   }
 
   .textStyle{
-    @apply pl-3 pr-3 bg-white translate-y-[-150%] duration-200
+    @apply pl-3 pr-3 bg-white translate-y-[-150%] duration-200 text-blue dark:bg-darkGray
   }
 
   .arrowStyle{

@@ -46,6 +46,7 @@ module.exports = {
       },
       boxShadow: {
         "4xl": "0 0 5px rgba(0,0,0,.2) inset",
+        "in": "0 0 0 0.2rem #61CDFE inset",
       },
       transitionDuration: {
         250: "250ms",
