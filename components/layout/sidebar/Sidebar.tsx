@@ -43,8 +43,11 @@ function Sidebar() {
               <div
                 onClick={() => {
                   logoutMutation.mutate();
-                  localStorage.removeItem('accessToken');
-                  localStorage.removeItem('refreshToken');
+                  if (logoutMutation.isSuccess) {
+                    localStorage.removeItem("accessToken");
+                    localStorage.removeItem("refreshToken");
+                    window.location.reload();
+                  }
                 }}
               >
                 <SidebarItems
