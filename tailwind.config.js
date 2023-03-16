@@ -8,19 +8,14 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
-        focusAnimation: {
+        clickAnimation: {
           "0%" : { transform: "scale(1.0)" },
           "50%": { transform: "scale(0.95)" },
           "100%": { transform: "scale(1.0)" },
         },
-        textAnimation: {
-          from: { transform: "top: 50%"},
-          to: { transform: 'top: 0'},
-        },
       },
       animation: {
-        focusAnimation: 'focusAnimation 0.3s ease-in-out',
-        textAnimation: 'textAnimation 0.3s ease-in-out',
+        clickAnimation: 'clickAnimation 0.3s ease-in-out',
       },
 
       colors: {
@@ -47,6 +42,8 @@ module.exports = {
       boxShadow: {
         "4xl": "0 0 5px rgba(0,0,0,.2) inset",
         "in": "0 0 0 0.2rem #61CDFE inset",
+        "inWhite": "0 0 0 0.2rem #ffffff inset",
+        "inBlack": "0 0 0 0.2rem #000000 inset",
       },
       transitionDuration: {
         250: "250ms",
