@@ -31,4 +31,43 @@
   .main-section {
     @apply rounded-tl-2xl absolute top-[5.4rem] left-[25rem] bg-lightBack dark:bg-darkGray w-[calc(100vw-25rem)] min-h-[calc(100vh-5.4rem)] dark:text-white;
   }
+
+  .setting-input {
+    @apply pl-10 pr-10 bg-lightBlock text-black w-[100%] h-[80%] rounded-4xl font-[1rem] dark:bg-lightGray dark:text-white outline-none focus:focusInteraction hover:shadow-4xl valid:hover:shadow-none valid:outline-black focus:!shadow-none dark:valid:outline-white valid:!bg-transparent;
+  }
+
+  .main-container {
+    @apply bg-lightBack dark:bg-darkGray flex items-center justify-center flex-col w-full h-screen top-0 font-bold text-4xl dark:text-white;
+  }
+
+  .blue-button {
+    @apply dark:text-black flex items-center justify-center bg-blue rounded-4xl;
+  }
+
+  .select-style {
+    -webkit-appearance: none; /* 크롬 화살표 없애기 */
+    -moz-appearance: none; /* 파이어폭스 화살표 없애기 */
+    appearance: none; /* 화살표 없애기 */
+    @apply focus:outline-blue focus:hover:!shadow-none duration-200 focus:dark:bg-darkGray outline-none focus:bg-lightBack hover:shadow-4xl dark:bg-lightGray dark:text-white pl-10 pr-10 bg-lightBlock text-black w-full h-[80%] rounded-4xl text-4xl;
+  }
+
+  .focusInteraction {
+    @apply !outline-blue bg-lightBack animate-clickAnimation dark:bg-darkGray;
+  }
+
+  .clickInteraction {
+    @apply animate-clickAnimation;
+  }
+
+  .textStyle {
+    @apply pl-3 pr-3 bg-white translate-y-[-150%] duration-200 text-blue dark:bg-darkGray;
+  }
+
+  .validTextStyle {
+    @apply pl-3 pr-3 bg-white translate-y-[-150%] duration-200 dark:text-white dark:bg-darkGray;
+  }
+
+  .arrowStyle {
+    @apply rotate-[180deg];
+  }
 }

@@ -8,6 +8,17 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        clickAnimation: {
+          "0%" : { transform: "scale(1.0)" },
+          "50%": { transform: "scale(0.95)" },
+          "100%": { transform: "scale(1.0)" },
+        },
+      },
+      animation: {
+        clickAnimation: 'clickAnimation 0.3s ease-in-out',
+      },
+
       colors: {
         blue: "#61CDFE",
         accentBlue: "#1188BB",
@@ -24,11 +35,19 @@ module.exports = {
         lightHover: "#C2C2C2",
         modalBackground: "#242528",
         modalBlack: "#303134",
+        lightBlock: "#EDEDED",
+        deepGrayButton: "#383838",
         sidebarLightText: "#606164",
         itemGray: "#303030",
       },
       borderRadius: {
         "4xl": "2rem",
+      },
+      boxShadow: {
+        "4xl": "0 0 5px rgba(0,0,0,.2) inset",
+        "in": "0 0 0 0.2rem #61CDFE inset",
+        "inWhite": "0 0 0 0.2rem #ffffff inset",
+        "inBlack": "0 0 0 0.2rem #000000 inset",
       },
       transitionDuration: {
         250: "250ms",
