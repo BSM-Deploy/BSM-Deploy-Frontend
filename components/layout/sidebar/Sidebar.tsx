@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import SidebarItems from "./SidebarItem";
 import { useQuery, useMutation } from "react-query";
-import { Logout, PersonOutline } from "@mui/icons-material";
+import { Logout, PersonOutline, Construction } from "@mui/icons-material";
 import { logout } from "@/utils/api/auth";
 
 function Sidebar() {
@@ -86,6 +86,14 @@ function Sidebar() {
           />
         </a>
       )}
+      <Link href="/project">
+        <SidebarItems
+          name="내 프로젝트"
+          Icon={
+            <Construction fontSize="large" className="dark:text-textDarkGray" />
+          }
+        />
+      </Link>
     </aside>
   );
 }
