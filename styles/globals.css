@@ -31,6 +31,9 @@
   .main-section {
     @apply rounded-tl-2xl absolute top-[5.4rem] left-[25rem] bg-lightBack dark:bg-darkGray w-[calc(100vw-25rem)] min-h-[calc(100vh-5.4rem)] dark:text-white;
   }
+  .make-project-button {
+    @apply bg-blue p-5 rounded-xl dark:text-black font-bold;
+  }
 
   .setting-input {
     @apply pl-10 pr-10 bg-lightBlock text-black w-[100%] h-[80%] rounded-4xl font-[1rem] dark:bg-lightGray dark:text-white outline-none focus:focusInteraction hover:shadow-4xl valid:hover:shadow-none valid:outline-black focus:!shadow-none dark:valid:outline-white valid:!bg-transparent;
