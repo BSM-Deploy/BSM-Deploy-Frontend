@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Refresh } from "@/components/etc/refresh";
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
@@ -19,6 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
         <SettingModal />
+        <Refresh />
       </QueryClientProvider>
     </RecoilRoot>
   );

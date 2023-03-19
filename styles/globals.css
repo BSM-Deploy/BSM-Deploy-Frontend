@@ -8,7 +8,19 @@
   }
   body {
     font-size: 1.5rem;
-    @apply text-text bg-lightBackground dark:bg-black;
+    @apply text-text bg-lightBackground dark:bg-black overflow-hidden;
+  }
+
+  *::-webkit-scrollbar {
+    @apply w-[2rem];
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply rounded-[1rem] dark:bg-textDarkGray bg-sidebarLightText mr-10 w-[0.4rem] bg-clip-padding border-transparent border-8 border-solid;
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply bg-lightBack dark:bg-darkGray;
   }
 }
 
@@ -16,43 +28,49 @@
   .gray-button {
     @apply active:scale-90 dark:hover:bg-darkHover hover:bg-lightHover duration-250 rounded-xl dark:text-textLightGray cursor-pointer inline-flex items-center justify-center;
   }
-
-  .setting-input{
-    @apply pl-10 pr-10 bg-lightBlock text-black w-[100%] h-[80%] rounded-4xl font-[1rem] dark:bg-lightGray dark:text-white outline-none focus:focusInteraction hover:shadow-4xl valid:hover:shadow-none valid:outline-black focus:!shadow-none dark:valid:outline-white valid:!bg-transparent
+  .main-section {
+    @apply rounded-tl-2xl absolute top-[5.4rem] left-[25rem] bg-lightBack dark:bg-darkGray w-[calc(100vw-25rem)] min-h-[calc(100vh-5.4rem)] dark:text-white;
   }
-  
-  .main-container{
-    @apply bg-lightBack dark:bg-darkGray flex items-center justify-center flex-col w-full h-screen top-0 font-bold text-4xl dark:text-white
+  .make-project-button {
+    @apply bg-accentBlue dark:bg-blue hover:bg-lightHover dark:hover:bg-darkHover duration-250 text-textLightGray p-5 rounded-xl dark:text-text font-bold;
   }
 
-  .blue-button{
-    @apply dark:text-black flex items-center justify-center bg-blue rounded-4xl
+  .setting-input {
+    @apply pl-10 pr-10 bg-lightBlock text-black w-[100%] h-[80%] rounded-4xl font-[1rem] dark:bg-lightGray dark:text-white outline-none focus:focusInteraction hover:shadow-4xl valid:hover:shadow-none valid:outline-black focus:!shadow-none dark:valid:outline-white valid:!bg-transparent;
   }
 
-  .select-style{
-    -webkit-appearance:none; /* 크롬 화살표 없애기 */
-    -moz-appearance:none; /* 파이어폭스 화살표 없애기 */
-    appearance:none; /* 화살표 없애기 */
-    @apply focus:outline-blue focus:hover:!shadow-none duration-200 focus:dark:bg-darkGray outline-none focus:bg-lightBack hover:shadow-4xl dark:bg-lightGray dark:text-white pl-10 pr-10 bg-lightBlock text-black w-full h-[80%] rounded-4xl text-4xl 
+  .main-container {
+    @apply bg-lightBack dark:bg-darkGray flex items-center justify-center flex-col w-full h-screen top-0 font-bold text-4xl dark:text-white;
   }
 
-  .focusInteraction{
-    @apply !outline-blue bg-lightBack animate-clickAnimation dark:bg-darkGray
+  .blue-button {
+    @apply dark:text-black flex items-center justify-center bg-blue rounded-4xl;
   }
 
-  .clickInteraction{
-    @apply animate-clickAnimation
+  .select-style {
+    -webkit-appearance: none; /* 크롬 화살표 없애기 */
+    -moz-appearance: none; /* 파이어폭스 화살표 없애기 */
+    appearance: none; /* 화살표 없애기 */
+    @apply focus:outline-blue focus:hover:!shadow-none duration-200 focus:dark:bg-darkGray outline-none focus:bg-lightBack hover:shadow-4xl dark:bg-lightGray dark:text-white pl-10 pr-10 bg-lightBlock text-black w-full h-[80%] rounded-4xl text-4xl;
   }
 
-  .textStyle{
-    @apply pl-3 pr-3 bg-white translate-y-[-150%] duration-200 text-blue dark:bg-darkGray
-  }
-  
-  .validTextStyle{
-    @apply pl-3 pr-3 bg-white translate-y-[-150%] duration-200 dark:text-white dark:bg-darkGray
+  .focusInteraction {
+    @apply !outline-blue bg-lightBack animate-clickAnimation dark:bg-darkGray;
   }
 
-  .arrowStyle{
-    @apply rotate-[180deg]
+  .clickInteraction {
+    @apply animate-clickAnimation;
+  }
+
+  .textStyle {
+    @apply pl-3 pr-3 bg-white translate-y-[-150%] duration-200 text-blue dark:bg-darkGray;
+  }
+
+  .validTextStyle {
+    @apply pl-3 pr-3 bg-white translate-y-[-150%] duration-200 dark:text-white dark:bg-darkGray;
+  }
+
+  .arrowStyle {
+    @apply rotate-[180deg];
   }
 }
