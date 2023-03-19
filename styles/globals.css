@@ -32,7 +32,7 @@
     @apply rounded-tl-2xl absolute top-[5.4rem] left-[25rem] bg-lightBack dark:bg-darkGray w-[calc(100vw-25rem)] min-h-[calc(100vh-5.4rem)] dark:text-white;
   }
   .make-project-button {
-    @apply bg-blue p-5 rounded-xl dark:text-black font-bold;
+    @apply bg-accentBlue dark:bg-blue hover:bg-lightHover dark:hover:bg-darkHover duration-250 text-textLightGray p-5 rounded-xl dark:text-text font-bold;
   }
 
   .setting-input {
