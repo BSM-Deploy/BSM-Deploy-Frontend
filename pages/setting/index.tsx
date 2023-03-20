@@ -108,15 +108,8 @@ export default function Setting() {
               <option value={"BUILD_REACT_JS"}>Build React.js</option>
               <option value={"BUILD_NEXT_JS"}>Build Next.js</option>
             </select>
-            <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 group-focus-within:arrowStyle" />
-            <label
-              htmlFor="select"
-              className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 pr-10 peer-focus:textStyle ${
-                selected && "dark:!bg-darkGray bg-white"
-              }`}
-            >
-              {setting.projectType}
-            </label>
+            <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 group-focus-within:arrowStyle"/>
+            <label htmlFor="select" className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 peer-focus:textStyle ${selected && "dark:!bg-darkGray bg-white"} pr-10`}>{setting.projectType}</label>
           </div>
           <div className="flex items-center">
             <button className="hover:bg-lighterGray dark:hover:bg-darkHover duration-200 w-[10rem] h-[6rem] rounded-4xl mr-10 bg-deepGrayButton text-white">
