@@ -3,11 +3,9 @@ import React from "react";
 import { Settings } from "@mui/icons-material";
 import { settingModalState } from "@/store/atoms/modals/settingModal";
 import { useRecoilState } from "recoil";
-import { titleState } from "@/store/atoms/layout/title";
 
-function Header() {
+function Header({ title }: { title?: string }) {
   const [settingModal, setSettingModal] = useRecoilState(settingModalState);
-  const [title, setTitle] = useRecoilState(titleState);
   return (
     <header className="z-50 dark:bg-black bg-lightBackground p-[5px] h-[54px] flex items-center gap-2 fixed top-0 w-full">
       <Link

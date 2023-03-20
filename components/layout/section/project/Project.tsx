@@ -1,4 +1,3 @@
-import { titleState } from "@/store/atoms/layout/title";
 import { getProjectList } from "@/utils/api/project";
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
@@ -6,21 +5,29 @@ import { useRecoilState } from "recoil";
 import ProjectItem from "./ProjectItem";
 import { ProjectType } from "@/types/project";
 import Image from "next/image";
+import Link from "next/link";
 
 function ProjectSection() {
-  const [title, setTitle] = useRecoilState(titleState);
   const projectQuery = useQuery("projects", () => getProjectList());
-  useEffect(() => {
-    setTitle("내 프로젝트");
-  }, []);
   return (
     <div className="main-section p-60 overflow-y-auto h-full flex justify-center items-center">
       {projectQuery.isSuccess &&
         (projectQuery.data?.list ? (
           <div className="flex flex-wrap gap-12">
-            <button className="make-project-button absolute top-16 right-16">프로젝트 생성하기</button>
+            <button className="make-project-button absolute top-16 right-16">
+              프로젝트 생성하기
+            </button>
             {projectQuery.data?.list.map((project: ProjectType) => (
-              <ProjectItem key={project.id} data={project} />
+              <Link
+                href={{
+                  pathname: `/project/${project.id}`,
+                  query: { project: JSON.stringify(project) },
+                }}
+                key={project.id}
+                as={`/project/${project.id}`}
+              >
+                <ProjectItem data={project} />
+              </Link>
             ))}
           </div>
         ) : (
