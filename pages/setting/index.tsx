@@ -1,67 +1,52 @@
 import Header from "@/components/layout/header/Header";
 import Sidebar from "@/components/layout/sidebar/Sidebar";
+import useGetSettingForm from "@/hooks/useGetSettingForm";
+import { SettingType } from "@/types/Setting";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useRef, useState } from "react";
-
-interface SettingType{
-  name: string;
-  domainPrefix: string;
-  projectType: string;
-}
+import { useForm } from "react-hook-form";
 
 export default function Setting() {
 
-  const [selected, setSelected] = useState(false)
-  const [setting, setSetting] = useState<SettingType>({
-    name: "",
-    domainPrefix: "",
-    projectType: "프로젝트 종류",
+  const method = useForm<SettingType>({
+    defaultValues: {
+      name: "",
+      domainPrefix: "",
+      projectType: "프로젝트 종류",
+    },
   })
 
-  const onBlurHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-    const { name, value } = e.target
-    console.log(name, value)
-    const regex = /^[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*$/;
+  const { name, domainPrefix, projectType } = useGetSettingForm({control: method.control})
 
+  const onBlurHandler = ({value, onChange}: {value: string, onChange: (value: string) => void}) => {
+    const regex = /^[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*$/
     if(!regex.test(value)){
-      const newSetting = {
-        ...setting,
-        "domainPrefix": ""
-      };
-      setSetting(newSetting)
+      onChange("");
     }
   }
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>)=> {
-    const { name, value } = e.target
-
-    if(name === "projectType"){
-      setSelected(true)
-    }
-
-    const newSetting = {
-      ...setting,
-      [name]: value,
-    }
-
-    setSetting(newSetting)
+  const onChangeHandler = ({value, onChange}: {value: string, onChange: (value: string) => void})=> {
+    onChange(value)
   }
 
     return (
       <>
         <Header />
-        <Sidebar/>
+        <Sidebar />
         <div className="main-container flex-col">
           <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
             <input
               type="text"
-              name="name"
               id="input"
-              value={setting.name}
-              onChange={onChangeHandler}
-              autoComplete={"off"}
               required={true}
+              value={name.value}
               maxLength={16}
+              onChange={(e) =>
+                onChangeHandler({
+                  value: e.target.value,
+                  onChange: name.onChange,
+                })
+              }
+              autoComplete={"off"}
               className="setting-input peer"
             ></input>
             <label
@@ -73,16 +58,26 @@ export default function Setting() {
           </div>
           <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
             <input
-              name="domainPrefix"
               type="text"
-              value={setting.domainPrefix}
-              required={true}
               className="setting-input peer"
               id="input2"
-              autoComplete={"off"}
+              required={true}
               pattern={"^[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*$"}
-              onChange={onChangeHandler}
-              onBlur={onBlurHandler}
+              autoComplete={"off"}
+              value={domainPrefix.value}
+              maxLength={16}
+              onChange={(e) =>
+                onChangeHandler({
+                  value: e.target.value,
+                  onChange: domainPrefix.onChange,
+                })
+              }
+              onBlur={(e) =>
+                onBlurHandler({
+                  value: e.target.value,
+                  onChange: domainPrefix.onChange,
+                })
+              }
             ></input>
             <label
               htmlFor="input2"
@@ -94,10 +89,15 @@ export default function Setting() {
           <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
             <select
               id="select"
-              onChange={onChangeHandler}
-              name="projectType"
+              value={projectType.value}
+              onChange={(e) =>
+                onChangeHandler({
+                  value: e.target.value,
+                  onChange: projectType.onChange,
+                })
+              }
               className={
-                selected
+                projectType.value !== "프로젝트 종류"
                   ? "focus:!outline-blue outline-black dark:outline-white dark:!bg-darkGray bg-lightBack hover:!shadow-none select-style peer"
                   : "select-style peer"
               }
@@ -112,19 +112,18 @@ export default function Setting() {
             <label
               htmlFor="select"
               className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 pr-10 peer-focus:textStyle ${
-                selected && "dark:!bg-darkGray bg-white"
+                projectType.value !== "프로젝트 종류" &&
+                "dark:!bg-darkGray bg-white"
               }`}
             >
-              {setting.projectType}
+              {projectType.value}
             </label>
           </div>
           <div className="flex items-center">
             <button className="hover:bg-lighterGray dark:hover:bg-darkHover duration-200 w-[10rem] h-[6rem] rounded-4xl mr-10 bg-deepGrayButton text-white">
               취소
             </button>
-            <button className="blue-button w-[10rem] h-[6rem]">
-              다음
-            </button>
+            <button className="blue-button w-[10rem] h-[6rem]">다음</button>
           </div>
         </div>
       </>
