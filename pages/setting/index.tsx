@@ -1,4 +1,5 @@
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/header/Header";
+import Sidebar from "@/components/layout/sidebar/Sidebar";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useRef, useState } from "react";
 
@@ -49,7 +50,8 @@ export default function Setting() {
     return (
       <>
         <Header />
-        <div className="main-container">
+        <Sidebar/>
+        <div className="main-container flex-col">
           <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
             <input
               type="text"
@@ -90,21 +92,39 @@ export default function Setting() {
             </label>
           </div>
           <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
-            <select id="select" onChange={onChangeHandler} name="projectType" className={selected ? "focus:!outline-blue outline-black dark:outline-white dark:!bg-darkGray bg-lightBack hover:!shadow-none select-style peer" : "select-style peer"}>
+            <select
+              id="select"
+              onChange={onChangeHandler}
+              name="projectType"
+              className={
+                selected
+                  ? "focus:!outline-blue outline-black dark:outline-white dark:!bg-darkGray bg-lightBack hover:!shadow-none select-style peer"
+                  : "select-style peer"
+              }
+            >
               {/* <option value={""}>프로젝트 종류</option> */}
               <option value={"SINGLE_HTML"}>Single HTML</option>
               <option value={"MULTIPLE_FILE"}>Multiple File</option>
               <option value={"BUILD_REACT_JS"}>Build React.js</option>
               <option value={"BUILD_NEXT_JS"}>Build Next.js</option>
             </select>
-            <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 group-focus-within:arrowStyle"/>
-            <label htmlFor="select" className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 peer-focus:textStyle ${selected && "dark:!bg-darkGray bg-white"}`}>{setting.projectType}</label>
+            <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 group-focus-within:arrowStyle" />
+            <label
+              htmlFor="select"
+              className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 pr-10 peer-focus:textStyle ${
+                selected && "dark:!bg-darkGray bg-white"
+              }`}
+            >
+              {setting.projectType}
+            </label>
           </div>
           <div className="flex items-center">
             <button className="hover:bg-lighterGray dark:hover:bg-darkHover duration-200 w-[10rem] h-[6rem] rounded-4xl mr-10 bg-deepGrayButton text-white">
               취소
             </button>
-            <button className="hover:bg-lighterGray dark:hover:bg-darkHover duration-200 blue-button text-white dark:text-black w-[10rem] h-[6rem]">다음</button>
+            <button className="blue-button w-[10rem] h-[6rem]">
+              다음
+            </button>
           </div>
         </div>
       </>
