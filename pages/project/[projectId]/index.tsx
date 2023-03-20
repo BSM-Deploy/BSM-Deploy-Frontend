@@ -1,25 +1,26 @@
+import Loading from "@/components/etc/Loading";
 import Header from "@/components/layout/header/Header";
 import Sidebar from "@/components/layout/sidebar/Sidebar";
+import { loadingState } from "@/store/atoms/loading/loading";
 import { getProject } from "@/utils/api/project";
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
+import { useRecoilState } from "recoil";
 
 function ProjectDetail() {
+  const [loading, setLoading] = useRecoilState(loadingState);
   const router = useRouter();
-  const projectQuery = useQuery(
+  const { isLoading, data } = useQuery(
     "project",
     () => getProject(String(router.query.projectId)),
     { enabled: router.isReady }
   );
 
-  // projectQuery.isLoading ? setLoading(true) : setLoading(false);
-  // projectQuery.isLoading && setLoading(true);
-
-  console.log(projectQuery);
+  isLoading ? setLoading(true) : setLoading(false);
   return (
     <>
-      <Header title={projectQuery.data?.name} />
+      <Header title={data?.name} />
       <Sidebar />
       <div className="main-section"></div>
     </>

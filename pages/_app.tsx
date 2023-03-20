@@ -1,10 +1,11 @@
 import SettingModal from "@/components/modals/SettingModal";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Refresh } from "@/components/etc/refresh";
+import Loading from "@/components/etc/Loading";
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
@@ -20,6 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
         <SettingModal />
+        <Loading />
         <Refresh />
       </QueryClientProvider>
     </RecoilRoot>
