@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/header/Header";
 import Sidebar from "@/components/layout/sidebar/Sidebar";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useRef, useState } from "react";
@@ -111,7 +111,7 @@ export default function Setting() {
             <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 group-focus-within:arrowStyle" />
             <label
               htmlFor="select"
-              className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 peer-focus:textStyle ${
+              className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 pr-10 peer-focus:textStyle ${
                 selected && "dark:!bg-darkGray bg-white"
               }`}
             >

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // mode: "jit", 
+  // mode: "jit",
   darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -38,6 +38,7 @@ module.exports = {
         lightBlock: "#EDEDED",
         deepGrayButton: "#383838",
         sidebarLightText: "#606164",
+        itemGray: "#303030",
       },
       borderRadius: {
         "4xl": "2rem",
