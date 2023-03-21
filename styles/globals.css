@@ -38,7 +38,11 @@
   }
 
   .setting-input {
-    @apply pl-10 pr-10 bg-lightBlock text-black w-[100%] h-[80%] rounded-4xl font-[1rem] dark:bg-lightGray dark:text-white outline-none focus:focusInteraction hover:shadow-4xl valid:hover:shadow-none valid:outline-black focus:!shadow-none dark:valid:outline-white valid:!bg-transparent;
+    @apply pl-10 pr-10 bg-lightBlock text-black w-[100%] h-[80%] rounded-4xl font-[1rem] dark:bg-lightGray dark:text-white outline-none focus:focusInteraction hover:shadow-4xl 
+  }
+
+  .setting-input-valid{
+    @apply valid:hover:shadow-none valid:outline-black focus:!shadow-none dark:valid:outline-white valid:!bg-transparent;
   }
   
   .main-container{

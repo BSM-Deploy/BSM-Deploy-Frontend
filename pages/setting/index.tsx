@@ -19,11 +19,27 @@ export default function Setting() {
     }
   })
 
-  const { handleSubmit, register, setValue, control } = useForm<SettingType>()
+  const { handleSubmit, register, setValue, control } = useForm<SettingType>({
+    defaultValues:{
+      name: "",
+      domainPrefix: "",
+      projectType: "",
+    }
+  })
 
-  const projectName = useWatch({
+  const projectTypeWatcher = useWatch({
     control,
     name: "projectType",
+  })
+
+  const nameWatcher = useWatch({
+    control,
+    name: "name",
+  })
+
+  const domainPrefixWatcher = useWatch({
+    control,
+    name: "domainPrefix",
   })
 
   const onBlurHandler = (value: string) => {
@@ -34,7 +50,7 @@ export default function Setting() {
   }
 
   const onSubmit = (data: SettingType) => {
-    mutate(data)
+    console.log(data)
   }
 
   const onError = (error: any) => {
@@ -51,9 +67,9 @@ export default function Setting() {
               type="text"
               id="input"
               autoComplete={"off"}
-              required={true}
-              className="setting-input peer"
+              className={`setting-input peer ${nameWatcher !== "" ? "setting-input-valid" : ""}`}
               {...register("name", {
+                required: "프로젝트 이름이 없습니다.",
                 maxLength: {
                   value: 16,
                   message: "프로젝트 이름은 16자 이하여야합니다."
@@ -62,7 +78,7 @@ export default function Setting() {
             ></input>
             <label
               htmlFor="input"
-              className="absolute duration-200 cursor-text left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle peer-valid:validTextStyle"
+              className={`absolute duration-200 cursor-text left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle ${nameWatcher !== "" ? "validTextStyle" : ""}`}
             >
               프로젝트 이름
             </label>
@@ -70,12 +86,11 @@ export default function Setting() {
           <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
             <input
               type="text"
-              className="setting-input peer"
+              className={`setting-input peer ${domainPrefixWatcher !== "" ? "setting-input-valid" : ""}`}
               id="input2"
-              required={true}
-              pattern={"^[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*$"}
               autoComplete={"off"}
               {...register("domainPrefix", {
+                required: "도메인 접두사가 없습니다.",
                 maxLength: {
                   value: 16,
                   message: "도메인 접두사는 16자 이하여야합니다."
@@ -83,25 +98,27 @@ export default function Setting() {
                 pattern: {
                   value: /^[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*$/,
                   message: "도메인 접두사는 영어, 숫자로만 이루어져야 합니다."
-                }
+                },
+                onBlur(event) {
+                  onBlurHandler(event.target.value)
+                },
               })}
-              onBlur={(e) => onBlurHandler(e.target.value)}
             ></input>
             <label
               htmlFor="input2"
-              className="absolute duration-200 cursor-text left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle peer-valid:validTextStyle"
+              className={`absolute duration-200 cursor-text left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle ${domainPrefixWatcher !== "" ? "validTextStyle" : ""}`}
             >
               도메인 접두사
             </label>
           </div>
           <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
             <select
-              aria-required={true}
               id="select"
-              required={true}
-              {...register("projectType")}
+              {...register("projectType", {
+                required: "프로젝트 종류가 선택되지 않았습니다."
+              })}
               className={
-                projectName !== ""
+                projectTypeWatcher !== ""
                   ? "focus:!outline-blue outline-black dark:outline-white dark:!bg-darkGray bg-lightBack hover:!shadow-none select-style peer"
                   : "select-style peer"
               }
@@ -111,12 +128,12 @@ export default function Setting() {
               <option value={"BUILD_REACT_JS"}>Build React.js</option>
               <option value={"BUILD_NEXT_JS"}>Build Next.js</option>
             </select>
-            <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 group-focus-within:arrowStyle" />
+            <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 peer-focus:arrowStyle" />
             <label
               htmlFor="select"
-              className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 pr-10 peer-focus:peer-valid:textStyle peer-focus:textStyle peer-valid:validTextStyle ${
-                projectName !== "" &&
-                "dark:!bg-darkGray bg-white"
+              className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 peer-focus:peer-valid:textStyle peer-focus:textStyle ${
+                projectTypeWatcher !== "" &&
+                "validTextStyle dark:!bg-darkGray bg-white"
               }`}
             >
               프로젝트 종류
