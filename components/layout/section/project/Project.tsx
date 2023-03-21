@@ -9,8 +9,9 @@ import Link from "next/link";
 
 function ProjectSection() {
   const projectQuery = useQuery("projects", () => getProjectList());
+  console.log(projectQuery.data);
   return (
-    <div className="main-section p-60 overflow-y-auto h-full flex justify-center items-center">
+    <div className="main-section p-52 overflow-y-auto h-full">
       {projectQuery.isSuccess &&
         (projectQuery.data?.list ? (
           <div className="flex flex-wrap gap-12">
