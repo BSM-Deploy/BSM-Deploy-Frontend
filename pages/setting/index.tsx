@@ -3,19 +3,27 @@ import Sidebar from "@/components/layout/sidebar/Sidebar";
 import { SettingType } from "@/types/setting";
 import { project } from "@/utils/api/project";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { useForm, useWatch } from "react-hook-form";
 import { useMutation } from "react-query";
 
 export default function Setting() {
 
-  const { mutate, isSuccess } = useMutation(project)
-
-  const { handleSubmit, register, formState: { errors }, getValues, setValue } = useForm<SettingType>({
-    defaultValues: {
-      name: "",
-      domainPrefix: "",
-      projectType: "프로젝트 종류",
+  const router = useRouter()
+  const { mutate } = useMutation(project, {
+    onSuccess: (data) => {
+      router.push(`/upload/${data}`)
     },
+    onError: (error) => {
+      console.log(error)
+    }
+  })
+
+  const { handleSubmit, register, setValue, control } = useForm<SettingType>()
+
+  const projectName = useWatch({
+    control,
+    name: "projectType",
   })
 
   const onBlurHandler = (value: string) => {
@@ -25,12 +33,12 @@ export default function Setting() {
     }
   }
 
-  const onSubmit = () => {
-    
+  const onSubmit = (data: SettingType) => {
+    mutate(data)
   }
 
-  const onError = () => {
-
+  const onError = (error: any) => {
+    console.log(error)
   }
 
     return (
@@ -46,7 +54,6 @@ export default function Setting() {
               required={true}
               className="setting-input peer"
               {...register("name", {
-                required: "프로젝트 이름이 없습니다.",
                 maxLength: {
                   value: 16,
                   message: "프로젝트 이름은 16자 이하여야합니다."
@@ -69,7 +76,6 @@ export default function Setting() {
               pattern={"^[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*$"}
               autoComplete={"off"}
               {...register("domainPrefix", {
-                required: "도메인 접두사가 없습니다.",
                 maxLength: {
                   value: 16,
                   message: "도메인 접두사는 16자 이하여야합니다."
@@ -95,7 +101,7 @@ export default function Setting() {
               required={true}
               {...register("projectType")}
               className={
-                getValues("projectType") !== "프로젝트 종류"
+                projectName !== ""
                   ? "focus:!outline-blue outline-black dark:outline-white dark:!bg-darkGray bg-lightBack hover:!shadow-none select-style peer"
                   : "select-style peer"
               }
@@ -109,7 +115,7 @@ export default function Setting() {
             <label
               htmlFor="select"
               className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 pr-10 peer-focus:peer-valid:textStyle peer-focus:textStyle peer-valid:validTextStyle ${
-                getValues("projectType") !== "프로젝트 종류" &&
+                projectName !== "" &&
                 "dark:!bg-darkGray bg-white"
               }`}
             >
