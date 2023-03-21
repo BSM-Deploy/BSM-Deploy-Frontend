@@ -1,13 +1,16 @@
 import Header from "@/components/layout/header/Header";
 import Sidebar from "@/components/layout/sidebar/Sidebar";
-import useGetSettingForm from "@/hooks/useGetSettingForm";
-import { SettingType } from "@/types/Setting";
+import { SettingType } from "@/types/setting";
+import { project } from "@/utils/api/project";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
 
 export default function Setting() {
 
-  const method = useForm<SettingType>({
+  const { mutate, isSuccess } = useMutation(project)
+
+  const { handleSubmit, register, formState: { errors }, getValues, setValue } = useForm<SettingType>({
     defaultValues: {
       name: "",
       domainPrefix: "",
@@ -15,39 +18,40 @@ export default function Setting() {
     },
   })
 
-  const { name, domainPrefix, projectType } = useGetSettingForm({control: method.control})
-
-  const onBlurHandler = ({value, onChange}: {value: string, onChange: (value: string) => void}) => {
+  const onBlurHandler = (value: string) => {
     const regex = /^[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*$/
     if(!regex.test(value)){
-      onChange("");
+      setValue("domainPrefix", "");
     }
   }
 
-  const onChangeHandler = ({value, onChange}: {value: string, onChange: (value: string) => void})=> {
-    onChange(value)
+  const onSubmit = () => {
+    
+  }
+
+  const onError = () => {
+
   }
 
     return (
       <>
         <Header />
         <Sidebar />
-        <div className="main-container flex-col">
+        <form onSubmit={handleSubmit(onSubmit, onError)} className="main-container flex-col">
           <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
             <input
               type="text"
               id="input"
-              required={true}
-              value={name.value}
-              maxLength={16}
-              onChange={(e) =>
-                onChangeHandler({
-                  value: e.target.value,
-                  onChange: name.onChange,
-                })
-              }
               autoComplete={"off"}
+              required={true}
               className="setting-input peer"
+              {...register("name", {
+                required: "프로젝트 이름이 없습니다.",
+                maxLength: {
+                  value: 16,
+                  message: "프로젝트 이름은 16자 이하여야합니다."
+                }
+              })}
             ></input>
             <label
               htmlFor="input"
@@ -64,20 +68,18 @@ export default function Setting() {
               required={true}
               pattern={"^[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*$"}
               autoComplete={"off"}
-              value={domainPrefix.value}
-              maxLength={16}
-              onChange={(e) =>
-                onChangeHandler({
-                  value: e.target.value,
-                  onChange: domainPrefix.onChange,
-                })
-              }
-              onBlur={(e) =>
-                onBlurHandler({
-                  value: e.target.value,
-                  onChange: domainPrefix.onChange,
-                })
-              }
+              {...register("domainPrefix", {
+                required: "도메인 접두사가 없습니다.",
+                maxLength: {
+                  value: 16,
+                  message: "도메인 접두사는 16자 이하여야합니다."
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*$/,
+                  message: "도메인 접두사는 영어, 숫자로만 이루어져야 합니다."
+                }
+              })}
+              onBlur={(e) => onBlurHandler(e.target.value)}
             ></input>
             <label
               htmlFor="input2"
@@ -88,21 +90,16 @@ export default function Setting() {
           </div>
           <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
             <select
+              aria-required={true}
               id="select"
-              value={projectType.value}
-              onChange={(e) =>
-                onChangeHandler({
-                  value: e.target.value,
-                  onChange: projectType.onChange,
-                })
-              }
+              required={true}
+              {...register("projectType")}
               className={
-                projectType.value !== "프로젝트 종류"
+                getValues("projectType") !== "프로젝트 종류"
                   ? "focus:!outline-blue outline-black dark:outline-white dark:!bg-darkGray bg-lightBack hover:!shadow-none select-style peer"
                   : "select-style peer"
               }
             >
-              {/* <option value={""}>프로젝트 종류</option> */}
               <option value={"SINGLE_HTML"}>Single HTML</option>
               <option value={"MULTIPLE_FILE"}>Multiple File</option>
               <option value={"BUILD_REACT_JS"}>Build React.js</option>
@@ -111,21 +108,19 @@ export default function Setting() {
             <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 group-focus-within:arrowStyle" />
             <label
               htmlFor="select"
-              className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 pr-10 peer-focus:textStyle ${
-                projectType.value !== "프로젝트 종류" &&
+              className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 pr-10 peer-focus:peer-valid:textStyle peer-focus:textStyle peer-valid:validTextStyle ${
+                getValues("projectType") !== "프로젝트 종류" &&
                 "dark:!bg-darkGray bg-white"
               }`}
             >
-              {projectType.value}
+              프로젝트 종류
             </label>
           </div>
           <div className="flex items-center">
-            <button className="hover:bg-lighterGray dark:hover:bg-darkHover duration-200 w-[10rem] h-[6rem] rounded-4xl mr-10 bg-deepGrayButton text-white">
-              취소
-            </button>
-            <button className="blue-button w-[10rem] h-[6rem]">다음</button>
+            <input type="button" value="취소" className="hover:bg-lighterGray dark:hover:bg-darkHover duration-200 w-[10rem] h-[6rem] rounded-4xl mr-10 bg-deepGrayButton text-white" />
+            <input type="submit" value="다음" className="blue-button w-[10rem] h-[6rem]" />
           </div>
-        </div>
+        </form>
       </>
     );
 }
