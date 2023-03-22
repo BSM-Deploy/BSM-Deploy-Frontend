@@ -6,7 +6,7 @@ import React from "react";
 function Project() {
   return (
     <>
-      <Header />
+      <Header title='내 프로젝트'/>
       <Sidebar />
       <ProjectSection />
     </>
