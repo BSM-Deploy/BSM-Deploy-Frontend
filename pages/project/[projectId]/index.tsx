@@ -3,21 +3,35 @@ import Header from "@/components/layout/header/Header";
 import Sidebar from "@/components/layout/sidebar/Sidebar";
 import { loadingState } from "@/store/atoms/loading/loading";
 import { ProjectType } from "@/types/project";
+import { getContainerLog } from "@/utils/api/container";
 import { getProject } from "@/utils/api/project";
 import { Skeleton } from "@mui/material";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
-import { useQuery } from "react-query";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 
 function ProjectDetail() {
   const [loading, setLoading] = useRecoilState(loadingState);
+  const [log, setLog] = useState<string[]>([]);
   const router = useRouter();
   const { isLoading, data, isSuccess } = useQuery<ProjectType, Error>(
     "project",
     () => getProject(String(router.query.projectId)),
     { enabled: router.isReady }
   );
+  const { isLoading: containerIsLoading, data: containerData } = useQuery<
+    string,
+    Error
+  >("container", () => getContainerLog(String(router.query.projectId)), {
+    enabled: router.isReady && data?.projectType === "BUILT_NEXT_JS",
+    refetchInterval: 3000,
+    onSuccess: () => {
+      log && containerData ? setLog((prev) => [...prev, containerData]) : null;
+    },
+  });
+
   const projectType = {
     SINGLE_HTML: "단일 HTML",
     MULTIPLE_FILE: "다중 파일",
@@ -25,14 +39,15 @@ function ProjectDetail() {
     BUILT_NEXT_JS: "Next.js",
   };
 
-  isLoading ? setLoading(true) : setLoading(false);
+  isLoading || containerIsLoading ? setLoading(true) : setLoading(false);
+
   return (
     <>
       {isSuccess && (
         <>
           <Header title={data?.name} />
           <Sidebar />
-          <div className="main-section py-28 px-60">
+          <div className="main-section py-28 px-60 flex gap-10 flex-col h-full overflow-y-auto">
             <div className="flex justify-between">
               <h1 className="text-6xl font-bold">{data?.name}</h1>
               <div className="gap-5 flex">
@@ -40,20 +55,22 @@ function ProjectDetail() {
                 <button className="make-project-button">재배포하기</button>
               </div>
             </div>
-            <hr className="my-12 dark:border-white border-text" />
+            <hr className="my-6 dark:border-white border-text" />
             <div className="flex flex-wrap">
               {data.isDeploy ? (
-                <iframe
-                  src={`https://${data?.domainPrefix}.bssm.kro.kr/1화.pdf`}
-                  width={470}
-                  height={270}
-                  className="rounded-xl bg-white"
-                />
+                <div className="w-[40rem] h-[22.5rem]">
+                  <iframe
+                    src={`https://${data?.domainPrefix}.bssm.kro.kr`}
+                    width={1600}
+                    height={900}
+                    className="rounded-xl bg-white scale-[0.25] origin-top-left"
+                  />
+                </div>
               ) : (
                 <div className="relative">
                   <Skeleton variant="rounded" className="bg-lighterGray">
                     <iframe
-                      src={`https://${data?.domainPrefix}.bssm.kro.kr/1화.pdf`}
+                      src={`https://${data?.domainPrefix}.bssm.kro.kr`}
                       width={470}
                       height={270}
                       className="rounded-xl bg-white"
@@ -67,7 +84,12 @@ function ProjectDetail() {
               <div className="p-12 flex flex-col gap-10 justify-center">
                 <div className="gap-5 flex flex-col">
                   <h3 className="font-bold dark:text-textDarkGray">DOMAIN</h3>
-                  <span className="text-4xl">{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
+                  <Link
+                    href={`https://${data?.domainPrefix}.bssm.kro.kr`}
+                    target="_blank"
+                  >
+                    <span className="text-4xl">{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
+                  </Link>
                 </div>
                 <div className="gap-5 flex flex-col">
                   <h3 className="font-bold dark:text-textDarkGray">TYPE</h3>
@@ -76,6 +98,16 @@ function ProjectDetail() {
                   </span>
                 </div>
               </div>
+            </div>
+            <div className="w-full rounded-xl bg-black p-8 h-64 overflow-y-auto">
+              {log.map((item, index) => {
+                return (
+                  <>
+                    <span key={index}>{item}</span>
+                    <br />
+                  </>
+                );
+              })}
             </div>
           </div>
         </>

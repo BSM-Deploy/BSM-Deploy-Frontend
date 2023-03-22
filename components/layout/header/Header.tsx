@@ -10,7 +10,7 @@ function Header({ title }: { title?: string }) {
     <header className="z-50 dark:bg-black bg-lightBackground p-[5px] h-[54px] flex items-center gap-2 fixed top-0 w-full">
       <Link
         href="/"
-        className="gray-button text-[2rem] font-bold h-full tracking-tight px-[1.8rem] w-[144.48px]"
+        className="gray-button text-[2rem] font-bold h-full tracking-tight  w-[144.48px]"
       >
         BSM Deploy
       </Link>
