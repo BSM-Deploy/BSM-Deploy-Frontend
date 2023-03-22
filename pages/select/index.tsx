@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/header/Header";
 import Link from "next/link";
 import Sidebar from "@/components/layout/sidebar/Sidebar";
 import Image from "next/image";
