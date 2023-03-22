@@ -51,7 +51,9 @@ function ProjectDetail() {
             <div className="flex justify-between">
               <h1 className="text-6xl font-bold">{data?.name}</h1>
               <div className="gap-5 flex">
-                <button className="make-project-button">배포 취소하기</button>
+                <button className="!bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button">
+                  배포 취소하기
+                </button>
                 <button className="make-project-button">재배포하기</button>
               </div>
             </div>

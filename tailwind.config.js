@@ -10,18 +10,19 @@ module.exports = {
     extend: {
       keyframes: {
         clickAnimation: {
-          "0%" : { transform: "scale(1.0)" },
+          "0%": { transform: "scale(1.0)" },
           "50%": { transform: "scale(0.95)" },
           "100%": { transform: "scale(1.0)" },
         },
       },
       animation: {
-        clickAnimation: 'clickAnimation 0.3s ease-in-out',
+        clickAnimation: "clickAnimation 0.3s ease-in-out",
       },
 
       colors: {
         blue: "#61CDFE",
         accentBlue: "#1188BB",
+        red: "#EA8777",
         darkGray: "#282828",
         lightGray: "#858585",
         lightBack: "#FAFAFA",
@@ -45,9 +46,9 @@ module.exports = {
       },
       boxShadow: {
         "4xl": "0 0 5px rgba(0,0,0,.2) inset",
-        "in": "0 0 0 0.2rem #61CDFE inset",
-        "inWhite": "0 0 0 0.2rem #ffffff inset",
-        "inBlack": "0 0 0 0.2rem #000000 inset",
+        in: "0 0 0 0.2rem #61CDFE inset",
+        inWhite: "0 0 0 0.2rem #ffffff inset",
+        inBlack: "0 0 0 0.2rem #000000 inset",
       },
       transitionDuration: {
         250: "250ms",
