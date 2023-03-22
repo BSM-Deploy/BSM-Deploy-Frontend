@@ -8,7 +8,7 @@
   }
   body {
     font-size: 1.5rem;
-    @apply text-text bg-lightBackground dark:bg-black overflow-hidden;
+    @apply text-text dark:text-textLightGray bg-lightBackground dark:bg-black overflow-hidden;
   }
 
   *::-webkit-scrollbar {
@@ -44,9 +44,9 @@
   .setting-input-valid{
     @apply valid:hover:shadow-none valid:outline-black focus:!shadow-none dark:valid:outline-white valid:!bg-transparent;
   }
-  
-  .main-container{
-    @apply rounded-tl-2xl absolute top-[5.4rem] left-[25rem] bg-lightBack dark:bg-darkGray flex items-center justify-center w-[calc(100vw-25rem)] h-[calc(100vh-5.4rem)] font-bold text-4xl dark:text-white
+
+  .main-container {
+    @apply rounded-tl-2xl absolute top-[5.4rem] left-[25rem] bg-lightBack dark:bg-darkGray flex items-center justify-center w-[calc(100vw-25rem)] h-[calc(100vh-5.4rem)] font-bold text-4xl dark:text-white;
   }
 
   .blue-button{

@@ -29,7 +29,7 @@ function ProjectItem({ data }: { data: ProjectType }) {
         {data.name}
       </h1>
       <span className="text-xl text-textDarkGray">
-        {data.domainPrefix}.bssm.hs.kr
+        {data.domainPrefix}.bssm.kro.kr
       </span>
       <Tooltip
         title={tooltip[data.projectType]}
