@@ -1,6 +1,6 @@
 import { errorMessageState } from "@/store/atoms/layout/error";
 import { openSnackbarState } from "@/store/atoms/snackbar/openSnackbar";
-import { SettingType } from "@/types/setting";
+import { SettingType } from "@/types/Setting";
 import { project } from "@/utils/api/project";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/router";
@@ -17,7 +17,7 @@ export default function SettingForm() {
       router.push(`/upload/${data}`);
     },
     onError: (error) => {
-      console.log(error);
+      console.log(error)
     },
   });
   const onSubmit = (data: SettingType) => {
@@ -25,7 +25,6 @@ export default function SettingForm() {
   };
 
   const onError = (error: any) => {
-    console.log(error);
     const { type, message } = error[Object.keys(error)[0]];
     if (type === "pattern") {
       setValue("domainPrefix", "");
@@ -68,7 +67,7 @@ export default function SettingForm() {
             type="text"
             id="input"
             autoComplete={"off"}
-            className={`setting-input peer ${
+            className={`setting-input peer focus:hover:shadow-none ${
               nameWatcher !== "" ? "setting-input-valid" : ""
             }`}
             {...register("name", {
@@ -91,7 +90,7 @@ export default function SettingForm() {
         <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
           <input
             type="text"
-            className={`setting-input peer ${
+            className={`setting-input peer focus:hover:shadow-none ${
               domainPrefixWatcher !== "" ? "setting-input-valid" : ""
             }`}
             id="input2"
@@ -111,7 +110,7 @@ export default function SettingForm() {
           <label
             htmlFor="input2"
             className={`absolute duration-200 cursor-text left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle ${
-              domainPrefixWatcher !== "" ? "validTextStyle" : ""
+              domainPrefixWatcher !== "" ? "validTextStyle " : ""
             }`}
           >
             도메인 접두사
@@ -148,6 +147,7 @@ export default function SettingForm() {
         <div className="flex items-center">
           <input
             type="button"
+            onClick={() => router.back()}
             value="취소"
             className="hover:bg-lighterGray dark:hover:bg-darkHover duration-200 w-[10rem] h-[6rem] rounded-4xl mr-10 bg-deepGrayButton text-white"
           />
