@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import { useForm, useWatch } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
+import CancelButton from "../../button/cancelButton";
+import SubmitButton from "../../button/submitButton";
 
 export default function SettingForm() {
   const router = useRouter();
@@ -145,17 +147,8 @@ export default function SettingForm() {
           </label>
         </div>
         <div className="flex items-center">
-          <input
-            type="button"
-            onClick={() => router.back()}
-            value="취소"
-            className="hover:bg-lighterGray dark:hover:bg-darkHover duration-200 w-[10rem] h-[6rem] rounded-4xl mr-10 bg-deepGrayButton text-white"
-          />
-          <input
-            type="submit"
-            value="다음"
-            className="blue-button w-[10rem] h-[6rem]"
-          />
+          <CancelButton router={router} />
+          <SubmitButton />
         </div>
       </form>
     </>
