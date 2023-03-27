@@ -6,10 +6,10 @@ import SettingSnackbar from "@/components/layout/section/setting/SettingSnackbar
 export default function Setting() {
   return (
     <>
-      <Header />
+      <Header title="프로젝트 세팅" />
       <Sidebar />
-      <SettingForm/>
-      <SettingSnackbar/>
+      <SettingForm />
+      <SettingSnackbar />
     </>
   );
 }

@@ -17,7 +17,8 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
     string,
     Error
   >("container", () => getContainerLog(String(router.query.projectId)), {
-    enabled: router.isReady && data?.projectType === "BUILT_NEXT_JS",
+    enabled:
+      router.isReady && data?.projectType === "BUILT_NEXT_JS" && data.isDeploy,
     refetchInterval: 3000,
     onSuccess: () => {
       log && containerData ? setLog((prev) => [...prev, containerData]) : null;
@@ -38,10 +39,14 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
         <div className="flex justify-between">
           <h1 className="text-6xl font-bold">{data?.name}</h1>
           <div className="gap-5 flex">
-            <button className="!bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button">
-              배포 취소하기
+            {data.isDeploy && (
+              <button className="!bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button">
+                배포 취소하기
+              </button>
+            )}
+            <button className="make-project-button">
+              {data.isDeploy ? "재" : ""}배포하기
             </button>
-            <button className="make-project-button">재배포하기</button>
           </div>
         </div>
         <hr className="my-6 dark:border-white border-text" />
@@ -73,12 +78,18 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
           <div className="p-12 flex flex-col gap-10 justify-center">
             <div className="gap-5 flex flex-col">
               <h3 className="font-bold dark:text-textDarkGray">DOMAIN</h3>
-              <Link
-                href={`https://${data?.domainPrefix}.bssm.kro.kr`}
-                target="_blank"
-              >
-                <span className="text-4xl">{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
-              </Link>
+              {data.isDeploy ? (
+                <Link
+                  href={`https://${data?.domainPrefix}.bssm.kro.kr`}
+                  target="_blank"
+                >
+                  <span
+                    className={"text-4xl"}
+                  >{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
+                </Link>
+              ) : (
+                <span className="text-4xl cursor-not-allowed text-textDarkGray">{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
+              )}
             </div>
             <div className="gap-5 flex flex-col">
               <h3 className="font-bold dark:text-textDarkGray">TYPE</h3>
@@ -86,18 +97,11 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
             </div>
           </div>
         </div>
-        <div className="w-full rounded-xl bg-black p-8 h-64 overflow-y-auto">
-          {log.map((item, index) => {
-            return (
-              <>
-                <span key={index} className="text-white">
-                  {item}
-                </span>
-                <br />
-              </>
-            );
-          })}
-        </div>
+        {data?.projectType === "BUILT_NEXT_JS" && (
+          <div className="w-full rounded-xl bg-black p-8 h-64 overflow-y-auto whitespace-pre">
+            {containerData}
+          </div>
+        )}
       </div>
     </>
   );
