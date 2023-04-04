@@ -1,7 +1,7 @@
 import { errorMessageState } from "@/store/atoms/layout/error";
 import { openSnackbarState } from "@/store/atoms/snackbar/openSnackbar";
-import { SettingType } from "@/types/Setting";
-import { project } from "@/utils/api/project";
+import { SettingType } from "@/types/setting";
+import { settingProject } from "@/utils/api/project";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/router";
 import { useForm, useWatch } from "react-hook-form";
@@ -9,13 +9,22 @@ import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 import CancelButton from "../../button/cancelButton";
 import SubmitButton from "../../button/submitButton";
+import { projectUploadState } from "@/store/atoms/upload/uploadState";
 
 export default function SettingForm() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
   const [openSnackbar, setOpenSnackbar] = useRecoilState(openSnackbarState);
-  const { mutate } = useMutation(project, {
+  const [uploadState, setUploadState] = useRecoilState(projectUploadState);
+
+  const { mutate } = useMutation(settingProject, {
     onSuccess: (data) => {
+      setUploadState((prev) => ({
+        ...prev,
+        name: nameWatcher,
+        type: projectTypeWatcher,
+        domain: domainPrefixWatcher,
+      }))
       router.push(`/upload/${data}`);
     },
     onError: (error) => {

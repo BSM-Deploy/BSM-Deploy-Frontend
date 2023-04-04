@@ -79,4 +79,8 @@
   .arrowStyle {
     @apply rotate-[180deg];
   }
+
+  .dragStyle{
+    @apply !border-blue duration-200
+  }
 }

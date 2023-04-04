@@ -1,4 +1,4 @@
-import { SnackbarType } from "@/types/Setting";
+import { SnackbarType } from "@/types/setting";
 import { atom } from "recoil";
 
 export const openSnackbarState = atom<SnackbarType>({
