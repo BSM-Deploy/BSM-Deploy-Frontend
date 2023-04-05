@@ -1,7 +1,9 @@
+import { ZipAFolder } from "@/utils/functions/zipFolder";
+import JSZip from "jszip";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface Options {
-  isDir: boolean
+  isFile?: string;
 }
 
 function useFileDrop(options: Options) {
@@ -13,12 +15,17 @@ function useFileDrop(options: Options) {
   const onDragFile = useCallback(
     (event: DragEvent) => {
       if (!event?.dataTransfer?.files) return;
+
       const selectFiles = event.dataTransfer.files;
       const uploadFiles = Array.from(selectFiles);
 
+      if (options.isFile === "false") {
+        const folder = event.dataTransfer.items;
+        ZipAFolder(folder, uploadFiles[0].name)
+      }
       setFiles(uploadFiles);
     },
-    [],
+    [options.isFile]
   );
 
   const onDragEnter = useCallback((e: DragEvent) => {
@@ -48,7 +55,7 @@ function useFileDrop(options: Options) {
       onDragFile(e);
       setIsDragActive(false);
     },
-    [onDragFile],
+    [onDragFile]
   );
 
   useEffect(() => {
@@ -69,10 +76,11 @@ function useFileDrop(options: Options) {
 
   useEffect(() => {
     if (!inputRef.current || !options) return;
-    if (options.isDir){
+    if (!options.isFile) {
       inputRef.current.setAttribute("multiple", "multiple");
       inputRef.current.setAttribute("directory", "");
       inputRef.current.setAttribute("webkitdirectory", "");
+      inputRef.current.setAttribute("mozdirectory", "");
     }
   }, [inputRef, options]);
 

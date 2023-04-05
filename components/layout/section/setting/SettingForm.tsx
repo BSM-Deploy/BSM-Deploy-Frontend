@@ -9,28 +9,27 @@ import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 import CancelButton from "../../button/cancelButton";
 import SubmitButton from "../../button/submitButton";
-import { projectUploadState } from "@/store/atoms/upload/uploadState";
 
 export default function SettingForm() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
   const [openSnackbar, setOpenSnackbar] = useRecoilState(openSnackbarState);
-  const [uploadState, setUploadState] = useRecoilState(projectUploadState);
 
   const { mutate } = useMutation(settingProject, {
     onSuccess: (data) => {
-      setUploadState((prev) => ({
-        ...prev,
-        name: nameWatcher,
-        type: projectTypeWatcher,
-        domain: domainPrefixWatcher,
-      }))
-      router.push(`/upload/${data}`);
+      router.push({
+        pathname: `/upload/[index]`,
+        query:{
+          index: data,
+          isFile: projectTypeWatcher === "SINGLE_HTML"
+        }
+      }, `/upload`);
     },
     onError: (error) => {
       console.log(error)
     },
   });
+  
   const onSubmit = (data: SettingType) => {
     mutate(data);
   };
@@ -50,7 +49,7 @@ export default function SettingForm() {
       domainPrefix: "",
       projectType: "",
     },
-  });
+  });  
 
   const projectTypeWatcher = useWatch({
     control,
@@ -65,7 +64,7 @@ export default function SettingForm() {
   const domainPrefixWatcher = useWatch({
     control,
     name: "domainPrefix",
-  });
+  });  
 
   return (
     <>

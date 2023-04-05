@@ -1,6 +1,5 @@
 import useFileDrop from "@/hooks/useFileDrop";
 import { uploadProject } from "@/utils/api/project";
-import JSZip from "jszip";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -9,20 +8,19 @@ import CancelButton from "../../button/cancelButton";
 import SubmitButton from "../../button/submitButton";
 
 export default function UploadForm() {
+  const router = useRouter();
+  const { id, isFile } = router.query;
+
+  const { files, inputRef, isDragActive, labelRef } = useFileDrop({
+    isFile: isFile as string,
+  });
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const { mutate } = useMutation(uploadProject, {
-    onSuccess: (data) => {
-      
-    },
+    onSuccess: (data) => {},
     onError: (error) => {
       console.log(error);
     },
-  });
-
-  const router = useRouter();
-  const { files, inputRef, isDragActive, labelRef } = useFileDrop({
-    isDir: false,
   });
 
   useEffect(() => {
@@ -31,20 +29,32 @@ export default function UploadForm() {
   }, [files]);
 
   const submit = () => {
+
+    // const zip = JSZip()
+
+    // const test = zip.folder("test")
+    // test?.file("test.txt", "test", {base64: true})
+    // const test2 = test?.folder("test2")
+    // test2?.file("test2.txt", "test2")
+
+    // test?.generateAsync({type: 'blob'}).then((content) => {
+    //   saveAs(content, 'test')
+    // })
+
     const data = new FormData();
-    data.append("projectId", router.query.index as string);
-    data.append("file", files[0]);
+    data.append("projectId", id as string);
+    
+    if(isFile === 'false'){
+        // ZipAFolder(folder, files[0].name).then((data) => {
+        //   console.log
+        // })
+      // data.append("file")
+    }
+    else{
+      data.append("file", files[0]);
+    }
 
-    mutate(data);
-  };
-
-  const ZipAFolder = (fileInfo: File[]) => {
-    const zip = new JSZip();
-
-    return new Promise((resolve, reject) => {
-      zip.file(fileInfo[0].name, fileInfo[0]);
-      zip.generateAsync({ type: "base64" }).then(resolve);
-    });
+    // mutate(data);
   };
 
   return (
