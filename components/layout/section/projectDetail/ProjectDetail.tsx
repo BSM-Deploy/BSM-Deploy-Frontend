@@ -25,7 +25,14 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
   });
   const ref = useRef(null);
 
-  useOnClickOutside(ref, () => toggleMenu());
+  useOnClickOutside(ref, () => {
+    if (isOpenMenu) {
+      setIsView(false);
+      setTimeout(() => {
+        setIsOpenMenu(false);
+      }, 150);
+    }
+  });
 
   const toggleMenu = () => {
     if (!isOpenMenu) {
