@@ -5,14 +5,15 @@ import { getProject } from "@/utils/api/project";
 import { Skeleton } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useQuery } from "react-query";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useRecoilState } from "recoil";
+import { useOnClickOutside } from "usehooks-ts";
 
 function ProjectDetailSection({ data }: { data: ProjectType }) {
-  const [loading, setLoading] = useRecoilState(loadingState);
-  const [log, setLog] = useState<string[]>([]);
   const router = useRouter();
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
   const { isLoading: containerIsLoading, data: containerData } = useQuery<
     string,
     Error
@@ -20,10 +21,10 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
     enabled:
       router.isReady && data?.projectType === "BUILT_NEXT_JS" && data.isDeploy,
     refetchInterval: 3000,
-    onSuccess: () => {
-      log && containerData ? setLog((prev) => [...prev, containerData]) : null;
-    },
   });
+  const ref = useRef(null);
+
+  useOnClickOutside(ref, () => setIsOpenMenu(false));
 
   const projectType = {
     SINGLE_HTML: "단일 HTML",
@@ -36,9 +37,9 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
   return (
     <>
       <div className="main-section py-28 px-60 flex gap-10 flex-col h-full overflow-y-auto">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center relative">
           <h1 className="text-6xl font-bold">{data?.name}</h1>
-          <div className="gap-5 flex">
+          {/* <div className="gap-5 flex">
             {data.isDeploy && (
               <button className="!bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button">
                 배포 취소하기
@@ -47,6 +48,26 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
             <button className="make-project-button">
               {data.isDeploy ? "재" : ""}배포하기
             </button>
+          </div> */}
+          <div ref={ref}>
+            <BiDotsVerticalRounded
+              size={40}
+              className="cursor-pointer"
+              onClick={() => setIsOpenMenu(prev => !prev)}
+            />
+            {isOpenMenu && (
+              <ul className="absolute flex flex-col text-center top-[5rem] right-0">
+                <li className="rounded-t-xl rounded-b-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button">
+                  재배포하기
+                </li>
+                <li className="rounded-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button">
+                  배포 취소하기
+                </li>
+                <li className="rounded-b-xl rounded-t-none cursor-pointer !bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button">
+                  프로젝트 삭제하기
+                </li>
+              </ul>
+            )}
           </div>
         </div>
         <hr className="my-6 dark:border-white border-text" />
@@ -98,7 +119,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
           </div>
         </div>
         {data?.projectType === "BUILT_NEXT_JS" && (
-          <div className="w-full rounded-xl bg-black p-8 h-64 overflow-y-auto whitespace-pre">
+          <div className="w-full rounded-xl bg-black text-textLightGray p-8 h-64 overflow-auto whitespace-pre">
             {containerData}
           </div>
         )}
