@@ -1,4 +1,3 @@
-import SettingModal from "@/components/modals/SettingModal";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Suspense, useEffect, useState } from "react";
@@ -20,7 +19,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
-        <SettingModal />
         <Loading />
         <Refresh />
       </QueryClientProvider>
