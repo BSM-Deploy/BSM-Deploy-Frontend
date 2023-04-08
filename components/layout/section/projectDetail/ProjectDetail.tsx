@@ -14,6 +14,7 @@ import { useOnClickOutside } from "usehooks-ts";
 function ProjectDetailSection({ data }: { data: ProjectType }) {
   const router = useRouter();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isView, setIsView] = useState(false);
   const { isLoading: containerIsLoading, data: containerData } = useQuery<
     string,
     Error
@@ -24,8 +25,19 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
   });
   const ref = useRef(null);
 
-  useOnClickOutside(ref, () => setIsOpenMenu(false));
+  useOnClickOutside(ref, () => toggleMenu());
 
+  const toggleMenu = () => {
+    if (!isOpenMenu) {
+      setIsView(true);
+      setIsOpenMenu(true);
+    } else {
+      setIsView(false);
+      setTimeout(() => {
+        setIsOpenMenu(false);
+      }, 150);
+    }
+  };
   const projectType = {
     SINGLE_HTML: "단일 HTML",
     MULTIPLE_FILE: "다중 파일",
@@ -39,24 +51,18 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
       <div className="main-section py-28 px-60 flex gap-10 flex-col h-full overflow-y-auto">
         <div className="flex justify-between items-center relative">
           <h1 className="text-6xl font-bold">{data?.name}</h1>
-          {/* <div className="gap-5 flex">
-            {data.isDeploy && (
-              <button className="!bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button">
-                배포 취소하기
-              </button>
-            )}
-            <button className="make-project-button">
-              {data.isDeploy ? "재" : ""}배포하기
-            </button>
-          </div> */}
           <div ref={ref}>
             <BiDotsVerticalRounded
               size={40}
               className="cursor-pointer"
-              onClick={() => setIsOpenMenu(prev => !prev)}
+              onClick={() => toggleMenu()}
             />
             {isOpenMenu && (
-              <ul className="absolute flex flex-col text-center top-[5rem] right-0">
+              <ul
+                className={`absolute flex flex-col text-center top-[5rem] right-0 ${
+                  isView ? "animate-down" : "animate-up"
+                }`}
+              >
                 <li className="rounded-t-xl rounded-b-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button">
                   재배포하기
                 </li>
