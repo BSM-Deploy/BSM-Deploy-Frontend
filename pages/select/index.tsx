@@ -21,7 +21,7 @@ export default function Select(){
 
     return (
       <>
-        <Header />
+        <Header title="프로젝트 종류"/>
         <Sidebar />
         <div className="main-container">
           <div className="flex flex-col items-center mr-[20rem]">

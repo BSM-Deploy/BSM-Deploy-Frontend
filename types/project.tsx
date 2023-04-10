@@ -15,3 +15,9 @@ export interface ProjectType {
     | "BUILT_NEXT_JS";
   dataSize: number;
 }
+
+export interface ProjectControlModalType {
+  id: number;
+  modalType: "CANCEL_DEPLOY" | "DELETE_PROJECT";
+  isOpen: boolean
+}

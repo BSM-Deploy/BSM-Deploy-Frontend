@@ -1,7 +1,7 @@
 import { errorMessageState } from "@/store/atoms/layout/error";
 import { openSnackbarState } from "@/store/atoms/snackbar/openSnackbar";
-import { SettingType } from "@/types/Setting";
-import { project } from "@/utils/api/project";
+import { SettingType } from "@/types/setting";
+import { makeProject } from "@/utils/api/project";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/router";
 import { useForm, useWatch } from "react-hook-form";
@@ -14,7 +14,7 @@ export default function SettingForm() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
   const [openSnackbar, setOpenSnackbar] = useRecoilState(openSnackbarState);
-  const { mutate } = useMutation(project, {
+  const { mutate } = useMutation(makeProject, {
     onSuccess: (data) => {
       router.push(`/upload/${data}`);
     },
@@ -132,8 +132,8 @@ export default function SettingForm() {
           >
             <option value={"SINGLE_HTML"}>Single HTML</option>
             <option value={"MULTIPLE_FILE"}>Multiple File</option>
-            <option value={"BUILD_REACT_JS"}>Build React.js</option>
-            <option value={"BUILD_NEXT_JS"}>Build Next.js</option>
+            <option value={"BUILT_REACT_JS"}>Built React.js</option>
+            <option value={"BUILT_NEXT_JS"}>Built Next.js</option>
           </select>
           <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 peer-focus:arrowStyle" />
           <label
