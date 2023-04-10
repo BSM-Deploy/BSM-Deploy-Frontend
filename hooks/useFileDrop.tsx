@@ -1,32 +1,25 @@
-import { ZipAFolder } from "@/utils/functions/zipFolder";
-import JSZip from "jszip";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-interface Options {
-  isFile?: string;
-}
-
-function useFileDrop(options: Options) {
+function useFileDrop() {
   const inputRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLLabelElement>(null);
   const [isDragActive, setIsDragActive] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
+  const [items, setItems] = useState<DataTransferItem[]>([]);
 
-  const onDragFile = useCallback(
-    (event: DragEvent) => {
-      if (!event?.dataTransfer?.files) return;
+  const onDragFile = useCallback((event: DragEvent) => {
+    if (!event?.dataTransfer?.files) return;
 
-      const selectFiles = event.dataTransfer.files;
-      const uploadFiles = Array.from(selectFiles);
+    const { files, items } = event.dataTransfer;
 
-      if (options.isFile === "false") {
-        const folder = event.dataTransfer.items;
-        ZipAFolder(folder, uploadFiles[0].name)
-      }
-      setFiles(uploadFiles);
-    },
-    [options.isFile]
-  );
+    if (items[0].webkitGetAsEntry()?.isFile) {
+      const uploadFile = Array.from(files);
+      setFiles(uploadFile);
+    } else {
+      const uploadItems = Array.from(items);
+      setItems(uploadItems);
+    }
+  }, []);
 
   const onDragEnter = useCallback((e: DragEvent) => {
     e.preventDefault();
@@ -74,20 +67,11 @@ function useFileDrop(options: Options) {
     };
   }, [labelRef, onDragEnter, onDragLeave, onDragOver, onDrop]);
 
-  useEffect(() => {
-    if (!inputRef.current || !options) return;
-    if (!options.isFile) {
-      inputRef.current.setAttribute("multiple", "multiple");
-      inputRef.current.setAttribute("directory", "");
-      inputRef.current.setAttribute("webkitdirectory", "");
-      inputRef.current.setAttribute("mozdirectory", "");
-    }
-  }, [inputRef, options]);
-
   return {
     inputRef,
     labelRef,
     files,
+    items,
     isDragActive,
   };
 }

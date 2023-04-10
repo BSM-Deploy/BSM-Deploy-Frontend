@@ -1,60 +1,62 @@
 import useFileDrop from "@/hooks/useFileDrop";
-import { uploadProject } from "@/utils/api/project";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useMutation } from "react-query";
 import CancelButton from "../../button/cancelButton";
 import SubmitButton from "../../button/submitButton";
+import useReadFolder from "@/hooks/useReadFolder";
+import { useMutation } from "react-query";
+import { uploadProject } from "@/utils/api/project";
+import JSZip, { file } from "jszip";
+import uuid from "react-uuid";
 
 export default function UploadForm() {
   const router = useRouter();
-  const { id, isFile } = router.query;
+  const id = router.query.index as string;
+  const { files, items, inputRef, isDragActive, labelRef } = useFileDrop();
+  const { progressManagement, zip } = useReadFolder();
 
-  const { files, inputRef, isDragActive, labelRef } = useFileDrop({
-    isFile: isFile as string,
-  });
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
+  useEffect(() => {
+    if (files.length > 0 || items.length > 0) {
+      setButtonDisabled(false);
+    }
+    if (items[0]) {
+      progressManagement(
+        items[0].webkitGetAsEntry() as FileSystemDirectoryEntry
+      );
+    }
+  }, [files, items, progressManagement]);
+
   const { mutate } = useMutation(uploadProject, {
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      console.log(data);
+    },
     onError: (error) => {
       console.log(error);
     },
   });
 
-  useEffect(() => {
-    console.log(files);
-    if (files.length > 0) setButtonDisabled(false);
-  }, [files]);
+  const makeZipFile = (z: JSZip) => {
+    return new Promise((resolve, reject) => {
+      z.generateAsync({ type: "blob", compression: "DEFLATE" }).then(
+        (content: Blob) => {
+          const file = new File([content], `${uuid()}.zip`);
+          resolve(file);
+        }
+      );
+    });
+  };
 
-  const submit = () => {
-
-    // const zip = JSZip()
-
-    // const test = zip.folder("test")
-    // test?.file("test.txt", "test", {base64: true})
-    // const test2 = test?.folder("test2")
-    // test2?.file("test2.txt", "test2")
-
-    // test?.generateAsync({type: 'blob'}).then((content) => {
-    //   saveAs(content, 'test')
-    // })
-
+  const submit = async () => {
+    const zipFile = await makeZipFile(zip);
     const data = new FormData();
-    data.append("projectId", id as string);
-    
-    if(isFile === 'false'){
-        // ZipAFolder(folder, files[0].name).then((data) => {
-        //   console.log
-        // })
-      // data.append("file")
-    }
-    else{
-      data.append("file", files[0]);
-    }
 
-    // mutate(data);
+    data.append("projectId", id);
+    data.append("file", zipFile as Blob);
+
+    mutate(data);
   };
 
   return (

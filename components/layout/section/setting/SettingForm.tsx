@@ -17,13 +17,7 @@ export default function SettingForm() {
 
   const { mutate } = useMutation(settingProject, {
     onSuccess: (data) => {
-      router.push({
-        pathname: `/upload/[index]`,
-        query:{
-          index: data,
-          isFile: projectTypeWatcher === "SINGLE_HTML"
-        }
-      }, `/upload`);
+      router.push(`/upload/${data}`);
     },
     onError: (error) => {
       console.log(error)
@@ -140,8 +134,8 @@ export default function SettingForm() {
           >
             <option value={"SINGLE_HTML"}>Single HTML</option>
             <option value={"MULTIPLE_FILE"}>Multiple File</option>
-            <option value={"BUILD_REACT_JS"}>Build React.js</option>
-            <option value={"BUILD_NEXT_JS"}>Build Next.js</option>
+            <option value={"BUILT_REACT_JS"}>Build React.js</option>
+            <option value={"BUILT_NEXT_JS"}>Build Next.js</option>
           </select>
           <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 peer-focus:arrowStyle" />
           <label
