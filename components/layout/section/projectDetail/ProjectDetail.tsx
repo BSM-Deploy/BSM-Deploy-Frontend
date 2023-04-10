@@ -10,11 +10,16 @@ import { useQuery } from "react-query";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useRecoilState } from "recoil";
 import { useOnClickOutside } from "usehooks-ts";
+import ProjectControlModal from "@/components/modals/ProjectControlModal";
+import { projectControlModalState } from "@/store/atoms/modals/projectControlModal";
 
 function ProjectDetailSection({ data }: { data: ProjectType }) {
   const router = useRouter();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isView, setIsView] = useState(false);
+  const [projectControlModal, setProjectControlModal] = useRecoilState(
+    projectControlModalState
+  );
   const { isLoading: containerIsLoading, data: containerData } = useQuery<
     string,
     Error
@@ -53,6 +58,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
   };
 
   // containerIsLoading ? setLoading(true) : setLoading(false);
+
   return (
     <>
       <div className="main-section py-28 px-60 flex gap-10 flex-col h-full overflow-y-auto">
@@ -66,19 +72,62 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
             />
             {isOpenMenu && (
               <ul
-                className={`absolute flex flex-col text-center top-[5rem] right-0 ${
+                className={`absolute flex flex-col text-center top-[5rem] right-0 z-50 ${
                   isView ? "animate-down" : "animate-up"
                 }`}
               >
-                <li className="rounded-t-xl rounded-b-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button">
-                  재배포하기
-                </li>
-                <li className="rounded-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button">
-                  배포 취소하기
-                </li>
-                <li className="rounded-b-xl rounded-t-none cursor-pointer !bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button">
-                  프로젝트 삭제하기
-                </li>
+                {data.isDeploy ? (
+                  <>
+                    <li className="rounded-t-xl rounded-b-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button">
+                      재배포하기
+                    </li>
+                    <li
+                      className="rounded-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button"
+                      onClick={() => {
+                        setProjectControlModal({
+                          isOpen: true,
+                          id: data.id,
+                          modalType: "CANCEL_DEPLOY",
+                        });
+                        toggleMenu();
+                      }}
+                    >
+                      배포 취소하기
+                    </li>
+                    <li
+                      className="rounded-b-xl rounded-t-none cursor-pointer !bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button"
+                      onClick={() => {
+                        setProjectControlModal({
+                          isOpen: true,
+                          id: data.id,
+                          modalType: "DELETE_PROJECT",
+                        });
+                        toggleMenu();
+                      }}
+                    >
+                      프로젝트 삭제하기
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="rounded-t-xl rounded-b-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button">
+                      배포하기
+                    </li>
+                    <li
+                      className="rounded-b-xl rounded-t-none cursor-pointer !bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button"
+                      onClick={() => {
+                        setProjectControlModal({
+                          isOpen: true,
+                          id: data.id,
+                          modalType: "DELETE_PROJECT",
+                        });
+                        toggleMenu();
+                      }}
+                    >
+                      프로젝트 삭제하기
+                    </li>
+                  </>
+                )}
               </ul>
             )}
           </div>
@@ -137,6 +186,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
           </div>
         )}
       </div>
+      <ProjectControlModal data={data} />
     </>
   );
 }
