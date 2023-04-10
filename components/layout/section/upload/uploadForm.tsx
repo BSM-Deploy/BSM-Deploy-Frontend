@@ -50,11 +50,15 @@ export default function UploadForm() {
   };
 
   const submit = async () => {
-    const zipFile = await makeZipFile(zip);
     const data = new FormData();
-
     data.append("projectId", id);
-    data.append("file", zipFile as Blob);
+
+    if (files.length > 0) {
+      data.append("file", files[0]);
+    } else {
+      const zipFile = await makeZipFile(zip);
+      data.append("file", zipFile as Blob);
+    }
 
     mutate(data);
   };
