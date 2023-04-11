@@ -14,15 +14,25 @@ module.exports = {
           "50%": { transform: "scale(0.95)" },
           "100%": { transform: "scale(1.0)" },
         },
+        down: {
+          from: { transform: "translateY(-30px)", opacity: "0" },
+          to: { transform: "translateY(0px)", opacity: "1" },
+        },
+        up: {
+          from: { transform: "translateY(0px)", opacity: "1" },
+          to: { transform: "translateY(-30px)", opacity: "0" },
+        },
       },
       animation: {
         clickAnimation: "clickAnimation 0.3s ease-in-out",
+        down: "down .15s ease-in-out",
+        up: "up .15s ease-in-out",
       },
 
       colors: {
         blue: "#61CDFE",
         accentBlue: "#1188BB",
-        red: "#EA8777",
+        red: "#E88676",
         darkGray: "#282828",
         lightGray: "#858585",
         lightBack: "#FAFAFA",

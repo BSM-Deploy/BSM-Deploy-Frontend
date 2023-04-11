@@ -5,25 +5,51 @@ import { getProject } from "@/utils/api/project";
 import { Skeleton } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useQuery } from "react-query";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useRecoilState } from "recoil";
+import { useOnClickOutside } from "usehooks-ts";
+import ProjectControlModal from "@/components/modals/ProjectControlModal";
+import { projectControlModalState } from "@/store/atoms/modals/projectControlModal";
 
 function ProjectDetailSection({ data }: { data: ProjectType }) {
-  const [loading, setLoading] = useRecoilState(loadingState);
-  const [log, setLog] = useState<string[]>([]);
   const router = useRouter();
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isView, setIsView] = useState(false);
+  const [projectControlModal, setProjectControlModal] = useRecoilState(
+    projectControlModalState
+  );
   const { isLoading: containerIsLoading, data: containerData } = useQuery<
     string,
     Error
   >("container", () => getContainerLog(String(router.query.projectId)), {
-    enabled: router.isReady && data?.projectType === "BUILT_NEXT_JS",
+    enabled:
+      router.isReady && data?.projectType === "BUILT_NEXT_JS" && data.isDeploy,
     refetchInterval: 3000,
-    onSuccess: () => {
-      log && containerData ? setLog((prev) => [...prev, containerData]) : null;
-    },
+  });
+  const ref = useRef(null);
+
+  useOnClickOutside(ref, () => {
+    if (isOpenMenu) {
+      setIsView(false);
+      setTimeout(() => {
+        setIsOpenMenu(false);
+      }, 150);
+    }
   });
 
+  const toggleMenu = () => {
+    if (!isOpenMenu) {
+      setIsView(true);
+      setIsOpenMenu(true);
+    } else {
+      setIsView(false);
+      setTimeout(() => {
+        setIsOpenMenu(false);
+      }, 150);
+    }
+  };
   const projectType = {
     SINGLE_HTML: "단일 HTML",
     MULTIPLE_FILE: "다중 파일",
@@ -32,16 +58,78 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
   };
 
   // containerIsLoading ? setLoading(true) : setLoading(false);
+
   return (
     <>
       <div className="main-section py-28 px-60 flex gap-10 flex-col h-full overflow-y-auto">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center relative">
           <h1 className="text-6xl font-bold">{data?.name}</h1>
-          <div className="gap-5 flex">
-            <button className="!bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button">
-              배포 취소하기
-            </button>
-            <button className="make-project-button">재배포하기</button>
+          <div ref={ref}>
+            <BiDotsVerticalRounded
+              size={40}
+              className="cursor-pointer"
+              onClick={() => toggleMenu()}
+            />
+            {isOpenMenu && (
+              <ul
+                className={`absolute flex flex-col text-center top-[5rem] right-0 z-50 ${
+                  isView ? "animate-down" : "animate-up"
+                }`}
+              >
+                {data.isDeploy ? (
+                  <>
+                    <li className="rounded-t-xl rounded-b-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button">
+                      재배포하기
+                    </li>
+                    <li
+                      className="rounded-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button"
+                      onClick={() => {
+                        setProjectControlModal({
+                          isOpen: true,
+                          id: data.id,
+                          modalType: "CANCEL_DEPLOY",
+                        });
+                        toggleMenu();
+                      }}
+                    >
+                      배포 취소하기
+                    </li>
+                    <li
+                      className="rounded-b-xl rounded-t-none cursor-pointer !bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button"
+                      onClick={() => {
+                        setProjectControlModal({
+                          isOpen: true,
+                          id: data.id,
+                          modalType: "DELETE_PROJECT",
+                        });
+                        toggleMenu();
+                      }}
+                    >
+                      프로젝트 삭제하기
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="rounded-t-xl rounded-b-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button">
+                      배포하기
+                    </li>
+                    <li
+                      className="rounded-b-xl rounded-t-none cursor-pointer !bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button"
+                      onClick={() => {
+                        setProjectControlModal({
+                          isOpen: true,
+                          id: data.id,
+                          modalType: "DELETE_PROJECT",
+                        });
+                        toggleMenu();
+                      }}
+                    >
+                      프로젝트 삭제하기
+                    </li>
+                  </>
+                )}
+              </ul>
+            )}
           </div>
         </div>
         <hr className="my-6 dark:border-white border-text" />
@@ -73,12 +161,18 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
           <div className="p-12 flex flex-col gap-10 justify-center">
             <div className="gap-5 flex flex-col">
               <h3 className="font-bold dark:text-textDarkGray">DOMAIN</h3>
-              <Link
-                href={`https://${data?.domainPrefix}.bssm.kro.kr`}
-                target="_blank"
-              >
-                <span className="text-4xl">{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
-              </Link>
+              {data.isDeploy ? (
+                <Link
+                  href={`https://${data?.domainPrefix}.bssm.kro.kr`}
+                  target="_blank"
+                >
+                  <span
+                    className={"text-4xl"}
+                  >{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
+                </Link>
+              ) : (
+                <span className="text-4xl cursor-not-allowed text-textDarkGray">{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
+              )}
             </div>
             <div className="gap-5 flex flex-col">
               <h3 className="font-bold dark:text-textDarkGray">TYPE</h3>
@@ -86,19 +180,13 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
             </div>
           </div>
         </div>
-        <div className="w-full rounded-xl bg-black p-8 h-64 overflow-y-auto">
-          {log.map((item, index) => {
-            return (
-              <>
-                <span key={index} className="text-white">
-                  {item}
-                </span>
-                <br />
-              </>
-            );
-          })}
-        </div>
+        {data?.projectType === "BUILT_NEXT_JS" && (
+          <div className="w-full rounded-xl bg-black text-textLightGray p-8 h-64 overflow-auto whitespace-pre">
+            {containerData}
+          </div>
+        )}
       </div>
+      <ProjectControlModal data={data} />
     </>
   );
 }

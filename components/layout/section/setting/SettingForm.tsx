@@ -1,7 +1,7 @@
 import { errorMessageState } from "@/store/atoms/layout/error";
 import { openSnackbarState } from "@/store/atoms/snackbar/openSnackbar";
 import { SettingType } from "@/types/setting";
-import { settingProject } from "@/utils/api/project";
+import { makeProject } from "@/utils/api/project";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/router";
 import { useForm, useWatch } from "react-hook-form";
@@ -14,8 +14,7 @@ export default function SettingForm() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
   const [openSnackbar, setOpenSnackbar] = useRecoilState(openSnackbarState);
-
-  const { mutate } = useMutation(settingProject, {
+  const { mutate } = useMutation(makeProject, {
     onSuccess: (data) => {
       router.push(`/upload/${data}`);
     },

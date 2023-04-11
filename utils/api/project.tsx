@@ -1,7 +1,7 @@
 import { ProjectsType } from "@/types/project";
-import { SettingType } from "@/types/setting";
 import { instance } from "@/utils/instance";
 import { getAccessToken } from "../functions/getToken";
+import { SettingType } from "@/types/setting";
 
 export const getProjectList = async (): Promise<ProjectsType> => {
   return (await instance.get("/project", getAccessToken())).data;
@@ -9,10 +9,6 @@ export const getProjectList = async (): Promise<ProjectsType> => {
 
 export const getProject = async (id: string) => {
   return (await instance.get(`/project/${id}`, getAccessToken())).data;
-};
-
-export const settingProject = async (data: SettingType) => {
-  return (await instance.post('/project', {...data}, getAccessToken())).data.id
 };
 
 export const uploadProject = async (element: any) => {
@@ -23,3 +19,11 @@ export const uploadProject = async (element: any) => {
     }
   }))
 }
+export const makeProject = async (data: SettingType) => {
+  return (await instance.post("/project", { ...data }, getAccessToken())).data
+    .id;
+};
+
+export const deleteProject = async (id: number) => {
+  return (await instance.delete(`/project/${id}`, getAccessToken())).data;
+};
