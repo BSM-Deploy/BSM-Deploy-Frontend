@@ -1,5 +1,4 @@
 import useFileDrop from "@/hooks/useFileDrop";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import CancelButton from "../../button/cancelButton";
@@ -8,7 +7,8 @@ import useReadFolder from "@/hooks/useReadFolder";
 import { useMutation } from "react-query";
 import { getProject, uploadProject } from "@/utils/api/project";
 import JSZip from "jszip";
-import uuid from "react-uuid";
+import UploadIcon from "./uploadIcon";
+import { saveAs } from "file-saver";
 
 export default function UploadForm() {
   const router = useRouter();
@@ -16,10 +16,14 @@ export default function UploadForm() {
 
   const [type, setType] = useState<string>("");
 
-  const { files, items, inputRef, isDragActive, labelRef } = useFileDrop();
+  const { files, items, fileName, inputRef, isDragActive, labelRef } = useFileDrop();
   const { progressManagement, zip } = useReadFolder({
     type: type,
   });
+
+  useEffect(()=>{
+    console.log(zip, fileName)
+  }, [zip, fileName])
 
   useEffect(() => {
     (async () => {
@@ -36,9 +40,12 @@ export default function UploadForm() {
         items[0].webkitGetAsEntry() as FileSystemDirectoryEntry
       );
     }
+    else{
+      console.log(files)
+    }
   }, [files, items, progressManagement]);
 
-  const { mutate } = useMutation(uploadProject, {
+  const { mutate, isLoading } = useMutation(uploadProject, {
     onSuccess: (data) => {
       console.log(data);
     },
@@ -51,7 +58,8 @@ export default function UploadForm() {
     return new Promise((resolve, reject) => {
       z.generateAsync({ type: "blob", compression: "DEFLATE" }).then(
         (content: Blob) => {
-          const file = new File([content], `${uuid()}.zip`);
+          const file = new File([content], `${id}.zip`);
+          saveAs(file, "Tqlkf.zip")
           resolve(file);
         }
       );
@@ -84,12 +92,7 @@ export default function UploadForm() {
             isDragActive && "dragStyle"
           }`}
         >
-          <span className="absolute w-1/2 h-1/2 top-1/2 translate-y-[-60%]">
-            <Image src="/images/uploadfolder.svg" alt="upload" fill={true} />
-          </span>
-          <span className="dark:text-black flex items-center justify-center bg-blue rounded-4xl duration-200 text-white absolute w-[80%] h-[7rem] top-[70%]">
-            드래그해서 파일/폴더 업로드
-          </span>
+          {/* {root !== "" ? <span>{root}</span> : <UploadIcon />} */}
         </label>
       </div>
       <div className="flex items-center mt-[5rem]">

@@ -15,6 +15,9 @@ export const checkFile = (item: FileSystemFileEntry, root: string) => {
   if (path.includes('.next')) {
     return true
   }
+  if (path.includes('public')) {
+    return true
+  }
   if (path.includes(root)) {
     if (path.includes('package.json')) {
       return true

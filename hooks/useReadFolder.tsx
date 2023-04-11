@@ -1,14 +1,14 @@
 import { checkFile, checkFolder } from "@/utils/functions/validation";
+import { SettingsRemoteTwoTone } from "@mui/icons-material";
 import JSZip from "jszip";
 import { useCallback, useState } from "react";
 
 export default function useReadFolder({ type }: { type?: string }) {
-  const [zip, setZip] = useState<JSZip>(new JSZip());
-  const [root, setRoot] = useState<string>("");
+  const [zip, setZip] = useState<any>(new JSZip());
 
   // item: FileSystemFileEntry or FileSystemDirectoryEntry, folder: zip.folder()
   const traverseFileTree = useCallback(
-    (item: any, folder: JSZip) => {
+    (item: any, folder: JSZip, root: string) => {
       return new Promise((resolve, reject) => {
         if (item.isFile) {
           // Get file
@@ -31,17 +31,16 @@ export default function useReadFolder({ type }: { type?: string }) {
               const s_f = folder.folder(item.name);
               dirReader.readEntries((entries: any) => {
                 for (let i = 0; i < entries.length; i++) {
-                  traverseFileTree(entries[i], s_f as JSZip);
+                  traverseFileTree(entries[i], s_f as JSZip, root);
                 }
               });
             }
           } else {
-            console.log(item);
             const dirReader = item.createReader();
             const s_f = folder.folder(item.name);
             dirReader.readEntries((entries: any) => {
               for (let i = 0; i < entries.length; i++) {
-                traverseFileTree(entries[i], s_f as JSZip);
+                traverseFileTree(entries[i], s_f as JSZip, root);
               }
             });
           }
@@ -49,16 +48,16 @@ export default function useReadFolder({ type }: { type?: string }) {
         resolve("");
       });
     },
-    [type, root]
+    [type]
   );
 
   const readFolder = useCallback(
-    (folder: FileSystemDirectoryEntry, z: JSZip) => {
+    (folder: FileSystemDirectoryEntry, z: JSZip, root: string) => {
       return new Promise((resolve, reject) => {
         const dirReader = folder?.createReader();
         dirReader?.readEntries(async (entries: any) => {
           for (let i = 0; i < entries.length; i++) {
-            await traverseFileTree(entries[i], z);
+            await traverseFileTree(entries[i], z, root);
           }
         });
         resolve(z);
@@ -70,11 +69,7 @@ export default function useReadFolder({ type }: { type?: string }) {
   const progressManagement = useCallback(
     async (folder: FileSystemDirectoryEntry) => {
       const z = new JSZip();
-      if (folder !== null) {
-        setRoot(folder?.name);
-      }
-      const result: any = await readFolder(folder, z);
-      setZip(result);
+      setZip((await readFolder(folder, z, folder?.name)));
     },
     [readFolder]
   );

@@ -6,6 +6,7 @@ function useFileDrop() {
   const [isDragActive, setIsDragActive] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const [items, setItems] = useState<DataTransferItem[]>([]);
+  const [fileName, setFileName] = useState("");
 
   const onDragFile = useCallback((event: DragEvent) => {
     if (!event?.dataTransfer?.files) return;
@@ -15,9 +16,13 @@ function useFileDrop() {
     if (items[0].webkitGetAsEntry()?.isFile) {
       const uploadFile = Array.from(files);
       setFiles(uploadFile);
+      setFileName(uploadFile[0].name)
+      setItems([])
     } else {
       const uploadItems = Array.from(items);
       setItems(uploadItems);
+      setFileName(uploadItems[0].webkitGetAsEntry()?.name as string)
+      setFiles([])
     }
   }, []);
 
@@ -73,6 +78,7 @@ function useFileDrop() {
     files,
     items,
     isDragActive,
+    fileName,
   };
 }
 
