@@ -1,12 +1,11 @@
 import { checkFile, checkFolder } from "@/utils/functions/validation";
-import { SettingsRemoteTwoTone } from "@mui/icons-material";
 import JSZip from "jszip";
 import { useCallback, useState } from "react";
 
 export default function useReadFolder({ type }: { type?: string }) {
   const [zip, setZip] = useState<any>(new JSZip());
 
-  // item: FileSystemFileEntry or FileSystemDirectoryEntry, folder: zip.folder()
+  // item: FileSystemFileEntry or FileSystemDirectoryEntry
   const traverseFileTree = useCallback(
     (item: any, folder: JSZip, root: string) => {
       return new Promise((resolve, reject) => {

@@ -9,6 +9,7 @@ import { getProject, uploadProject } from "@/utils/api/project";
 import JSZip from "jszip";
 import UploadIcon from "./uploadIcon";
 import { saveAs } from "file-saver";
+import FileIcon from "./fileIcon";
 
 export default function UploadForm() {
   const router = useRouter();
@@ -20,10 +21,6 @@ export default function UploadForm() {
   const { progressManagement, zip } = useReadFolder({
     type: type,
   });
-
-  useEffect(()=>{
-    console.log(zip, fileName)
-  }, [zip, fileName])
 
   useEffect(() => {
     (async () => {
@@ -39,9 +36,6 @@ export default function UploadForm() {
       progressManagement(
         items[0].webkitGetAsEntry() as FileSystemDirectoryEntry
       );
-    }
-    else{
-      console.log(files)
     }
   }, [files, items, progressManagement]);
 
@@ -60,6 +54,7 @@ export default function UploadForm() {
         (content: Blob) => {
           const file = new File([content], `${id}.zip`);
           saveAs(file, "Tqlkf.zip")
+          console.log(file)
           resolve(file);
         }
       );
@@ -74,7 +69,6 @@ export default function UploadForm() {
       data.append("file", files[0]);
     } else {
       const zipFile = await makeZipFile(zip);
-      console.log(zipFile);
       data.append("file", zipFile as Blob);
     }
 
@@ -88,11 +82,11 @@ export default function UploadForm() {
         <label
           ref={labelRef}
           htmlFor="upload"
-          className={`dark:border-white relative flex flex-col items-center w-[60rem] h-[60rem] rounded-4xl border-dotted border-2 border-black ${
+          className={`dark:border-white relative flex flex-col items-center justify-center w-[60rem] h-[60rem] rounded-4xl border-dotted border-2 border-black ${
             isDragActive && "dragStyle"
           }`}
         >
-          {/* {root !== "" ? <span>{root}</span> : <UploadIcon />} */}
+          {fileName !== "" ? <FileIcon type={type} name={fileName} /> : <UploadIcon />}
         </label>
       </div>
       <div className="flex items-center mt-[5rem]">
