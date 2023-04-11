@@ -6,22 +6,31 @@ import CancelButton from "../../button/cancelButton";
 import SubmitButton from "../../button/submitButton";
 import useReadFolder from "@/hooks/useReadFolder";
 import { useMutation } from "react-query";
-import { uploadProject } from "@/utils/api/project";
-import JSZip, { file } from "jszip";
+import { getProject, uploadProject } from "@/utils/api/project";
+import JSZip from "jszip";
 import uuid from "react-uuid";
 
 export default function UploadForm() {
   const router = useRouter();
   const id = router.query.index as string;
-  const { files, items, inputRef, isDragActive, labelRef } = useFileDrop();
-  const { progressManagement, zip } = useReadFolder();
 
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [type, setType] = useState<string>("");
+
+  const { files, items, inputRef, isDragActive, labelRef } = useFileDrop();
+  const { progressManagement, zip } = useReadFolder({
+    type: type,
+  });
 
   useEffect(() => {
-    if (files.length > 0 || items.length > 0) {
-      setButtonDisabled(false);
-    }
+    (async () => {
+      try {
+        const result = await getProject(id);
+        setType(result.projectType);
+      } catch (err) {}
+    })();
+  }, [id]);
+
+  useEffect(() => {
     if (items[0]) {
       progressManagement(
         items[0].webkitGetAsEntry() as FileSystemDirectoryEntry
@@ -57,6 +66,7 @@ export default function UploadForm() {
       data.append("file", files[0]);
     } else {
       const zipFile = await makeZipFile(zip);
+      console.log(zipFile);
       data.append("file", zipFile as Blob);
     }
 
@@ -84,7 +94,7 @@ export default function UploadForm() {
       </div>
       <div className="flex items-center mt-[5rem]">
         <CancelButton router={router} />
-        <SubmitButton onClick={submit} disabled={buttonDisabled} />
+        <SubmitButton onClick={submit} />
       </div>
     </div>
   );
