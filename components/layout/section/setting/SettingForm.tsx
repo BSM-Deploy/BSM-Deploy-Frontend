@@ -22,6 +22,7 @@ export default function SettingForm() {
       console.log(error)
     },
   });
+  
   const onSubmit = (data: SettingType) => {
     mutate(data);
   };
@@ -41,7 +42,7 @@ export default function SettingForm() {
       domainPrefix: "",
       projectType: "",
     },
-  });
+  });  
 
   const projectTypeWatcher = useWatch({
     control,
@@ -56,7 +57,7 @@ export default function SettingForm() {
   const domainPrefixWatcher = useWatch({
     control,
     name: "domainPrefix",
-  });
+  });  
 
   return (
     <>
