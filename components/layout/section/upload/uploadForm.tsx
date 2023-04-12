@@ -8,7 +8,6 @@ import { useMutation } from "react-query";
 import { getProject, uploadProject } from "@/utils/api/project";
 import JSZip from "jszip";
 import UploadIcon from "./uploadIcon";
-import { saveAs } from "file-saver";
 import FileIcon from "./fileIcon";
 
 export default function UploadForm() {
@@ -17,7 +16,8 @@ export default function UploadForm() {
 
   const [type, setType] = useState<string>("");
 
-  const { files, items, fileName, inputRef, isDragActive, labelRef } = useFileDrop();
+  const { files, items, fileName, inputRef, isDragActive, labelRef } =
+    useFileDrop();
   const { progressManagement, zip } = useReadFolder({
     type: type,
   });
@@ -41,6 +41,7 @@ export default function UploadForm() {
 
   const { mutate, isLoading } = useMutation(uploadProject, {
     onSuccess: (data) => {
+      router.push(`/deploy/${id}`);
       console.log(data);
     },
     onError: (error) => {
@@ -53,8 +54,6 @@ export default function UploadForm() {
       z.generateAsync({ type: "blob", compression: "DEFLATE" }).then(
         (content: Blob) => {
           const file = new File([content], `${id}.zip`);
-          saveAs(file, "Tqlkf.zip")
-          console.log(file)
           resolve(file);
         }
       );
@@ -86,7 +85,11 @@ export default function UploadForm() {
             isDragActive && "dragStyle"
           }`}
         >
-          {fileName !== "" ? <FileIcon type={type} name={fileName} /> : <UploadIcon />}
+          {fileName !== "" ? (
+            <FileIcon type={type} name={fileName} />
+          ) : (
+            <UploadIcon />
+          )}
         </label>
       </div>
       <div className="flex items-center mt-[5rem]">
