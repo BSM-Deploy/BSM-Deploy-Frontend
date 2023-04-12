@@ -18,6 +18,6 @@ export interface ProjectType {
 
 export interface ProjectControlModalType {
   id: number;
-  modalType: "CANCEL_DEPLOY" | "DELETE_PROJECT";
+  modalType: "CANCEL_DEPLOY" | "DELETE_PROJECT" | "DEPLOY_PROJECT";
   isOpen: boolean
 }

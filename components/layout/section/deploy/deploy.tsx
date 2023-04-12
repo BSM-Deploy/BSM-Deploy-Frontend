@@ -15,9 +15,9 @@ export default function DeploySection() {
     onSuccess: (data) => {
       console.log(data)
       setDeploy(true)
-      setTimeout(()=>{
+      setTimeout(()=> {
         router.push(`/project/${id}`)
-      }, 1000)
+      })
     },
     onError: (data) => {
       console.log(data)

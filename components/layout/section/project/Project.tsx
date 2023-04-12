@@ -15,9 +15,9 @@ function ProjectSection() {
       {projectQuery.isSuccess &&
         (projectQuery.data?.list ? (
           <div className="flex flex-wrap gap-12">
-            <button className="make-project-button absolute top-16 right-16">
+            <Link href="/setting" className="make-project-button absolute top-16 right-16">
               프로젝트 생성하기
-            </button>
+            </Link>
             {projectQuery.data?.list.map((project: ProjectType) => (
               <Link
                 href={{
@@ -43,7 +43,7 @@ function ProjectSection() {
               프로젝트가 없습니다!
             </span>
             {/* <Link> */}
-            <button className="make-project-button">프로젝트 생성하기</button>
+            <Link href="setting" className="make-project-button">프로젝트 생성하기</Link>
             {/* </Link> */}
           </div>
         ))}

@@ -6,6 +6,6 @@ export const cancelDeploy = async (projectId: number) => {
     .data;
 };
 
-export const deployProject = async (projectId: string) => {
+export const deployProject = async (projectId: string | number) => {
   return (await instance.put(`/deploy`, { projectId }, getAccessToken())).data;
 };
