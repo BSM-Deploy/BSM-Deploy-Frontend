@@ -78,7 +78,17 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
               >
                 {data.isDeploy ? (
                   <>
-                    <li className="rounded-t-xl rounded-b-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button">
+                    <li
+                      onClick={() => {
+                        setProjectControlModal({
+                          isOpen: true,
+                          id: data.id,
+                          modalType: "DEPLOY_PROJECT",
+                        });
+                        toggleMenu();
+                      }}
+                      className="rounded-t-xl rounded-b-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button"
+                    >
                       재배포하기
                     </li>
                     <li
@@ -110,7 +120,17 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
                   </>
                 ) : (
                   <>
-                    <li className="rounded-t-xl rounded-b-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button">
+                    <li
+                      className="rounded-t-xl rounded-b-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button"
+                      onClick={() => {
+                        setProjectControlModal({
+                          isOpen: true,
+                          id: data.id,
+                          modalType: "DEPLOY_PROJECT",
+                        });
+                        toggleMenu();
+                      }}
+                    >
                       배포하기
                     </li>
                     <li

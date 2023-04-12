@@ -1,0 +1,56 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { useMutation } from "react-query";
+import { deployProject } from "@/utils/api/deploy";
+
+export default function DeploySection() {
+  const router = useRouter();
+  const id = router.query.index as string;
+
+  const [deploy, setDeploy] = useState(false);
+
+  const { mutate } = useMutation(deployProject, {
+    onSuccess: (data) => {
+      console.log(data)
+      setDeploy(true)
+      setTimeout(()=> {
+        router.push(`/project/${id}`)
+      })
+    },
+    onError: (data) => {
+      console.log(data)
+    }
+  })
+
+  useEffect(() => {
+    mutate(id)
+  }, [id, mutate])
+
+  return (
+    <div className="main-section flex flex-col items-center justify-center">
+      {deploy ? (
+        <>
+          <CheckCircleOutlineIcon
+            sx={{
+              fontSize: 300,
+              color: "#61CDFE",
+            }}
+          />
+          <p className="text-6xl font-bold mt-20">배포 완료</p>
+        </>
+      ) : (
+        <>
+          <CircularProgress
+            size={300}
+            sx={{
+              color: "#61CDFE",
+            }}
+          />
+          <p className="text-6xl font-bold mt-20">배포중...</p>
+        </>
+      )}
+    </div>
+  );
+}

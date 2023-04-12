@@ -8,9 +8,9 @@ export default function FileIcon({type, name}: {type: string; name: string}) {
   }
 
   return(
-    <div className='relative w-[250px] h-[250px]'>
+    <div className='relative w-[35rem] h-[35rem]'>
       {type === 'SINGLE_HTML' ? <InsertDriveFileIcon sx={iconStyle} /> : <FolderIcon sx={iconStyle} />}
-      <p className='z-10 absolute top-1/2 left-1/2 translate-x-[-50%] text-white dark:text-black'>{name}</p>
+      <p className='z-10 absolute top-1/2 left-1/2 translate-x-[-50%] break-all text-white dark:text-black'>{name}</p>
     </div>
   )
 };
