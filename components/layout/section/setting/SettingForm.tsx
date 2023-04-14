@@ -18,11 +18,14 @@ export default function SettingForm() {
     onSuccess: (data) => {
       router.push(`/upload/${data}`);
     },
-    onError: (error) => {
-      console.log(error)
+    onError: (error: any) => {
+      const message = error.response?.data.fields.domainPrefix;
+      setErrorMessage(message);
+      setOpenSnackbar({ ...openSnackbar, open: true });
+      setValue("domainPrefix", "");
     },
   });
-  
+
   const onSubmit = (data: SettingType) => {
     mutate(data);
   };
@@ -42,7 +45,7 @@ export default function SettingForm() {
       domainPrefix: "",
       projectType: "",
     },
-  });  
+  });
 
   const projectTypeWatcher = useWatch({
     control,
@@ -57,7 +60,7 @@ export default function SettingForm() {
   const domainPrefixWatcher = useWatch({
     control,
     name: "domainPrefix",
-  });  
+  });
 
   return (
     <>

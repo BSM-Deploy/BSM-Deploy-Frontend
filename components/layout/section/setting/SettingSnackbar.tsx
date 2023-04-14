@@ -6,7 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 const snackbarStyle = {
   "& .MuiPaper-root": {
     width: "30rem",
-    height: "7rem",
+    height: "6rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -24,7 +24,7 @@ export default function SettingSnackbar() {
       open={open}
       autoHideDuration={2000}
       onClose={() => setSnackbar({ ...snackbar, open: false })}
-      message={<span className="text-3xl">{errorMessage}</span>}
+      message={<span className="text-2xl">{errorMessage}</span>}
       key={vertical + horizontal}
       sx={snackbarStyle}
     />
