@@ -9,6 +9,8 @@ import { getProject, uploadProject } from "@/utils/api/project";
 import JSZip from "jszip";
 import UploadIcon from "./uploadIcon";
 import FileIcon from "./fileIcon";
+import Example from "./example";
+import ExampleModal from "@/components/modals/exampleModal";
 
 export default function UploadForm() {
   const router = useRouter();
@@ -39,7 +41,7 @@ export default function UploadForm() {
     }
   }, [files, items, progressManagement]);
 
-  const { mutate, isLoading } = useMutation(uploadProject, {
+  const { mutate } = useMutation(uploadProject, {
     onSuccess: (data) => {
       router.push(`/deploy/${id}`);
       console.log(data);
@@ -75,7 +77,8 @@ export default function UploadForm() {
   };
 
   return (
-    <div className="main-container flex-col">
+    <div className="main-container flex-col relative">
+      <ExampleModal type={type} />
       <div>
         <input ref={inputRef} type="file" id="upload" hidden disabled />
         <label
@@ -85,6 +88,7 @@ export default function UploadForm() {
             isDragActive && "dragStyle"
           }`}
         >
+          <Example />
           {fileName !== "" ? (
             <FileIcon type={type} name={fileName} />
           ) : (

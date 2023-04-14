@@ -1,0 +1,143 @@
+{
+  "MULTIPLE_FILE": [
+    {
+      "id": 1,
+      "type": "folder",
+      "depth": 0,
+      "name": "MULTIPLE_FILE"
+    },
+    {
+      "id": 5,
+      "type": "folder",
+      "depth": 1,
+      "name": "page1"
+    },
+    {
+      "id": 6,
+      "type": "file",
+      "depth": 2,
+      "name": "page1.html"
+    },
+    {
+      "id": 2,
+      "type": "file",
+      "depth": 1,
+      "name": "favicon.ico"
+    },
+    {
+      "id": 3,
+      "type": "file",
+      "depth": 1,
+      "name": "index.html"
+    },
+    {
+      "id": 4,
+      "type": "file",
+      "depth": 1,
+      "name": "img1.jpg"
+    }
+  ],
+  "SINGLE_HTML": [
+    {
+      "id": 7,
+      "type": "file",
+      "depth": 0,
+      "name": "single_html.html"
+    }
+  ],
+  "BUILT_REACT_JS": [
+    {
+      "id": 8,
+      "type": "folder",
+      "depth": 0,
+      "name": "BUILT_REACT_JS"
+    },
+    {
+      "id": 9,
+      "type": "file",
+      "depth": 1,
+      "name": "asset-manifest.json"
+    },
+    {
+      "id": 10,
+      "type": "file",
+      "depth": 1,
+      "name": "favicon.ico"
+    },
+    {
+      "id": 11,
+      "type": "file",
+      "depth": 1,
+      "name": "index.html"
+    },
+    {
+      "id": 12,
+      "type": "file",
+      "depth": 1,
+      "name": "logo192.png"
+    },
+    {
+      "id": 13,
+      "type": "file",
+      "depth": 1,
+      "name": "logo512.png"
+    },
+    {
+      "id": 14,
+      "type": "file",
+      "depth": 1,
+      "name": "manifest.json"
+    },
+    {
+      "id": 15,
+      "type": "file",
+      "depth": 1,
+      "name": "robots.txt"
+    },
+    {
+      "id": 16,
+      "type": "folder",
+      "depth": 2,
+      "name": "static"
+    }
+
+  ],
+  "BUILT_NEXT_JS": [
+    {
+      "id": 17,
+      "type": "folder",
+      "depth": 0,
+      "name": "BUILT_NEXT_JS"
+    },
+    {
+      "id": 18,
+      "type": "file",
+      "depth": 1,
+      "name": "package.json"
+    },
+    {
+      "id": 19,
+      "type": "file",
+      "depth": 1,
+      "name": "next.config.js"
+    },
+    {
+      "id": 20,
+      "type": "file",
+      "depth": 1,
+      "name": "package-lock.json"
+    },
+    {
+      "id": 21,
+      "type": "folder",
+      "depth": 2,
+      "name": "public"
+    },
+    {
+      "id": 22,
+      "type": "folder",
+      "depth": 2,
+      "name": ".next"
+    }
+  ]
+}
