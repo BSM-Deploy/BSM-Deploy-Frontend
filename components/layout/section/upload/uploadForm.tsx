@@ -14,6 +14,7 @@ import ExampleModal from "@/components/modals/exampleModal";
 import { useRecoilState } from "recoil";
 import { openSnackbarState } from "@/store/atoms/snackbar/openSnackbar";
 import { errorMessageState } from "@/store/atoms/layout/error";
+import useException from "@/hooks/useException";
 
 export default function UploadForm() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function UploadForm() {
   const [openSnackbar, setOpenSnackbar] = useRecoilState(openSnackbarState);
   const [type, setType] = useState<string>("");
 
+  const { exceptionHandler } = useException();
   const { files, items, fileName, inputRef, isDragActive, labelRef } =
     useFileDrop();
   const { progressManagement, zip } = useReadFolder({
@@ -51,14 +53,7 @@ export default function UploadForm() {
       router.push(`/deploy/${id}`);
     },
     onError: (error: any) => {
-      const status = error.response?.data.statusCode;
-      if (status === 400) {
-        setErrorMessage(error.response?.data.fields.fileExtension);
-        setOpenSnackbar({ ...openSnackbar, open: true });
-      } else {
-        setErrorMessage(error.response?.data.message);
-        setOpenSnackbar({ ...openSnackbar, open: true });
-      }
+      exceptionHandler(error?.response.data, 'fileExtension')
     },
   });
 

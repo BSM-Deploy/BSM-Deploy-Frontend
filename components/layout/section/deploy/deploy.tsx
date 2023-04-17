@@ -4,23 +4,27 @@ import CircularProgress from "@mui/material/CircularProgress";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useMutation } from "react-query";
 import { deployProject } from "@/utils/api/deploy";
+import useException from "@/hooks/useException";
 
 export default function DeploySection() {
   const router = useRouter();
   const id = router.query.index as string;
 
+  const { exceptionHandler } = useException()
+
   const [deploy, setDeploy] = useState(false);
 
   const { mutate } = useMutation(deployProject, {
-    onSuccess: (data) => {
-      console.log(data)
-      setDeploy(true)
+    onSuccess: () => {
+      setTimeout(() => {
+        setDeploy(true)
+      }, 1500)
       setTimeout(()=> {
         router.push(`/project/${id}`)
-      })
+      }, 1500)
     },
-    onError: (data) => {
-      console.log(data)
+    onError: (error: any) => {
+      exceptionHandler(error?.response.data, 'projectId')
     }
   })
 
