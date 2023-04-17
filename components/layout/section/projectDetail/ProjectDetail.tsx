@@ -1,7 +1,5 @@
-import { loadingState } from "@/store/atoms/loading/loading";
 import { ProjectType } from "@/types/project";
 import { getContainerLog } from "@/utils/api/container";
-import { getProject } from "@/utils/api/project";
 import { Skeleton } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";

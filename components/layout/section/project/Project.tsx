@@ -1,7 +1,6 @@
 import { getProjectList } from "@/utils/api/project";
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery } from "react-query";
-import { useRecoilState } from "recoil";
 import ProjectItem from "./ProjectItem";
 import { ProjectType } from "@/types/project";
 import Image from "next/image";

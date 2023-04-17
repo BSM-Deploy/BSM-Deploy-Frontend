@@ -10,6 +10,8 @@ import { useRecoilState } from "recoil";
 import CancelButton from "../../button/cancelButton";
 import SubmitButton from "../../button/submitButton";
 import useException from "@/hooks/useException";
+import { AxiosError } from "axios";
+import { ExceptionType } from "@/types/exception";
 
 export default function SettingForm() {
   const router = useRouter();
@@ -22,8 +24,8 @@ export default function SettingForm() {
     onSuccess: (data) => {
       router.push(`/upload/${data}`);
     },
-    onError: (error: any) => {
-      exceptionHandler(error?.response.data, 'domainPrefix')
+    onError: (error: AxiosError) => {
+      exceptionHandler(error.response?.data as ExceptionType, 'domainPrefix')
       setValue("domainPrefix", "");
     },
   });

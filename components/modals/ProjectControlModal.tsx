@@ -1,19 +1,22 @@
+import useException from "@/hooks/useException";
 import { projectControlModalState } from "@/store/atoms/modals/projectControlModal";
 import { ProjectType } from "@/types/project";
 import { cancelDeploy, deployProject } from "@/utils/api/deploy";
 import { deleteProject } from "@/utils/api/project";
 import { Modal } from "@mui/material";
-import Link from "next/link";
+import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React from "react";
 import { MdClear } from "react-icons/md";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
+import { ExceptionType } from "@/types/exception";
 
 function ProjectControlModal({ data }: { data: ProjectType }) {
   const [projectControlModal, setProjectControlModal] = useRecoilState(
     projectControlModalState
   );
+  const { exceptionHandler } = useException()
 
   const router = useRouter();
 
@@ -49,6 +52,9 @@ function ProjectControlModal({ data }: { data: ProjectType }) {
       closeModal();
       data.isDeploy = true;
     },
+    onError: (error: AxiosError) => {
+      exceptionHandler(error.response?.data as ExceptionType)
+    }
   });
 
   const { isOpen, id, modalType } = projectControlModal;

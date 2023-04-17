@@ -15,6 +15,8 @@ import { useRecoilState } from "recoil";
 import { openSnackbarState } from "@/store/atoms/snackbar/openSnackbar";
 import { errorMessageState } from "@/store/atoms/layout/error";
 import useException from "@/hooks/useException";
+import { AxiosError } from "axios";
+import { ExceptionType } from "@/types/exception";
 
 export default function UploadForm() {
   const router = useRouter();
@@ -52,8 +54,8 @@ export default function UploadForm() {
     onSuccess: () => {
       router.push(`/deploy/${id}`);
     },
-    onError: (error: any) => {
-      exceptionHandler(error?.response.data, 'fileExtension')
+    onError: (error: AxiosError) => {
+      exceptionHandler(error.response?.data as ExceptionType, 'fileExtension')
     },
   });
 

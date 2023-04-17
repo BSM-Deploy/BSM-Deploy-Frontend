@@ -6,6 +6,8 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { useMutation } from "react-query";
 import { deployProject } from "@/utils/api/deploy";
 import useException from "@/hooks/useException";
+import { AxiosError } from "axios";
+import { ExceptionType } from "@/types/exception";
 
 export default function DeploySection() {
   const router = useRouter();
@@ -18,15 +20,11 @@ export default function DeploySection() {
 
   const { mutate, isLoading } = useMutation(deployProject, {
     onSuccess: () => {
-      setTimeout(() => {
-        setDeploy(true);
-      }, 1500);
-      setTimeout(() => {
-        router.push(`/project/${id}`);
-      }, 1500);
+      setDeploy(true);
+      router.push(`/project/${id}`);
     },
-    onError: (error: any) => {
-      exceptionHandler(error?.response.data, "projectId");
+    onError: (error: AxiosError) => {
+      exceptionHandler(error.response?.data as ExceptionType, "projectId");
       setFailed(true)
     },
   });
