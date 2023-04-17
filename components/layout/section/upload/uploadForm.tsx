@@ -11,11 +11,16 @@ import UploadIcon from "./uploadIcon";
 import FileIcon from "./fileIcon";
 import Example from "./example";
 import ExampleModal from "@/components/modals/exampleModal";
+import { useRecoilState } from "recoil";
+import { openSnackbarState } from "@/store/atoms/snackbar/openSnackbar";
+import { errorMessageState } from "@/store/atoms/layout/error";
 
 export default function UploadForm() {
   const router = useRouter();
   const id = router.query.index as string;
 
+  const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
+  const [openSnackbar, setOpenSnackbar] = useRecoilState(openSnackbarState);
   const [type, setType] = useState<string>("");
 
   const { files, items, fileName, inputRef, isDragActive, labelRef } =
@@ -42,12 +47,18 @@ export default function UploadForm() {
   }, [files, items, progressManagement]);
 
   const { mutate } = useMutation(uploadProject, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       router.push(`/deploy/${id}`);
-      console.log(data);
     },
-    onError: (error) => {
-      console.log(error);
+    onError: (error: any) => {
+      const status = error.response?.data.statusCode;
+      if (status === 400) {
+        setErrorMessage(error.response?.data.fields.fileExtension);
+        setOpenSnackbar({ ...openSnackbar, open: true });
+      } else {
+        setErrorMessage(error.response?.data.message);
+        setOpenSnackbar({ ...openSnackbar, open: true });
+      }
     },
   });
 
