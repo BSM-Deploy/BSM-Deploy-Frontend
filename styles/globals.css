@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
 @layer base {
   html {
     font-size: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
   }
   body {
     font-size: 1.5rem;
