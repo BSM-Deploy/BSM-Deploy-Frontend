@@ -1,10 +1,14 @@
 import { getUserInfo } from "@/utils/api/user";
 import Link from "next/link";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import SidebarItems from "./SidebarItem";
 import { useQuery, useMutation } from "react-query";
-import { Logout, PersonOutline, Construction } from "@mui/icons-material";
+import {
+  Logout,
+  PersonOutline,
+  Construction,
+  Settings,
+} from "@mui/icons-material";
 import { logout } from "@/utils/api/auth";
 
 function Sidebar() {
@@ -92,6 +96,12 @@ function Sidebar() {
           Icon={
             <Construction fontSize="large" className="dark:text-textDarkGray" />
           }
+        />
+      </Link>
+      <Link href="/setting">
+        <SidebarItems
+          name="프로젝트 만들기"
+          Icon={<Settings fontSize="large" />}
         />
       </Link>
     </aside>

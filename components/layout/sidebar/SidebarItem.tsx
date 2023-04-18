@@ -20,7 +20,7 @@ function SidebarItems({
   Icon?: ReactNode;
 }) {
   return (
-    <div
+    <div 
       className={`relative cursor-pointer [&:hover>svg]:text-accentBlue [&:hover>span]:text-accentBlue dark:[&:hover>svg]:text-blue dark:[&:hover>span]:text-blue dark:[&:hover>span>svg]:text-blue ${
         isOpenDropdown && "[&>svg]:rotate-180"
       } rounded-lg ${
