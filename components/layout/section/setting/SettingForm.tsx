@@ -9,19 +9,23 @@ import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 import CancelButton from "../../button/cancelButton";
 import SubmitButton from "../../button/submitButton";
+import useException from "@/hooks/useException";
+import { AxiosError } from "axios";
+import { ExceptionType } from "@/types/exception";
 
 export default function SettingForm() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
   const [openSnackbar, setOpenSnackbar] = useRecoilState(openSnackbarState);
+
+  const { exceptionHandler } = useException()
+
   const { mutate } = useMutation(makeProject, {
     onSuccess: (data) => {
       router.push(`/upload/${data}`);
     },
-    onError: (error: any) => {
-      const message = error.response?.data.fields.domainPrefix;
-      setErrorMessage(message);
-      setOpenSnackbar({ ...openSnackbar, open: true });
+    onError: (error: AxiosError) => {
+      exceptionHandler(error.response?.data as ExceptionType, 'domainPrefix')
       setValue("domainPrefix", "");
     },
   });

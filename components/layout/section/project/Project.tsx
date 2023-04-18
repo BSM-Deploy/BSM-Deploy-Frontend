@@ -1,7 +1,6 @@
 import { getProjectList } from "@/utils/api/project";
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery } from "react-query";
-import { useRecoilState } from "recoil";
 import ProjectItem from "./ProjectItem";
 import { ProjectType } from "@/types/project";
 import Image from "next/image";
@@ -13,7 +12,7 @@ function ProjectSection() {
   return (
     <div className="main-section p-52 overflow-y-auto h-full">
       {projectQuery.isSuccess &&
-        (projectQuery.data?.list ? (
+        (projectQuery.data?.size !== 0 ? (
           <div className="flex flex-wrap gap-12">
             <Link href="/setting" className="make-project-button absolute top-16 right-16">
               프로젝트 생성하기
@@ -32,7 +31,7 @@ function ProjectSection() {
             ))}
           </div>
         ) : (
-          <div className="flex flex-col justify-center items-center gap-8">
+          <div className="flex flex-col justify-center items-center gap-12">
             <Image
               src={"./images/noproject.svg"}
               alt="프로젝트 없음"

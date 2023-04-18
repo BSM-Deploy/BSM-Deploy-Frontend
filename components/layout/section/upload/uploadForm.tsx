@@ -11,13 +11,22 @@ import UploadIcon from "./uploadIcon";
 import FileIcon from "./fileIcon";
 import Example from "./example";
 import ExampleModal from "@/components/modals/exampleModal";
+import { useRecoilState } from "recoil";
+import { openSnackbarState } from "@/store/atoms/snackbar/openSnackbar";
+import { errorMessageState } from "@/store/atoms/layout/error";
+import useException from "@/hooks/useException";
+import { AxiosError } from "axios";
+import { ExceptionType } from "@/types/exception";
 
 export default function UploadForm() {
   const router = useRouter();
   const id = router.query.index as string;
 
+  const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
+  const [openSnackbar, setOpenSnackbar] = useRecoilState(openSnackbarState);
   const [type, setType] = useState<string>("");
 
+  const { exceptionHandler } = useException();
   const { files, items, fileName, inputRef, isDragActive, labelRef } =
     useFileDrop();
   const { progressManagement, zip } = useReadFolder({
@@ -42,12 +51,11 @@ export default function UploadForm() {
   }, [files, items, progressManagement]);
 
   const { mutate } = useMutation(uploadProject, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       router.push(`/deploy/${id}`);
-      console.log(data);
     },
-    onError: (error) => {
-      console.log(error);
+    onError: (error: AxiosError) => {
+      exceptionHandler(error.response?.data as ExceptionType, 'fileExtension')
     },
   });
 

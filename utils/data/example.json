@@ -100,7 +100,6 @@
       "depth": 2,
       "name": "static"
     }
-
   ],
   "BUILT_NEXT_JS": [
     {
@@ -130,13 +129,13 @@
     {
       "id": 21,
       "type": "folder",
-      "depth": 2,
+      "depth": 1,
       "name": "public"
     },
     {
       "id": 22,
       "type": "folder",
-      "depth": 2,
+      "depth": 1,
       "name": ".next"
     }
   ]
