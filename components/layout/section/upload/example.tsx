@@ -13,6 +13,7 @@ export default function Example() {
   return(
     <div onClick={openModal}>
       <ErrorOutlineIcon sx={{
+        cursor: 'pointer',
         color: '#61CDFE',
         fontSize: 60,
         position: 'absolute',

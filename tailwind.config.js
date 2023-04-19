@@ -13,10 +13,6 @@ module.exports = {
       'desktop': '1240px',
     },
     extend: {
-      transitionTimingFunction: {
-        'wa-one': 'calc(1 * 100ms)',
-        'wa-two': 'calc(2 * 100ms)',
-      },
       keyframes: {
         clickAnimation: {
           "0%": { transform: "scale(1.0)" },
@@ -28,14 +24,14 @@ module.exports = {
           to: { transform: "translateY(0)", opacity: "1" },
         },
         up: {
-          from: { transform: "translateY(0px)", opacity: "1" },
+          from: { transform: "translateY(0)", opacity: "1" },
           to: { transform: "translateY(-30px)", opacity: "0" },
         },
       },
       animation: {
         clickAnimation: "clickAnimation 0.3s ease-in-out",
-        down: "down .4s ease-in-out",
-        up: "up .2s ease-in-out",
+        down: "down .15s ease-in-out",
+        up: "up .15s ease-in-out",
       },
 
       colors: {
