@@ -24,12 +24,12 @@ module.exports = {
           "100%": { transform: "scale(1.0)" },
         },
         down: {
-          from: { transform: "translateX(-10rem)" },
-          to: { transform: "translateX(0)" },
+          from: { transform: "translateY(-30px)", opacity: "0" },
+          to: { transform: "translateY(0)", opacity: "1" },
         },
         up: {
-          from: { transform: "translateX(0px)", opacity: "1" },
-          to: { transform: "translateX(-30px)", opacity: "0" },
+          from: { transform: "translateY(0px)", opacity: "1" },
+          to: { transform: "translateY(-30px)", opacity: "0" },
         },
       },
       animation: {
