@@ -15,17 +15,15 @@ export default function DeploySection() {
 
   const { exceptionHandler } = useException();
 
-  const [deploy, setDeploy] = useState(false);
   const [failed, setFailed] = useState(false);
 
-  const { mutate, isLoading } = useMutation(deployProject, {
+  const { mutate } = useMutation(deployProject, {
     onSuccess: () => {
-      setDeploy(true);
       router.push(`/project/${id}`);
     },
     onError: (error: AxiosError) => {
       exceptionHandler(error.response?.data as ExceptionType, "projectId");
-      setFailed(true)
+      setFailed(true);
     },
   });
 
@@ -35,33 +33,21 @@ export default function DeploySection() {
 
   return (
     <div className="main-section flex flex-col items-center justify-center">
-      {deploy && !failed && (
+      {!failed ? (
         <>
           <CheckCircleOutlineIcon
             sx={{
-              fontSize: 300,
+              fontSize: 150,
               color: "#61CDFE",
             }}
           />
           <p className="text-6xl font-bold mt-20">배포 완료</p>
         </>
-      )}
-      {isLoading && (
-        <>
-          <CircularProgress
-            size={300}
-            sx={{
-              color: "#61CDFE",
-            }}
-          />
-          <p className="text-6xl font-bold mt-20">배포중...</p>
-        </>
-      )}
-      {failed && (
+      ) : (
         <>
           <WarningAmberIcon
             sx={{
-              fontSize: 300,
+              fontSize: 150,
               color: "#61CDFE",
             }}
           />

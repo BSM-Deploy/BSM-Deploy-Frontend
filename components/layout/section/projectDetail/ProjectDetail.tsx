@@ -48,6 +48,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
       }, 150);
     }
   };
+
   const projectType = {
     SINGLE_HTML: "단일 HTML",
     MULTIPLE_FILE: "다중 파일",
@@ -153,11 +154,11 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
         <hr className="my-6 dark:border-white border-text" />
         <div className="flex flex-wrap">
           {data.isDeploy ? (
-            <div className="w-[40rem] h-[22.5rem]">
+            <div className="w-[50rem] h-[27rem] overflow-hidden">
               <iframe
                 src={`https://${data?.domainPrefix}.bssm.kro.kr`}
-                width={1600}
-                height={900}
+                width={1920}
+                height={1080}
                 className="rounded-xl bg-white scale-[0.25] origin-top-left"
               />
             </div>
@@ -198,7 +199,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
             </div>
           </div>
         </div>
-        {data?.projectType === "BUILT_NEXT_JS" && (
+        {data?.projectType === "BUILT_NEXT_JS" && data.isDeploy && (
           <div className="w-full rounded-xl bg-black text-textLightGray p-8 h-64 overflow-auto whitespace-pre">
             {containerData}
           </div>

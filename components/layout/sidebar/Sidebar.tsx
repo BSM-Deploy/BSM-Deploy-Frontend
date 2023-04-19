@@ -1,10 +1,14 @@
 import { getUserInfo } from "@/utils/api/user";
 import Link from "next/link";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import SidebarItems from "./SidebarItem";
 import { useQuery, useMutation } from "react-query";
-import { Logout, PersonOutline, Construction } from "@mui/icons-material";
+import {
+  Logout,
+  PersonOutline,
+  Construction,
+  Settings,
+} from "@mui/icons-material";
 import { logout } from "@/utils/api/auth";
 
 function Sidebar() {
@@ -17,14 +21,27 @@ function Sidebar() {
     enabled: mount && localStorage.accessToken !== undefined,
   });
   const [userDropdown, setUserDropdown] = useState(false);
+  const [isView, setIsView] = useState(false);
 
   const logoutMutation = useMutation(() => logout());
+
+  const toggleMenu = () => {
+    if (!userDropdown) {
+      setIsView(true);
+      setUserDropdown(true);
+    } else {
+      setIsView(false);
+      setTimeout(() => {
+        setUserDropdown(false);
+      }, 150);
+    }
+  };
 
   return (
     <aside className="fixed top-[5.4rem] z-30 w-100 inline-block h-full min-h-screen bg-lightBackground dark:bg-black p-[0.5rem]">
       {userQuery.isSuccess ? (
         <>
-          <div onClick={() => setUserDropdown((prev) => !prev)}>
+          <div onClick={toggleMenu}>
             <SidebarItems
               name={userQuery.data.nickname}
               profileImg={userQuery.data.profileImg}
@@ -32,6 +49,7 @@ function Sidebar() {
               isOpenDropdown={userDropdown}
             />
           </div>
+          <div className={`${isView ? "animate-down" : "animate-up"}`}>
           {userDropdown && (
             <>
               <a href="https://auth.bssm.kro.kr/user" target="_blank">
@@ -71,6 +89,7 @@ function Sidebar() {
               </div>
             </>
           )}
+          </div>
         </>
       ) : (
         <a href="https://auth.bssm.kro.kr/oauth?clientId=347a7232&redirectURI=http://localhost:3000/oauth/bsm">
@@ -92,6 +111,12 @@ function Sidebar() {
           Icon={
             <Construction fontSize="large" className="dark:text-textDarkGray" />
           }
+        />
+      </Link>
+      <Link href="/setting">
+        <SidebarItems
+          name="프로젝트 만들기"
+          Icon={<Settings fontSize="large" />}
         />
       </Link>
     </aside>

@@ -7,6 +7,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      'tablet': '640px',
+      'laptop': '1024px',
+      'desktop': '1240px',
+    },
     extend: {
       keyframes: {
         clickAnimation: {
@@ -16,10 +21,10 @@ module.exports = {
         },
         down: {
           from: { transform: "translateY(-30px)", opacity: "0" },
-          to: { transform: "translateY(0px)", opacity: "1" },
+          to: { transform: "translateY(0)", opacity: "1" },
         },
         up: {
-          from: { transform: "translateY(0px)", opacity: "1" },
+          from: { transform: "translateY(0)", opacity: "1" },
           to: { transform: "translateY(-30px)", opacity: "0" },
         },
       },
