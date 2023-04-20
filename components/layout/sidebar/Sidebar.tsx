@@ -38,7 +38,7 @@ function Sidebar() {
   };
 
   return (
-    <aside className="fixed top-[5.4rem] z-30 w-100 inline-block h-full min-h-screen bg-lightBackground dark:bg-black p-[0.5rem]">
+    <aside className="fixed top-[54px] z-30 w-100 inline-block h-full min-h-screen bg-lightBackground dark:bg-black p-[0.5rem]">
       {userQuery.isSuccess ? (
         <>
           <div onClick={toggleMenu}>
