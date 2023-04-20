@@ -82,6 +82,10 @@ export default function SettingForm() {
             }`}
             {...register("name", {
               required: "프로젝트 이름이 비었습니다.",
+              minLength: {
+                value: 2,
+                message: "프로젝트 이름은 2자 이상이여야합니다.",
+              },
               maxLength: {
                 value: 16,
                 message: "프로젝트 이름은 16자 이하여야합니다.",
@@ -107,13 +111,17 @@ export default function SettingForm() {
             autoComplete={"off"}
             {...register("domainPrefix", {
               required: "도메인 접두사가 비었습니다.",
+              minLength: {
+                value: 3,
+                message: "도메인 접두사는 3자 이상이여야합니다.",
+              },
               maxLength: {
-                value: 16,
-                message: "도메인 접두사는 16자 이하여야합니다.",
+                value: 63,
+                message: "도메인 접두사는 63자 이하여야합니다.",
               },
               pattern: {
-                value: /^[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*$/,
-                message: "도메인 접두사는 영어, 숫자로만 이루어져야 합니다.",
+                value: /^[a-zA-Z0-9-]+$/,
+                message: "도메인 접두사는 영어, 숫자, 하이픈으로만 이루어져야 합니다.",
               },
             })}
           ></input>
