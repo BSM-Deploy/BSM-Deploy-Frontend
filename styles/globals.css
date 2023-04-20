@@ -17,6 +17,10 @@
     @apply text-text dark:text-textLightGray bg-lightBackground dark:bg-black overflow-hidden;
   }
 
+  button, input[type='submit'], input[type='button']{
+    cursor: pointer;
+  }
+
   *::-webkit-scrollbar {
     @apply w-[2rem];
   }
