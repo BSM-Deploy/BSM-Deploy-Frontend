@@ -49,8 +49,8 @@ function ProjectControlModal({ data }: { data: ProjectType }) {
 
   const deployProjectMutation = useMutation(() => deployProject(id), {
     onSuccess: () => {
-      closeModal();
       data.isDeploy = true;
+      closeModal();
     },
     onError: (error: AxiosError) => {
       exceptionHandler(error.response?.data as ExceptionType)

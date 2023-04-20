@@ -200,7 +200,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
           </div>
         </div>
         {data?.projectType === "BUILT_NEXT_JS" && data.isDeploy && (
-          <div className="w-full rounded-xl bg-black text-textLightGray p-8 h-64 overflow-auto whitespace-pre">
+          <div className="w-full rounded-xl bg-black text-textLightGray p-8 h-96 mt-6 overflow-auto whitespace-pre">
             {containerData}
           </div>
         )}
