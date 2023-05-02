@@ -10,8 +10,14 @@ import {
   Settings,
 } from "@mui/icons-material";
 import { logout } from "@/utils/api/auth";
+import useException from "@/hooks/useException";
+import { AxiosError } from "axios";
+import { ExceptionType } from "@/types/exception";
+import { useRecoilState } from "recoil";
+import { userIsLogin } from "@/store/atoms/user/user";
 
 function Sidebar() {
+  const [login, setLogin] = useRecoilState(userIsLogin)
   const [mount, setMount] = useState(false);
   useEffect(() => {
     setMount(true);
@@ -19,9 +25,13 @@ function Sidebar() {
   }, []);
   const userQuery = useQuery("user", () => getUserInfo(), {
     enabled: mount && localStorage.accessToken !== undefined,
+    onSuccess: () => {
+      setLogin(true)
+    }
   });
   const [userDropdown, setUserDropdown] = useState(false);
   const [isView, setIsView] = useState(false);
+  const { exceptionHandler } = useException();
 
   const logoutMutation = useMutation(() => logout(), {
     onSuccess: () => {
@@ -29,6 +39,9 @@ function Sidebar() {
       localStorage.removeItem("refreshToken");
       window.location.reload();
     },
+    onError: (err: AxiosError) => {
+      exceptionHandler(err.response?.data as ExceptionType)
+    }
   });
 
   const toggleMenu = () => {

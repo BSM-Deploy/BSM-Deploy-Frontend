@@ -1,24 +1,24 @@
 import Header from "@/components/layout/header/Header";
 import ProjectDetailSection from "@/components/layout/section/projectDetail/ProjectDetail";
 import Sidebar from "@/components/layout/sidebar/Sidebar";
-import { loadingState } from "@/store/atoms/loading/loading";
+import NeedLoginModal from "@/components/modals/needLoginModal";
+import { userIsLogin } from "@/store/atoms/user/user";
 import { ProjectType } from "@/types/project";
 import { getProject } from "@/utils/api/project";
 import { NextSeo, NextSeoProps } from "next-seo";
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 
 function ProjectDetail() {
-  const [loading, setLoading] = useRecoilState(loadingState);
+  const login = useRecoilValue(userIsLogin)
   const router = useRouter();
-  const { isLoading, data, isSuccess } = useQuery<ProjectType, Error>(
+  const { data, isSuccess } = useQuery<ProjectType, Error>(
     "project",
     () => getProject(String(router.query.projectId)),
     { enabled: router.isReady }
   );
-  isLoading ? setLoading(true) : setLoading(false);
 
   const seoConfig: NextSeoProps = {
     title: "프로젝트",
@@ -28,6 +28,7 @@ function ProjectDetail() {
   return (
     <>
       <NextSeo {...seoConfig} />
+      {!login && <NeedLoginModal />}
       {isSuccess && (
         <>
           <Header title={data?.name} />
