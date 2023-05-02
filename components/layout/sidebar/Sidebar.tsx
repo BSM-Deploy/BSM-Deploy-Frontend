@@ -23,7 +23,13 @@ function Sidebar() {
   const [userDropdown, setUserDropdown] = useState(false);
   const [isView, setIsView] = useState(false);
 
-  const logoutMutation = useMutation(() => logout());
+  const logoutMutation = useMutation(() => logout(), {
+    onSuccess: () => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      window.location.reload();
+    },
+  });
 
   const toggleMenu = () => {
     if (!userDropdown) {
@@ -50,45 +56,40 @@ function Sidebar() {
             />
           </div>
           <div className={`${isView ? "animate-down" : "animate-up"}`}>
-          {userDropdown && (
-            <>
-              <a href="https://auth.bssm.kro.kr/user" target="_blank">
-                <SidebarItems
-                  name="내 정보"
-                  isDropdownMenu
-                  index={1}
-                  Icon={
-                    <PersonOutline
-                      fontSize="large"
-                      className="dark:text-textDarkGray"
-                    />
-                  }
-                />
-              </a>
-              <div
-                onClick={() => {
-                  logoutMutation.mutate();
-                  if (logoutMutation.isSuccess) {
-                    localStorage.removeItem("accessToken");
-                    localStorage.removeItem("refreshToken");
-                    window.location.reload();
-                  }
-                }}
-              >
-                <SidebarItems
-                  name="로그아웃"
-                  isDropdownMenu
-                  index={2}
-                  Icon={
-                    <Logout
-                      fontSize="large"
-                      className="dark:text-textDarkGray"
-                    />
-                  }
-                />
-              </div>
-            </>
-          )}
+            {userDropdown && (
+              <>
+                <a href="https://auth.bssm.kro.kr/user" target="_blank">
+                  <SidebarItems
+                    name="내 정보"
+                    isDropdownMenu
+                    index={1}
+                    Icon={
+                      <PersonOutline
+                        fontSize="large"
+                        className="dark:text-textDarkGray"
+                      />
+                    }
+                  />
+                </a>
+                <div
+                  onClick={() => {
+                    logoutMutation.mutate();
+                  }}
+                >
+                  <SidebarItems
+                    name="로그아웃"
+                    isDropdownMenu
+                    index={2}
+                    Icon={
+                      <Logout
+                        fontSize="large"
+                        className="dark:text-textDarkGray"
+                      />
+                    }
+                  />
+                </div>
+              </>
+            )}
           </div>
         </>
       ) : (
@@ -116,7 +117,9 @@ function Sidebar() {
       <Link href="/setting">
         <SidebarItems
           name="프로젝트 만들기"
-          Icon={<Settings fontSize="large" className="dark:text-textDarkGray" />}
+          Icon={
+            <Settings fontSize="large" className="dark:text-textDarkGray" />
+          }
         />
       </Link>
     </aside>
