@@ -51,6 +51,7 @@ export default function UploadForm() {
     },
     onError: (error: AxiosError) => {
       exceptionHandler(error.response?.data as ExceptionType, "fileExtension");
+      console.log(zip)
     },
   });
 
@@ -72,6 +73,7 @@ export default function UploadForm() {
     if (files.length > 0) {
       data.append("file", files[0]);
     } else {
+      console.log(zip)
       const zipFile = await makeZipFile(zip);
       data.append("file", zipFile as Blob);
     }

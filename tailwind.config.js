@@ -35,6 +35,7 @@ module.exports = {
       },
 
       colors: {
+        leeBlack: '#1a1a1a',
         blue: "#61CDFE",
         accentBlue: "#1188BB",
         red: "#E88676",

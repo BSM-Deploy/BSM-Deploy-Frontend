@@ -9,7 +9,7 @@ function Header({ title }: { title?: string }) {
   const [settingModal, setSettingModal] = useRecoilState(settingModalState);
   return (
     <>
-      <header className="z-50 dark:bg-black bg-lightBackground p-[5px] h-[54px] flex items-center gap-2 fixed top-0 w-full">
+      <header className="z-50 dark:bg-leeBlack bg-lightBackground p-[5px] h-[54px] flex items-center gap-2 fixed top-0 w-full">
         <Link
           href="/"
           className="gray-button text-[2rem] font-bold h-full tracking-tight w-[144.48px]"
