@@ -13,7 +13,6 @@ interface ExampleDataType{
 }
 
 export default function ExampleModal({ type }: { type: string; }) {
-  console.log(type);
   const [exampleModal, setExampleModal] = useRecoilState(exampleModalState);
   const [example, setExample] = useState<ExampleDataType[]>([]);
 

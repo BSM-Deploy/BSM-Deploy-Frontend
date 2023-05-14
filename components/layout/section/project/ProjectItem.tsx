@@ -25,10 +25,10 @@ function ProjectItem({ data }: { data: ProjectType }) {
   const { icon, tooltip } = projectType;
   return (
     <div className="h-80 w-80 dark:bg-itemGray p-8 rounded-2xl border border-solid border-lightBack relative bg-textLightGray hover:bg-lightHover dark:hover:bg-darkHover duration-250">
-      <h1 className="m-0 text-4xl dark:text-textLightGray font-bold">
+      <h1 className="m-0 break-words text-4xl dark:text-textLightGray font-bold">
         {data.name}
       </h1>
-      <span className="text-xl text-textDarkGray">
+      <span className="text-xl break-words text-textDarkGray">
         {data.domainPrefix}.bssm.kro.kr
       </span>
       <Tooltip

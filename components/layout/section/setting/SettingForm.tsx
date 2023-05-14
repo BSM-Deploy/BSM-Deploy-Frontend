@@ -18,14 +18,14 @@ export default function SettingForm() {
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
   const [openSnackbar, setOpenSnackbar] = useRecoilState(openSnackbarState);
 
-  const { exceptionHandler } = useException()
+  const { exceptionHandler } = useException();
 
   const { mutate } = useMutation(makeProject, {
     onSuccess: (data) => {
       router.push(`/upload/${data}`);
     },
     onError: (error: AxiosError) => {
-      exceptionHandler(error.response?.data as ExceptionType, 'domainPrefix')
+      exceptionHandler(error.response?.data as ExceptionType, "domainPrefix");
       setValue("domainPrefix", "");
     },
   });
@@ -121,7 +121,8 @@ export default function SettingForm() {
               },
               pattern: {
                 value: /^[a-zA-Z0-9-]+$/,
-                message: "도메인 접두사는 영어, 숫자, 하이픈으로만 이루어져야 합니다.",
+                message:
+                  "도메인 접두사는 영어, 숫자, 하이픈으로만 이루어져야 합니다.",
               },
             })}
           ></input>
