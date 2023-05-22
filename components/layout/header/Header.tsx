@@ -12,17 +12,17 @@ function Header({ title }: { title?: string }) {
       <header className="z-50 dark:bg-leeBlack bg-lightBackground p-[5px] h-[54px] flex items-center gap-2 fixed top-0 w-full">
         <Link
           href="/"
-          className="gray-button text-[2rem] font-bold h-full tracking-tight w-[144.48px]"
+          className="gray-button text-[20px] font-bold h-full tracking-tight w-[144.48px]"
         >
           BSM Deploy
         </Link>
         <div
-          className="!w-[4.4rem] !h-[4.4rem] gray-button"
+          className="!w-[44px] !h-[44px] gray-button"
           onClick={() => setSettingModal(true)}
         >
-          <Settings className="dark:text-textLightGray !text-5xl" />
+          <Settings className="dark:text-textLightGray !text-[30px]" />
         </div>
-        <div className="dark:text-textLightGray text-center w-[calc(100%-198.48px)] text-[2rem] font-bold cursor-default">
+        <div className="dark:text-textLightGray text-center w-[calc(100%-198.48px)] text-[20px] font-bold cursor-default">
           {title}
         </div>
       </header>

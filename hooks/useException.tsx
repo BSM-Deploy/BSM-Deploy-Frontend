@@ -8,18 +8,20 @@ export default function useException() {
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
   const [openSnackbar, setOpenSnackbar] = useRecoilState(openSnackbarState);
 
-  const exceptionHandler = useCallback((error: ExceptionType, name?: string) => {
-    if(error.statusCode === 400){
-      setErrorMessage(`${name}: ${error.fields[name as string]}`)
-      setOpenSnackbar({...openSnackbar, open: true})
-    }
-    else{
-      setErrorMessage(error.message as string)
-      setOpenSnackbar({...openSnackbar, open: true})
-    }
-  }, [setErrorMessage, setOpenSnackbar, openSnackbar])
+  const exceptionHandler = useCallback(
+    (error: ExceptionType, name?: string) => {
+      if (error.statusCode === 400) {
+        setErrorMessage(`${name}: ${error.fields[name as string]}`);
+        setOpenSnackbar({ ...openSnackbar, open: true });
+      } else {
+        setErrorMessage(error.message as string);
+        setOpenSnackbar({ ...openSnackbar, open: true });
+      }
+    },
+    [setErrorMessage, setOpenSnackbar, openSnackbar]
+  );
 
   return {
     exceptionHandler,
-  }
-};
+  };
+}

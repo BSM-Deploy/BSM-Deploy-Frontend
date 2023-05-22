@@ -24,27 +24,27 @@ function ProjectItem({ data }: { data: ProjectType }) {
   };
   const { icon, tooltip } = projectType;
   return (
-    <div className="h-80 w-80 dark:bg-itemGray p-8 rounded-2xl border border-solid border-lightBack relative bg-textLightGray hover:bg-lightHover dark:hover:bg-darkHover duration-250">
-      <h1 className="m-0 break-words text-4xl dark:text-textLightGray font-bold">
+    <div className="h-[200px] w-[200px] dark:bg-itemGray p-8 rounded-2xl border border-solid border-lightBack relative bg-textLightGray hover:bg-lightHover dark:hover:bg-darkHover duration-250">
+      <h1 className="m-0 break-words text-[22.5px] dark:text-textLightGray font-bold">
         {data.name}
       </h1>
-      <span className="text-xl break-words text-textDarkGray">
+      <span className="text-[13px] break-words text-textDarkGray">
         {data.domainPrefix}.bssm.kro.kr
       </span>
       <Tooltip
         title={tooltip[data.projectType]}
         arrow
       >
-        <div className="bg-textDarkGray dark:bg-textLightGray rounded-full w-12 h-12 absolute bottom-8 inline-flex justify-center items-center left-8">
+        <div className="bg-textDarkGray dark:bg-textLightGray rounded-full w-[30px] h-[30px] absolute bottom-8 inline-flex justify-center items-center left-8">
           {icon[data.projectType]}
         </div>
       </Tooltip>
       <Tooltip title={data.isDeploy ? "배포됨" : "배포되지 않음"} arrow>
         <div className="absolute bottom-8 right-8">
           {data.isDeploy ? (
-            <MdCheck className="text-4xl dark:text-textLightGray text-textDarkGray" />
+            <MdCheck className="text-[22.5px] dark:text-textLightGray text-textDarkGray" />
           ) : (
-            <MdClear className="text-4xl dark:text-textLightGray text-textDarkGray" />
+            <MdClear className="text-[22.5px] dark:text-textLightGray text-textDarkGray" />
           )}
         </div>
       </Tooltip>

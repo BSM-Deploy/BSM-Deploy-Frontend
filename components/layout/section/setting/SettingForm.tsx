@@ -72,7 +72,7 @@ export default function SettingForm() {
         onSubmit={handleSubmit(onSubmit, onError)}
         className="main-container flex-col"
       >
-        <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
+        <div className="max-w-[500px] max-h-[90px] w-full h-full mb-[50px] relative flex items-center">
           <input
             type="text"
             id="input"
@@ -94,14 +94,14 @@ export default function SettingForm() {
           ></input>
           <label
             htmlFor="input"
-            className={`absolute duration-200 cursor-text left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle ${
+            className={`absolute duration-200 cursor-text text-[20px] left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle ${
               nameWatcher !== "" ? "validTextStyle" : ""
             }`}
           >
             프로젝트 이름
           </label>
         </div>
-        <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
+        <div className="max-w-[500px] max-h-[90px] w-full h-full mb-[50px] relative flex items-center">
           <input
             type="text"
             className={`setting-input peer focus:hover:shadow-none ${
@@ -128,14 +128,14 @@ export default function SettingForm() {
           ></input>
           <label
             htmlFor="input2"
-            className={`absolute duration-200 cursor-text left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle ${
+            className={`absolute duration-200 cursor-text text-[20px] left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle ${
               domainPrefixWatcher !== "" ? "validTextStyle " : ""
             }`}
           >
             도메인 접두사
           </label>
         </div>
-        <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
+        <div className="max-w-[500px] max-h-[90px] w-full h-full mb-[50px] relative flex items-center">
           <select
             id="select"
             {...register("projectType", {
@@ -155,7 +155,7 @@ export default function SettingForm() {
           <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 peer-focus:arrowStyle" />
           <label
             htmlFor="select"
-            className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 peer-focus:peer-valid:textStyle peer-focus:textStyle ${
+            className={`absolute text-[20px] duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 peer-focus:peer-valid:textStyle peer-focus:textStyle ${
               projectTypeWatcher !== "" &&
               "validTextStyle dark:!bg-darkGray bg-white"
             }`}

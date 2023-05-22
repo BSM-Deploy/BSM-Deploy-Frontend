@@ -71,7 +71,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
             />
             {isOpenMenu && (
               <ul
-                className={`absolute flex flex-col text-center top-[5rem] right-0 z-50 ${
+                className={`absolute flex flex-col text-center top-[5rem] text-[15px] right-0 z-50 ${
                   isView ? "animate-down" : "animate-up"
                 }`}
               >
@@ -154,7 +154,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
         <hr className="my-6 dark:border-white border-text" />
         <div className="flex flex-wrap">
           {data.isDeploy ? (
-            <div className="w-[50rem] h-[27rem] overflow-hidden">
+            <div className="w-[500px] h-[270px] overflow-hidden">
               <iframe
                 src={`https://${data?.domainPrefix}.bssm.kro.kr`}
                 width={1920}
@@ -179,28 +179,28 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
           )}
           <div className="p-12 flex flex-col gap-10 justify-center">
             <div className="gap-5 flex flex-col">
-              <h3 className="font-bold dark:text-textDarkGray">DOMAIN</h3>
+              <h3 className="font-bold text-[15px] dark:text-textDarkGray">DOMAIN</h3>
               {data.isDeploy ? (
                 <Link
                   href={`https://${data?.domainPrefix}.bssm.kro.kr`}
                   target="_blank"
                 >
                   <span
-                    className={"text-4xl"}
+                    className={"text-[22.5px]"}
                   >{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
                 </Link>
               ) : (
-                <span className="text-4xl cursor-not-allowed text-textDarkGray">{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
+                <span className="text-[22.5px] cursor-not-allowed text-textDarkGray">{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
               )}
             </div>
             <div className="gap-5 flex flex-col">
-              <h3 className="font-bold dark:text-textDarkGray">TYPE</h3>
-              <span className="text-4xl">{projectType[data.projectType]}</span>
+              <h3 className="font-bold text-[15px] dark:text-textDarkGray">TYPE</h3>
+              <span className="text-[22.5px]">{projectType[data.projectType]}</span>
             </div>
           </div>
         </div>
         {data?.projectType === "BUILT_NEXT_JS" && data.isDeploy && (
-          <div className="w-full rounded-xl bg-black text-textLightGray p-8 h-96 mt-6 overflow-auto whitespace-pre">
+          <div className="text-[15px] w-full rounded-xl bg-black text-textLightGray p-8 h-96 mt-6 overflow-auto whitespace-pre">
             {containerData}
           </div>
         )}

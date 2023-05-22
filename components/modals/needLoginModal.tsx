@@ -11,7 +11,7 @@ export default function NeedLoginModal() {
           href={
             "https://auth.bssm.kro.kr/oauth?clientId=347a7232&redirectURI=http://localhost:3000/oauth/bsm"
           }
-          className="text-3xl blue-button w-[17rem] h-[4rem]"
+          className="text-3xl blue-button w-[17rem] h-[5rem]"
         >
           로그인 하러가기
         </Link>

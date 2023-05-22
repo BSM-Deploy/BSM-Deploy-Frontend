@@ -25,12 +25,12 @@ function SidebarItems({
         isOpenDropdown && "[&>svg]:rotate-180"
       } rounded-lg ${
         isDropdownMenu ? "w-[calc(100%-1.5rem)]" : "w-full"
-      } h-[4.5rem] flex items-center gap-6 px-6 py-3 ${
+      } h-[45px] flex items-center gap-[15px] px-6 py-3 ${
         isDropdownMenu && "ml-6"
       } dark:hover:bg-darkHover hover:bg-lightBack duration-250`}
     >
       {profileImg ? (
-        <div className="w-[2.75rem] h-[2.75rem] relative rounded-full">
+        <div className="w-[27.5px] h-[27.5px] relative rounded-full">
           <Image
             src={profileImg}
             fill
@@ -39,11 +39,11 @@ function SidebarItems({
           />
         </div>
       ) : (
-        <span className="w-[2.75rem] h-[2.75rem] relative flex justify-center items-center">
+        <span className="w-[27.5px] h-[27.5px] relative flex justify-center items-center">
           {Icon}
         </span>
       )}
-      <span className="font-bold text-sidebarLightText dark:text-textDarkGray duration-250">
+      <span className="font-bold text-[15px] text-sidebarLightText dark:text-textDarkGray duration-250">
         {name}
       </span>
       {isDropdown && (
