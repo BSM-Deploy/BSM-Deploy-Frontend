@@ -27,8 +27,8 @@ function SettingModal() {
   };
   return (
     <Modal open={settingModal} onClose={() => setSettingModal(false)}>
-      <div className="w-[40rem] flex p-6 rounded-3xl flex-col bg-lightBackground dark:bg-modalBackground top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 absolute focus-visible:outline-none">
-        <h1 className="dark:text-textLightGray text-[2.5rem] font-bold text-center">
+      <div className="w-[400px] flex p-6 rounded-3xl flex-col bg-lightBackground dark:bg-modalBackground top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 absolute focus-visible:outline-none">
+        <h1 className="dark:text-textLightGray text-[25px] font-bold text-center">
           설정
         </h1>
         <button
@@ -38,21 +38,23 @@ function SettingModal() {
           <MdClear className="dark:text-textLightGray" size={44} />
         </button>
         <div>
-          <h3 className="text-[#606164] dark:text-textDarkGray text-[1.6rem] px-6 pt-8 pb-4 font-bold">
+          <h3 className="text-[#606164] dark:text-textDarkGray text-[16px] px-6 pt-8 pb-4 font-bold">
             모양
           </h3>
-          <div className="px-6 flex justify-between rounded-4xl bg-lighterGray dark:bg-modalBlack h-[46px] items-center hover:bg-lightHover dark:hover:bg-darkHover duration-200">
-            <span className="dark:text-textLightGray font-bold">다크 모드</span>
-            <div
-              className="w-[3.8rem] h-[2.2rem] rounded-full dark:bg-blue relative cursor-pointer bg-[#808080]"
-              onClick={() => {
-                if (mount) {
-                  changeTheme();
-                }
-              }}
-            >
+          <div
+            className="px-6 cursor-pointer flex justify-between rounded-4xl bg-lighterGray dark:bg-modalBlack h-[46px] items-center hover:bg-lightHover dark:hover:bg-darkHover duration-200"
+            onClick={() => {
+              if (mount) {
+                changeTheme();
+              }
+            }}
+          >
+            <span className="dark:text-textLightGray text-[16px] font-bold">
+              다크 모드
+            </span>
+            <div className="w-[38px] h-[22px] rounded-full dark:bg-blue relative bg-[#808080]">
               <div
-                className={`w-[1.6rem] h-[1.6rem] bg-white rounded-full absolute left-[0.3rem] top-[0.3rem] duration-[.25s] ${
+                className={`w-[16px] h-[16px] bg-white rounded-full absolute left-[3px] top-[3px] duration-[.25s] ${
                   isDarkMode ? "translate-x-full" : ""
                 }`}
               />

@@ -14,7 +14,7 @@ function ProjectSection() {
       {projectQuery.isSuccess &&
         (projectQuery.data?.size !== 0 ? (
           <div className="flex flex-wrap gap-12">
-            <Link href="/setting" className="make-project-button absolute top-16 right-16">
+            <Link href="/setting" className="make-project-button absolute top-16 right-16 text-[15px]">
               프로젝트 생성하기
             </Link>
             {projectQuery.data?.list.map((project: ProjectType) => (

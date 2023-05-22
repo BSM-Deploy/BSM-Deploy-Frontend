@@ -8,9 +8,9 @@ module.exports = {
   ],
   theme: {
     screens: {
-      'tablet': '640px',
-      'laptop': '1024px',
-      'desktop': '1240px',
+      tablet: "640px",
+      laptop: "1024px",
+      desktop: "1240px",
     },
     extend: {
       keyframes: {
@@ -35,7 +35,7 @@ module.exports = {
       },
 
       colors: {
-        leeBlack: '#1a1a1a',
+        leeBlack: "#1a1a1a",
         blue: "#61CDFE",
         accentBlue: "#1188BB",
         red: "#E88676",
@@ -65,6 +65,7 @@ module.exports = {
         in: "0 0 0 0.2rem #61CDFE inset",
         inWhite: "0 0 0 0.2rem #ffffff inset",
         inBlack: "0 0 0 0.2rem #000000 inset",
+        main: ".1rem .1rem .5rem rgba(0,0,0,.15)",
       },
       transitionDuration: {
         250: "250ms",

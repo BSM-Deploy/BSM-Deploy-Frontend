@@ -7,7 +7,7 @@ export default function CancelButton({ router }: { router: NextRouter }) {
         type="button"
         onClick={() => router.back()}
         value="취소"
-        className="hover:bg-lighterGray dark:hover:bg-darkHover duration-200 w-[10rem] h-[6rem] rounded-4xl mr-10 bg-deepGrayButton text-white"
+        className="hover:bg-lighterGray dark:hover:bg-darkHover duration-200 w-[100px] h-[60px] text-[20px] rounded-[20px] mr-10 bg-deepGrayButton text-white"
       />
     </>
   );
