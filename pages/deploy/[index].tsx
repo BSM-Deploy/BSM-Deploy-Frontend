@@ -1,11 +1,11 @@
-import Header from "@/components/layout/header/Header";
 import DeploySection from "@/components/layout/section/deploy/deploy";
-import Sidebar from "@/components/layout/sidebar/Sidebar";
 import NeedLoginModal from "@/components/modals/needLoginModal";
 import ErrorSnackbar from "@/components/snackbar/errorSnackbar";
+import { headerTitleState } from "@/store/atoms/layout/headerTitle";
 import { userIsLogin } from "@/store/atoms/user/user";
 import { NextSeo, NextSeoProps } from "next-seo";
-import { useRecoilValue } from "recoil";
+import { useEffect } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function Deploy() {
   const login = useRecoilValue(userIsLogin);
@@ -14,12 +14,15 @@ export default function Deploy() {
     description: "프로젝트를 배포하는 페이지입니다.",
   };
 
+  const setTitle = useSetRecoilState(headerTitleState);
+
+  useEffect(() => {
+    setTitle('프로젝트 배포하기');
+  }, []);
   return (
     <>
       {!login && <NeedLoginModal />}
       <NextSeo {...seoConfig} />
-      <Header />
-      <Sidebar />
       <DeploySection />
       <ErrorSnackbar />
     </>
