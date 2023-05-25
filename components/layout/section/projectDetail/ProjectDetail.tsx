@@ -60,7 +60,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
 
   return (
     <>
-      <div className="main-section py-28 px-60 flex gap-10 flex-col h-full overflow-y-auto">
+      <div className="main-section py-28 px-60 mobile:p-10 mobile:pb-20 flex gap-10 flex-col h-full overflow-y-auto mobile:break-all">
         <div className="flex justify-between items-center relative">
           <h1 className="text-6xl font-bold">{data?.name}</h1>
           <div ref={ref}>
@@ -163,7 +163,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
               />
             </div>
           ) : (
-            <div className="relative">
+            <div className="relative overflow-hidden">
               <Skeleton variant="rounded" className="bg-lighterGray">
                 <iframe
                   src={`https://${data?.domainPrefix}.bssm.kro.kr`}

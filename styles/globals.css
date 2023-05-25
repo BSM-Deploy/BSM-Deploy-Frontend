@@ -35,12 +35,20 @@
 }
 
 @layer components {
+  .mobile-setting-button{
+    @apply absolute right-0
+  }
+
+  .mobile-layout{
+    @apply w-full h-full left-0
+  }
+
   .gray-button {
     @apply active:scale-90 dark:hover:bg-darkHover hover:bg-lightHover duration-250 rounded-xl dark:text-textLightGray cursor-pointer inline-flex items-center justify-center;
   }
 
   .main-section {
-    @apply rounded-tl-2xl absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray w-[calc(100vw-250px)] min-h-[calc(100vh-54px)] dark:text-white shadow-main;
+    @apply mobile:bottom-[56px] rounded-tl-2xl mobile:rounded-none absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray w-[calc(100vw-250px)] min-h-[calc(100vh-54px)] mobile:mobile-layout dark:text-white shadow-main;
   }
 
   .make-project-button {
@@ -56,7 +64,7 @@
   }
 
   .main-container {
-    @apply rounded-tl-2xl absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray flex items-center justify-center w-[calc(100vw-250px)] h-[calc(100vh-54px)] font-bold text-4xl dark:text-white;
+    @apply mobile:bottom-[56px] rounded-tl-2xl mobile:rounded-none absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray flex items-center justify-center w-[calc(100vw-250px)] h-[calc(100vh-54px)] mobile:mobile-layout font-bold text-4xl dark:text-white;
   }
 
   .blue-button{

@@ -5,6 +5,8 @@ import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Refresh } from "@/components/etc/refresh";
 import Loading from "@/components/etc/Loading";
+import Nav from "@/components/etc/nav";
+import { useMediaQuery } from "@mui/material";
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
@@ -14,6 +16,8 @@ export default function App({ Component, pageProps }: AppProps) {
       document.documentElement.classList.add("dark");
     }
   }, []);
+  
+  const matches = useMediaQuery("(max-width: 480px)")
 
   return (
     <RecoilRoot>
@@ -21,6 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
         <Loading />
         <Refresh />
+        {matches && <Nav />}
       </QueryClientProvider>
     </RecoilRoot>
   );
