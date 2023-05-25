@@ -6,6 +6,8 @@ import { MdClear, MdCheck } from "react-icons/md";
 import { ProjectType } from "@/types/project";
 import { Tooltip } from "@mui/material";
 import React from "react";
+import SpringBoot from "@/components/icons/Springboot";
+
 
 function ProjectItem({ data }: { data: ProjectType }) {
   const projectType = {
@@ -14,12 +16,14 @@ function ProjectItem({ data }: { data: ProjectType }) {
       MULTIPLE_FILE: <MultipleHtml />,
       BUILT_REACT_JS: <ReactIcon />,
       BUILT_NEXT_JS: <NextIcon />,
+      BUILT_SPRING_JAR: <SpringBoot />,
     },
     tooltip: {
       SINGLE_HTML: "단일 HTML",
       MULTIPLE_FILE: "다중 파일",
       BUILT_REACT_JS: "React.js",
       BUILT_NEXT_JS: "Next.js",
+      BUILT_SPRING_JAR: "Spring boot",
     },
   };
   const { icon, tooltip } = projectType;

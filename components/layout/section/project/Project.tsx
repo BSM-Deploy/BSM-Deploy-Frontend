@@ -13,7 +13,7 @@ function ProjectSection() {
     <div className="main-section p-52 overflow-y-auto h-full">
       {projectQuery.isSuccess &&
         (projectQuery.data?.size !== 0 ? (
-          <div className="flex flex-wrap gap-12">
+          <div className="flex flex-wrap gap-12 mobile:justify-center">
             <Link href="/setting" className="make-project-button absolute top-16 right-16 text-[15px]">
               프로젝트 생성하기
             </Link>

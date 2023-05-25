@@ -7,6 +7,7 @@
     font-family: 'Noto Sans KR';
     src: url('../public/font/NotoSansKR-Regular.otf');
   }
+  
   html {
     font-size: 10px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -35,12 +36,20 @@
 }
 
 @layer components {
+  .mobile-setting-button{
+    @apply absolute right-0
+  }
+
+  .mobile-layout{
+    @apply w-full h-full left-0
+  }
+
   .gray-button {
     @apply active:scale-90 dark:hover:bg-darkHover hover:bg-lightHover duration-250 rounded-xl dark:text-textLightGray cursor-pointer inline-flex items-center justify-center;
   }
 
   .main-section {
-    @apply rounded-tl-2xl absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray w-[calc(100vw-250px)] min-h-[calc(100vh-54px)] dark:text-white shadow-main;
+    @apply mobile:bottom-[56px] rounded-tl-2xl mobile:rounded-none absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray w-[calc(100vw-250px)] min-h-[calc(100vh-54px)] mobile:mobile-layout dark:text-white shadow-main;
   }
 
   .make-project-button {
@@ -48,7 +57,7 @@
   }
 
   .setting-input {
-    @apply text-[20px] pl-10 pr-10 bg-lightBlock text-black w-[100%] h-[80%] rounded-4xl font-[10px] dark:bg-lightGray dark:text-white outline-none focus:focusInteraction hover:shadow-4xl 
+    @apply text-[20px] pl-10 pr-10 bg-lightBlock text-black w-full h-full rounded-4xl font-[10px] dark:bg-lightGray dark:text-white outline-none focus:focusInteraction hover:shadow-4xl 
   }
 
   .setting-input-valid{
@@ -56,7 +65,7 @@
   }
 
   .main-container {
-    @apply rounded-tl-2xl absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray flex items-center justify-center w-[calc(100vw-250px)] h-[calc(100vh-54px)] font-bold text-4xl dark:text-white;
+    @apply mobile:bottom-[56px] rounded-tl-2xl mobile:rounded-none absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray flex items-center justify-center w-[calc(100vw-250px)] h-[calc(100vh-54px)] mobile:mobile-layout font-bold text-4xl dark:text-white;
   }
 
   .blue-button{
@@ -67,7 +76,7 @@
     -webkit-appearance: none; /* 크롬 화살표 없애기 */
     -moz-appearance: none; /* 파이어폭스 화살표 없애기 */
     appearance: none; /* 화살표 없애기 */
-    @apply focus:outline-blue focus:hover:!shadow-none duration-200 focus:dark:bg-darkGray outline-none focus:bg-lightBack hover:shadow-4xl dark:bg-lightGray dark:text-white px-10 bg-lightBlock text-black w-full h-[80%] rounded-4xl text-4xl;
+    @apply focus:outline-blue focus:hover:!shadow-none duration-200 focus:dark:bg-darkGray outline-none focus:bg-lightBack hover:shadow-4xl dark:bg-lightGray dark:text-white px-10 bg-lightBlock text-black w-full h-full rounded-4xl text-4xl;
   }
 
   .focusInteraction {
@@ -92,5 +101,9 @@
 
   .dragStyle{
     @apply !border-blue duration-200
+  }
+
+  .terminal-font{
+    font-family: 'Courier New', Courier, monospace;
   }
 }

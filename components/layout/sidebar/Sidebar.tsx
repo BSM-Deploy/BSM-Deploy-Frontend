@@ -13,10 +13,12 @@ import { logout } from "@/utils/api/auth";
 import useException from "@/hooks/useException";
 import { AxiosError } from "axios";
 import { ExceptionType } from "@/types/exception";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { userIsLogin } from "@/store/atoms/user/user";
+import { openSidebarState } from "@/store/atoms/modals/openSideBar";
 
 function Sidebar() {
+  const openSidebar = useRecoilValue(openSidebarState)
   const [login, setLogin] = useRecoilState(userIsLogin)
   const [mount, setMount] = useState(false);
   useEffect(() => {
@@ -37,7 +39,7 @@ function Sidebar() {
     onSuccess: () => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
-      window.location.reload();
+      window.location.href = "/";
     },
     onError: (err: AxiosError) => {
       exceptionHandler(err.response?.data as ExceptionType)
@@ -57,7 +59,7 @@ function Sidebar() {
   };
 
   return (
-    <aside className="fixed top-[54px] z-30 w-[250px] inline-block h-full min-h-screen bg-lightBackground dark:bg-leeBlack p-[0.5rem]">
+    <aside className={` fixed top-[54px] z-30 w-[250px] inline-block h-full min-h-screen bg-lightBackground dark:bg-leeBlack p-[0.5rem]`}>
       {userQuery.isSuccess ? (
         <>
           <div onClick={toggleMenu}>
@@ -106,7 +108,7 @@ function Sidebar() {
           </div>
         </>
       ) : (
-        <a href="https://auth.bssm.kro.kr/oauth?clientId=347a7232&redirectURI=http://localhost:3000/oauth/bsm">
+        <a href={process.env.BSM_OAUTH_URI}>
           <SidebarItems
             name="로그인"
             Icon={

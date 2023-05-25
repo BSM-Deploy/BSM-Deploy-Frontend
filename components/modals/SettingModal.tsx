@@ -1,8 +1,8 @@
-import { settingModalState } from "@/store/atoms/modals/settingModal";
 import { Modal } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { MdClear } from "react-icons/md";
+import { settingModalState } from "@/store/atoms/modals/settingModal";
 
 function SettingModal() {
   const [settingModal, setSettingModal] = useRecoilState(settingModalState);
@@ -27,7 +27,7 @@ function SettingModal() {
   };
   return (
     <Modal open={settingModal} onClose={() => setSettingModal(false)}>
-      <div className="w-[400px] flex p-6 rounded-3xl flex-col bg-lightBackground dark:bg-modalBackground top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 absolute focus-visible:outline-none">
+      <div className="mobile:w-[80%] w-[400px] flex p-6 rounded-3xl flex-col bg-lightBackground dark:bg-modalBackground top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 absolute focus-visible:outline-none">
         <h1 className="dark:text-textLightGray text-[25px] font-bold text-center">
           설정
         </h1>
