@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Refresh } from "@/components/etc/refresh";
 import Loading from "@/components/etc/Loading";
 import Layout from "@/components/layout/layout";
-import { useMediaQuery } from "@mui/material";
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
@@ -16,8 +15,6 @@ export default function App({ Component, pageProps }: AppProps) {
       document.documentElement.classList.add("dark");
     }
   }, []);
-  
-  const matches = useMediaQuery("(max-width: 480px)")
 
   return (
     <RecoilRoot>

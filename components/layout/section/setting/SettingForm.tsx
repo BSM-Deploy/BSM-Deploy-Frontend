@@ -72,7 +72,7 @@ export default function SettingForm() {
         onSubmit={handleSubmit(onSubmit, onError)}
         className="main-container flex-col"
       >
-        <div className="max-w-[500px] max-h-[90px] w-full h-full mb-[50px] relative flex items-center">
+        <div className="max-w-[500px] max-h-[80px] w-full h-full mb-[50px] relative flex items-center">
           <input
             type="text"
             id="input"
@@ -101,7 +101,7 @@ export default function SettingForm() {
             프로젝트 이름
           </label>
         </div>
-        <div className="max-w-[500px] max-h-[90px] w-full h-full mb-[50px] relative flex items-center">
+        <div className="max-w-[500px] max-h-[80px] w-full h-full mb-[50px] relative flex items-center">
           <input
             type="text"
             className={`setting-input peer focus:hover:shadow-none ${
@@ -135,7 +135,7 @@ export default function SettingForm() {
             도메인 접두사
           </label>
         </div>
-        <div className="max-w-[500px] max-h-[90px] w-full h-full mb-[50px] relative flex items-center">
+        <div className="max-w-[500px] max-h-[80px] w-full h-full mb-[50px] relative flex items-center">
           <select
             id="select"
             {...register("projectType", {
@@ -151,6 +151,7 @@ export default function SettingForm() {
             <option value={"MULTIPLE_FILE"}>Multiple File</option>
             <option value={"BUILT_REACT_JS"}>Built React.js</option>
             <option value={"BUILT_NEXT_JS"}>Built Next.js</option>
+            <option value={"BUILT_SPRING_JAR"}>Built Spring boot</option>
           </select>
           <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 peer-focus:arrowStyle" />
           <label

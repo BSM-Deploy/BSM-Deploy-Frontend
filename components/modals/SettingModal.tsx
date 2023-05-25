@@ -1,8 +1,8 @@
-import { settingModalState } from "@/store/atoms/modals/settingModal";
 import { Modal } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { MdClear } from "react-icons/md";
+import { settingModalState } from "@/store/atoms/modals/settingModal";
 
 function SettingModal() {
   const [settingModal, setSettingModal] = useRecoilState(settingModalState);

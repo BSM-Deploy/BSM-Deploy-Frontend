@@ -3,9 +3,9 @@ import React from "react";
 import { Settings } from "@mui/icons-material";
 import { settingModalState } from "@/store/atoms/modals/settingModal";
 import { useRecoilState } from "recoil";
-import SettingModal from "@/components/modals/SettingModal";
 import MenuIcon from "@mui/icons-material/Menu";
 import { openSidebarState } from "@/store/atoms/modals/openSideBar";
+import SettingModal from "@/components/modals/SettingModal";
 
 function Header({ title }: { title?: string }) {
   const [settingModal, setSettingModal] = useRecoilState(settingModalState);

@@ -18,12 +18,14 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
   const [projectControlModal, setProjectControlModal] = useRecoilState(
     projectControlModalState
   );
+
+  const whiteList = ["BUILT_NEXT_JS", "BUILT_SPRING_JAR"]
+
   const { isLoading: containerIsLoading, data: containerData } = useQuery<
     string,
     Error
   >("container", () => getContainerLog(String(router.query.projectId)), {
-    enabled:
-      router.isReady && data?.projectType === "BUILT_NEXT_JS" && data.isDeploy,
+    enabled: (router.isReady && data?.isDeploy && Boolean(whiteList.indexOf(data?.projectType))),
     refetchInterval: 3000,
   });
   const ref = useRef(null);
@@ -54,9 +56,8 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
     MULTIPLE_FILE: "다중 파일",
     BUILT_REACT_JS: "React.js",
     BUILT_NEXT_JS: "Next.js",
+    BUILT_SPRING_JAR: "Spring boot",
   };
-
-  // containerIsLoading ? setLoading(true) : setLoading(false);
 
   return (
     <>
@@ -179,7 +180,9 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
           )}
           <div className="p-12 flex flex-col gap-10 justify-center">
             <div className="gap-5 flex flex-col">
-              <h3 className="font-bold text-[15px] dark:text-textDarkGray">DOMAIN</h3>
+              <h3 className="font-bold text-[15px] dark:text-textDarkGray">
+                DOMAIN
+              </h3>
               {data.isDeploy ? (
                 <Link
                   href={`https://${data?.domainPrefix}.bssm.kro.kr`}
@@ -194,13 +197,22 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
               )}
             </div>
             <div className="gap-5 flex flex-col">
-              <h3 className="font-bold text-[15px] dark:text-textDarkGray">TYPE</h3>
-              <span className="text-[22.5px]">{projectType[data.projectType]}</span>
+              <h3 className="font-bold text-[15px] dark:text-textDarkGray">
+                TYPE
+              </h3>
+              <span className="text-[22.5px]">
+                {projectType[data.projectType]}
+              </span>
             </div>
           </div>
         </div>
-        {data?.projectType === "BUILT_NEXT_JS" && data.isDeploy && (
+        {data?.projectType === "BUILT_NEXT_JS" && (
           <div className="text-[15px] w-full rounded-xl bg-black text-textLightGray p-8 h-96 mt-6 overflow-auto whitespace-pre">
+            {containerData}
+          </div>
+        )}
+        {data?.projectType === "BUILT_SPRING_JAR" && (
+          <div className="terminal-font text-[15px] w-full rounded-xl bg-black text-textLightGray p-8 h-96 mt-6 overflow-auto whitespace-pre">
             {containerData}
           </div>
         )}

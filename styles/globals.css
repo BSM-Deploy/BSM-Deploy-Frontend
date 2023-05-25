@@ -7,6 +7,7 @@
     font-family: 'Noto Sans KR';
     src: url('../public/font/NotoSansKR-Regular.otf');
   }
+  
   html {
     font-size: 10px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -56,7 +57,7 @@
   }
 
   .setting-input {
-    @apply text-[20px] pl-10 pr-10 bg-lightBlock text-black w-[100%] h-[80%] rounded-4xl font-[10px] dark:bg-lightGray dark:text-white outline-none focus:focusInteraction hover:shadow-4xl 
+    @apply text-[20px] pl-10 pr-10 bg-lightBlock text-black w-full h-full rounded-4xl font-[10px] dark:bg-lightGray dark:text-white outline-none focus:focusInteraction hover:shadow-4xl 
   }
 
   .setting-input-valid{
@@ -75,7 +76,7 @@
     -webkit-appearance: none; /* 크롬 화살표 없애기 */
     -moz-appearance: none; /* 파이어폭스 화살표 없애기 */
     appearance: none; /* 화살표 없애기 */
-    @apply focus:outline-blue focus:hover:!shadow-none duration-200 focus:dark:bg-darkGray outline-none focus:bg-lightBack hover:shadow-4xl dark:bg-lightGray dark:text-white px-10 bg-lightBlock text-black w-full h-[80%] rounded-4xl text-4xl;
+    @apply focus:outline-blue focus:hover:!shadow-none duration-200 focus:dark:bg-darkGray outline-none focus:bg-lightBack hover:shadow-4xl dark:bg-lightGray dark:text-white px-10 bg-lightBlock text-black w-full h-full rounded-4xl text-4xl;
   }
 
   .focusInteraction {
@@ -100,5 +101,9 @@
 
   .dragStyle{
     @apply !border-blue duration-200
+  }
+
+  .terminal-font{
+    font-family: 'Courier New', Courier, monospace;
   }
 }
