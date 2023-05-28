@@ -15,10 +15,11 @@ export interface ProjectType {
     | "BUILT_NEXT_JS"
     | "BUILT_SPRING_JAR";
   dataSize: number;
+  envVar: string;
 }
 
 export interface ProjectControlModalType {
   id: number;
   modalType: "CANCEL_DEPLOY" | "DELETE_PROJECT" | "DEPLOY_PROJECT";
-  isOpen: boolean
+  isOpen: boolean;
 }
