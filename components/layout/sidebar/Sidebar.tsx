@@ -18,9 +18,10 @@ import { userIsLogin } from "@/store/atoms/user/user";
 import { openSidebarState } from "@/store/atoms/modals/openSideBar";
 
 function Sidebar() {
-  const openSidebar = useRecoilValue(openSidebarState)
-  const [login, setLogin] = useRecoilState(userIsLogin)
+  const openSidebar = useRecoilValue(openSidebarState);
+  const [login, setLogin] = useRecoilState(userIsLogin);
   const [mount, setMount] = useState(false);
+
   useEffect(() => {
     setMount(true);
     return () => setMount(false);
@@ -28,8 +29,8 @@ function Sidebar() {
   const userQuery = useQuery("user", () => getUserInfo(), {
     enabled: mount && localStorage.accessToken !== undefined,
     onSuccess: () => {
-      setLogin(true)
-    }
+      setLogin(true);
+    },
   });
   const [userDropdown, setUserDropdown] = useState(false);
   const [isView, setIsView] = useState(false);
@@ -42,8 +43,8 @@ function Sidebar() {
       window.location.href = "/";
     },
     onError: (err: AxiosError) => {
-      exceptionHandler(err.response?.data as ExceptionType)
-    }
+      exceptionHandler(err.response?.data as ExceptionType);
+    },
   });
 
   const toggleMenu = () => {
@@ -59,7 +60,11 @@ function Sidebar() {
   };
 
   return (
-    <aside className={` fixed top-[54px] z-30 w-[250px] inline-block h-full min-h-screen bg-lightBackground dark:bg-leeBlack p-[0.5rem]`}>
+    <aside
+      className={`mobile:translate-x-[-100%] fixed top-[54px] z-30 w-[250px] inline-block h-full min-h-screen bg-lightBackground dark:bg-leeBlack p-[0.5rem] ${
+        openSidebar && "!translate-x-[0%]"
+      } duration-300`}
+    >
       {userQuery.isSuccess ? (
         <>
           <div onClick={toggleMenu}>

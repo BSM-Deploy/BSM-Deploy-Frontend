@@ -10,9 +10,12 @@ import SettingModal from "@/components/modals/SettingModal";
 function Header({ title }: { title?: string }) {
   const [settingModal, setSettingModal] = useRecoilState(settingModalState);
   const [openSidebar, setOpenSidebar] = useRecoilState(openSidebarState);
+
   return (
     <>
-      <header className="z-50 dark:bg-leeBlack bg-lightBackground p-[5px] mobile:relative h-[54px] flex items-center gap-2 fixed top-0 w-full">
+      <header
+        className="z-50 dark:bg-leeBlack bg-lightBackground p-[5px] mobile:relative h-[54px] flex items-center gap-2 fixed top-0 w-full"
+      >
         <Link
           href="/"
           className="mobile:hidden gray-button text-[20px] font-bold h-full tracking-tight w-[144.48px]"
