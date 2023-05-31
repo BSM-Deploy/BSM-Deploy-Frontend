@@ -43,13 +43,13 @@ function EnvSection() {
 
   return (
     <div className="main-container flex-col gap-5">
-      {data?.envVar && (
+      {data?.envVar !== undefined && (
         <Editor
           height="80%"
           width="80%"
           theme={isDarkMode ? "vs-dark" : "light"}
           onMount={handleEditorDidMount}
-          defaultValue={data?.envVar}
+          defaultValue={data.envVar ?? ""}
           options={{ fontSize: 16 }}
         />
       )}
