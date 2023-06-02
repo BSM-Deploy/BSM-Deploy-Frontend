@@ -10,10 +10,8 @@ import { useRecoilState } from "recoil";
 import { useOnClickOutside } from "usehooks-ts";
 import ProjectControlModal from "@/components/modals/ProjectControlModal";
 import { projectControlModalState } from "@/store/atoms/modals/projectControlModal";
-import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 
 function ProjectDetailSection({ data }: { data: ProjectType }) {
-  console.log(data)
   const router = useRouter();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isView, setIsView] = useState(false);
@@ -29,9 +27,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
     Error
   >("container", () => getContainerLog(String(router.query.projectId)), {
     enabled:
-      router.isReady &&
-      data?.isDeploy &&
-      Boolean(whiteList.indexOf(data?.projectType)),
+      router.isReady && data?.isDeploy && whiteList.includes(data.projectType),
     refetchInterval: 3000,
   });
   const ref = useRef(null);
@@ -228,22 +224,17 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
             </div>
           </div>
         </div>
-        {/* {data?.projectType === "BUILT_NEXT_JS" && (
-          <div className="text-[15px] w-full rounded-xl bg-black text-textLightGray p-8 h-96 mt-6 overflow-auto whitespace-pre">
-            {containerData}
-          </div>
-        )} */}
-        {Boolean(whiteList.indexOf(data.projectType)) && (
-          <div className="relative w-full h-96 mt-6">
-            <div className="terminal-font text-[15px] rounded-xl bg-black text-textLightGray p-8 w-full h-full overflow-auto whitespace-pre">
+        {whiteList.includes(data.projectType) && (
+          <div className="relative w-full h-96 mt-6 bg-black rounded-xl">
+            <div className="terminal-font text-[15px] text-textLightGray p-8 w-full h-full overflow-auto whitespace-pre">
               {containerData}
             </div>
-            <HiOutlineViewfinderCircle
-              color="white"
-              size={30}
-              className="absolute bottom-8 right-12 z-50"
-              onClick={() => router.push(`/project/${router.query.projectId}/log`)}
-            />
+            <Link
+              href={`/project/${data.id}/log`}
+              className="right-0 absolute cursor-pointer"
+            >
+              전체 화면으로 보기
+            </Link>
           </div>
         )}
       </div>
