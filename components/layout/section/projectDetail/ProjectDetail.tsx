@@ -110,6 +110,14 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
                     >
                       배포 취소하기
                     </li>
+                    {whiteList.includes(data.projectType) && (
+                      <Link
+                        href={`/project/${data.id}/env`}
+                        className="rounded-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button"
+                      >
+                        환경 변수 추가하기
+                      </Link>
+                    )}
                     <li
                       className="rounded-b-xl rounded-t-none cursor-pointer !bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button"
                       onClick={() => {
@@ -139,6 +147,14 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
                     >
                       배포하기
                     </li>
+                    {whiteList.includes(data.projectType) && (
+                      <Link
+                        href={`/project/${data.id}/env`}
+                        className="rounded-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button"
+                      >
+                        환경 변수 추가하기
+                      </Link>
+                    )}
                     <li
                       className="rounded-b-xl rounded-t-none cursor-pointer !bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button"
                       onClick={() => {

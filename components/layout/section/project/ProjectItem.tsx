@@ -8,8 +8,6 @@ import { Tooltip } from "@mui/material";
 import React from "react";
 import SpringBoot from "@/components/icons/SpringBoot";
 
-
-
 function ProjectItem({ data }: { data: ProjectType }) {
   const projectType = {
     icon: {
@@ -36,10 +34,7 @@ function ProjectItem({ data }: { data: ProjectType }) {
       <span className="text-[13px] break-words text-textDarkGray">
         {data.domainPrefix}.bssm.kro.kr
       </span>
-      <Tooltip
-        title={tooltip[data.projectType]}
-        arrow
-      >
+      <Tooltip title={tooltip[data.projectType]} arrow>
         <div className="bg-textDarkGray dark:bg-textLightGray rounded-full w-[30px] h-[30px] absolute bottom-8 inline-flex justify-center items-center left-8">
           {icon[data.projectType]}
         </div>

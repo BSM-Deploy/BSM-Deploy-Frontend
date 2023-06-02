@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { MdClear } from "react-icons/md";
 import { settingModalState } from "@/store/atoms/modals/settingModal";
+import { isDarkModeState } from "@/store/atoms/layout/isDarkMode";
 
 function SettingModal() {
   const [settingModal, setSettingModal] = useRecoilState(settingModalState);
   const [mount, setMount] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useRecoilState(isDarkModeState);
   useEffect(() => {
     setMount(true);
     setIsDarkMode(localStorage.theme === "dark");
