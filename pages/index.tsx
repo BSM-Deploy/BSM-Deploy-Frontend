@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     setTitle("");
-  }, []);
+  }, [setTitle]);
 
   return (
     <>

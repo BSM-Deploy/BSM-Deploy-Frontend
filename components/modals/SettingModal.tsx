@@ -27,7 +27,7 @@ function SettingModal() {
   };
   return (
     <Modal open={settingModal} onClose={() => setSettingModal(false)}>
-      <div className="mobile:w-[80%] w-[400px] flex p-6 rounded-3xl flex-col bg-lightBackground dark:bg-modalBackground top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 absolute focus-visible:outline-none">
+      <div className="mobile:w-[90%] w-[400px] flex p-6 rounded-3xl flex-col bg-lightBackground dark:bg-modalBackground top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 absolute focus-visible:outline-none">
         <h1 className="dark:text-textLightGray text-[25px] font-bold text-center">
           설정
         </h1>

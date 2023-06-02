@@ -23,18 +23,18 @@ function Header({ title }: { title?: string }) {
           BSM Deploy
         </Link>
         <div
-          className="laptop:hidden desktop:hidden tablet:hidden !w-[44px] !h-[44px] gray-button"
+          className="mobile:absolute mobile:left-[5px] laptop:hidden desktop:hidden tablet:hidden !w-[44px] !h-[44px] gray-button"
           onClick={() => setOpenSidebar((prev) => !prev)}
         >
           <MenuIcon className="dark:text-textLightGray !text-[30px]" />
         </div>
         <div
-          className="mobile:mobile-setting-button !w-[44px] !h-[44px] gray-button"
+          className="mobile:absolute mobile:right-[5px] !w-[44px] !h-[44px] gray-button"
           onClick={() => setSettingModal(true)}
         >
           <Settings className="dark:text-textLightGray !text-[30px]" />
         </div>
-        <div className="dark:text-textLightGray text-center w-[calc(100%-198.48px)] text-[20px] font-bold cursor-default">
+        <div className="dark:text-textLightGray text-center w-[calc(100%-198.48px)] mobile:w-full text-[20px] font-bold cursor-default">
           {title}
         </div>
       </header>

@@ -16,7 +16,7 @@ function Project() {
 
   useEffect(() => {
     setTitle("내 프로젝트");
-  }, []);
+  }, [setTitle]);
 
   return (
     <>

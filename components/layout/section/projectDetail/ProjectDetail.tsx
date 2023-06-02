@@ -1,6 +1,6 @@
 import { ProjectType } from "@/types/project";
 import { getContainerLog } from "@/utils/api/container";
-import { Skeleton } from "@mui/material";
+import { Skeleton, useMediaQuery } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
@@ -10,22 +10,28 @@ import { useRecoilState } from "recoil";
 import { useOnClickOutside } from "usehooks-ts";
 import ProjectControlModal from "@/components/modals/ProjectControlModal";
 import { projectControlModalState } from "@/store/atoms/modals/projectControlModal";
+import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 
 function ProjectDetailSection({ data }: { data: ProjectType }) {
+  console.log(data)
   const router = useRouter();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isView, setIsView] = useState(false);
   const [projectControlModal, setProjectControlModal] = useRecoilState(
     projectControlModalState
   );
+  const matches = useMediaQuery("(max-width: 480px)");
 
-  const whiteList = ["BUILT_NEXT_JS", "BUILT_SPRING_JAR"]
+  const whiteList = ["BUILT_NEXT_JS", "BUILT_SPRING_JAR"];
 
   const { isLoading: containerIsLoading, data: containerData } = useQuery<
     string,
     Error
   >("container", () => getContainerLog(String(router.query.projectId)), {
-    enabled: (router.isReady && data?.isDeploy && Boolean(whiteList.indexOf(data?.projectType))),
+    enabled:
+      router.isReady &&
+      data?.isDeploy &&
+      Boolean(whiteList.indexOf(data?.projectType)),
     refetchInterval: 3000,
   });
   const ref = useRef(null);
@@ -61,13 +67,13 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
 
   return (
     <>
-      <div className="main-section py-28 px-60 mobile:p-10 mobile:pb-20 flex gap-10 flex-col h-full overflow-y-auto mobile:break-all">
+      <div className="main-section py-28 px-60 mobile:p-10 mobile:pb-20 flex gap-10 mobile:gap-0 flex-col h-full overflow-y-auto mobile:break-all">
         <div className="flex justify-between items-center relative">
-          <h1 className="text-6xl font-bold">{data?.name}</h1>
+          <h1 className="text-6xl font-bold mobile:text-4xl">{data?.name}</h1>
           <div ref={ref}>
             <BiDotsVerticalRounded
-              size={40}
-              className="cursor-pointer"
+              size={matches ? 30 : 40}
+              className="cursor-pointer mobile:text-[30px]"
               onClick={() => toggleMenu()}
             />
             {isOpenMenu && (
@@ -206,14 +212,22 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
             </div>
           </div>
         </div>
-        {data?.projectType === "BUILT_NEXT_JS" && (
+        {/* {data?.projectType === "BUILT_NEXT_JS" && (
           <div className="text-[15px] w-full rounded-xl bg-black text-textLightGray p-8 h-96 mt-6 overflow-auto whitespace-pre">
             {containerData}
           </div>
-        )}
-        {data?.projectType === "BUILT_SPRING_JAR" && (
-          <div className="terminal-font text-[15px] w-full rounded-xl bg-black text-textLightGray p-8 h-96 mt-6 overflow-auto whitespace-pre">
-            {containerData}
+        )} */}
+        {Boolean(whiteList.indexOf(data.projectType)) && (
+          <div className="relative w-full h-96 mt-6">
+            <div className="terminal-font text-[15px] rounded-xl bg-black text-textLightGray p-8 w-full h-full overflow-auto whitespace-pre">
+              {containerData}
+            </div>
+            <HiOutlineViewfinderCircle
+              color="white"
+              size={30}
+              className="absolute bottom-8 right-12 z-50"
+              onClick={() => router.push(`/project/${router.query.projectId}/log`)}
+            />
           </div>
         )}
       </div>

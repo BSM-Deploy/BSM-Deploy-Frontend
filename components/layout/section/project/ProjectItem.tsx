@@ -6,7 +6,8 @@ import { MdClear, MdCheck } from "react-icons/md";
 import { ProjectType } from "@/types/project";
 import { Tooltip } from "@mui/material";
 import React from "react";
-import SpringBoot from "@/components/icons/Springboot";
+import SpringBoot from "@/components/icons/SpringBoot";
+
 
 
 function ProjectItem({ data }: { data: ProjectType }) {

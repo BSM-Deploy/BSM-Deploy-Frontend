@@ -8,7 +8,6 @@ import Link from "next/link";
 
 function ProjectSection() {
   const projectQuery = useQuery("projects", () => getProjectList());
-  console.log(projectQuery.data);
   return (
     <div className="main-section p-52 overflow-y-auto h-full">
       {projectQuery.isSuccess &&

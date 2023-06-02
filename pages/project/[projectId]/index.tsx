@@ -6,7 +6,7 @@ import { ProjectType } from "@/types/project";
 import { getProject } from "@/utils/api/project";
 import { NextSeo, NextSeoProps } from "next-seo";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 

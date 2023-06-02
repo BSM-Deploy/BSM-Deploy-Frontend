@@ -1,5 +1,4 @@
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
-import { useState } from "react";
 import { Construction, Settings } from "@mui/icons-material";
 import HomeIcon from '@mui/icons-material/Home';
 import { useRouter } from "next/router";
@@ -8,7 +7,7 @@ export default function Nav() {
   const router = useRouter();
 
   return (
-    <div className="fixed bottom-0 w-full">
+    <div className="absolute bottom-0 w-full">
       <BottomNavigation
         showLabels
         onChange={(event, newValue) => {
