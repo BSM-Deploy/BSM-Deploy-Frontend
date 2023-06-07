@@ -62,7 +62,7 @@ function ProjectControlModal({ data }: { data: ProjectType }) {
   const { isOpen, id, modalType } = projectControlModal;
   return (
     <Modal open={isOpen} onClose={() => closeModal()}>
-      <div className="w-[400px] flex p-[15px] rounded-3xl flex-col bg-lightBackground dark:bg-modalBackground top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 absolute focus-visible:outline-none">
+      <div className="w-[400px] mobile:w-[90%] flex p-[15px] rounded-3xl flex-col bg-lightBackground dark:bg-modalBackground top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 absolute focus-visible:outline-none">
         <h1 className="dark:text-textLightGray text-[25px] font-bold text-center">
           {(() => {
             switch (modalType) {
@@ -94,7 +94,7 @@ function ProjectControlModal({ data }: { data: ProjectType }) {
                 closeModal();
                 router.push(`/upload/${id}`);
               }}
-              className="blue-button w-[45%] text-[15px] h-[50px] font-bold"
+              className="blue-button w-[45%] mobile:break-keep text-[15px] h-[50px] font-bold"
             >
               파일/폴더 업로드하기
             </button>

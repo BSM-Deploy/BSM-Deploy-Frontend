@@ -36,10 +36,6 @@
 }
 
 @layer components {
-  .mobile-setting-button{
-    @apply absolute right-0
-  }
-
   .mobile-layout{
     @apply w-full h-full left-0
   }
@@ -49,7 +45,7 @@
   }
 
   .main-section {
-    @apply mobile:bottom-[56px] rounded-tl-2xl mobile:rounded-none absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray w-[calc(100vw-250px)] min-h-[calc(100vh-54px)] mobile:mobile-layout dark:text-white shadow-main;
+    @apply mobile:bottom-[100px] rounded-tl-2xl mobile:rounded-none absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray w-[calc(100vw-250px)] min-h-[calc(100vh-54px)] mobile:mobile-layout dark:text-white shadow-main;
   }
 
   .make-project-button {
@@ -65,7 +61,7 @@
   }
 
   .main-container {
-    @apply mobile:bottom-[56px] rounded-tl-2xl mobile:rounded-none absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray flex items-center justify-center w-[calc(100vw-250px)] h-[calc(100vh-54px)] mobile:mobile-layout font-bold text-4xl dark:text-white;
+    @apply mobile:bottom-[100px] rounded-tl-2xl mobile:rounded-none absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray flex items-center justify-center w-[calc(100vw-250px)] h-[calc(100vh-54px)] mobile:mobile-layout font-bold text-4xl dark:text-white;
   }
 
   .blue-button{

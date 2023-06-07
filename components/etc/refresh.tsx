@@ -10,16 +10,13 @@ export const Refresh = () => {
   };
 
   const errorResponse = (err: AxiosError): Promise<AxiosError> => {
-    const { response, config } = err;
-    const originalRequest = config as InternalAxiosRequestConfig
+    const _err = err as unknown as AxiosError;
+    const { response } = _err;
+    const originalConfig = _err?.config;
     if (localStorage.refreshToken && response && response.status === 401) {
       refreshMutation.mutate();
       if (refreshMutation.isSuccess) {
-        console.log(refreshMutation)
-        const newToken = refreshMutation.data.accessToken;
-        localStorage.setItem("accessToken", newToken);
-        originalRequest.headers["BSM-DEPLOY-TOKEN"] = newToken
-        return instance(originalRequest)
+        localStorage.setItem("accessToken", refreshMutation.data.accessToken);
       } else if (refreshMutation.isError) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
