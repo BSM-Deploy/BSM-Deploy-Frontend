@@ -226,7 +226,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
         </div>
         {whiteList.includes(data.projectType) && (
           <div className="relative w-full h-96 mt-6 bg-black rounded-xl">
-            <div className="terminal-font text-[15px] text-textLightGray p-8 w-full h-full overflow-auto whitespace-pre">
+            <div className="mobile:text-[10px] terminal-font text-[15px] text-textLightGray p-8 w-full h-full overflow-auto whitespace-pre">
               {containerData}
             </div>
             <Link
