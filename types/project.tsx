@@ -13,7 +13,8 @@ export interface ProjectType {
     | "MULTIPLE_FILE"
     | "BUILT_REACT_JS"
     | "BUILT_NEXT_JS"
-    | "BUILT_SPRING_JAR";
+    | "BUILT_SPRING_JAR"
+    | "BUILT_NODE_JS";
   dataSize: number;
   envVar: string;
 }

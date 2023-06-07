@@ -15,11 +15,16 @@ import useException from "@/hooks/useException";
 import { AxiosError } from "axios";
 import { ExceptionType } from "@/types/exception";
 import CircularProgress from "@mui/material/CircularProgress";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import { Modal } from "@mui/material";
 
 export default function UploadForm() {
   const router = useRouter();
   const id = router.query.index as string;
   const [type, setType] = useState<string>("");
+  const [errorMsg, setErrorMsg] = useState<string | undefined>("");
+  const [modal, setModal] = useState(false);
+  const [fail, setFail] = useState(false);
 
   const { exceptionHandler } = useException();
   const { files, items, fileName, inputRef, isDragActive, labelRef } =
@@ -27,6 +32,10 @@ export default function UploadForm() {
   const { progressManagement, zip } = useReadFolder({
     type: type,
   });
+
+  useEffect(() => {
+    console.log(zip)
+  }, [zip])
 
   useEffect(() => {
     (async () => {
@@ -50,8 +59,13 @@ export default function UploadForm() {
       router.push(`/deploy/${id}`);
     },
     onError: (error: AxiosError) => {
-      exceptionHandler(error.response?.data as ExceptionType, "fileExtension");
-      console.log(zip)
+      setFail(true);
+      const err = error.response?.data as ExceptionType;
+      if (err.statusCode === 500) {
+        setErrorMsg(err.message);
+      } else {
+        exceptionHandler(err, "fileExtension");
+      }
     },
   });
 
@@ -73,7 +87,6 @@ export default function UploadForm() {
     if (files.length > 0) {
       data.append("file", files[0]);
     } else {
-      console.log(zip)
       const zipFile = await makeZipFile(zip);
       data.append("file", zipFile as Blob);
     }
@@ -83,7 +96,7 @@ export default function UploadForm() {
 
   return (
     <div className="main-container flex-col relative">
-      {!isLoading ? (
+      {!isLoading && !fail && (
         <>
           <ExampleModal type={type} />
           <div>
@@ -108,7 +121,8 @@ export default function UploadForm() {
             <SubmitButton onClick={submit} />
           </div>
         </>
-      ) : (
+      )}
+      {isLoading && !fail && (
         <>
           <CircularProgress
             size={150}
@@ -117,7 +131,34 @@ export default function UploadForm() {
             }}
           />
           <p className="text-6xl font-bold mt-20">배포중...</p>
-          <p className="text-4xl font-bold mt-20">다소 시간이 걸릴 수 있습니다.</p>
+          <p className="text-4xl font-bold mt-20">
+            다소 시간이 걸릴 수 있습니다.
+          </p>
+        </>
+      )}
+      {!isLoading && fail && (
+        <>
+          <WarningAmberIcon
+            sx={{
+              fontSize: 150,
+              color: "#61CDFE",
+            }}
+          />
+          <p className="text-6xl font-bold mt-10">배포 실패</p>
+          <div className="flex gap-10 mt-32">
+          <button className="blue-button w-[200px] h-[50px]" onClick={() => setFail(false)}>다시 업로드하기</button>
+          <button
+            onClick={() => setModal(true)}
+            className="blue-button w-[200px] h-[50px]"
+          >
+            로그 보기
+          </button>
+          </div>
+          <Modal open={modal} onClose={() => setModal(false)}>
+            <div className="mobile:text-[10px] terminal-font text-[15px] bg-black absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[80%] h-[60%] text-textLightGray p-8 overflow-auto whitespace-pre">
+              {errorMsg}
+            </div>
+          </Modal>
         </>
       )}
     </div>

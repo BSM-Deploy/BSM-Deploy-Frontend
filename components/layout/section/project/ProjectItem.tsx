@@ -7,6 +7,7 @@ import { ProjectType } from "@/types/project";
 import { Tooltip } from "@mui/material";
 import React from "react";
 import SpringBoot from "@/components/icons/SpringBoot";
+import Nodejs from "@/components/icons/Nodejs";
 
 function ProjectItem({ data }: { data: ProjectType }) {
   const projectType = {
@@ -16,6 +17,7 @@ function ProjectItem({ data }: { data: ProjectType }) {
       BUILT_REACT_JS: <ReactIcon />,
       BUILT_NEXT_JS: <NextIcon />,
       BUILT_SPRING_JAR: <SpringBoot />,
+      BUILT_NODE_JS: <Nodejs />,
     },
     tooltip: {
       SINGLE_HTML: "단일 HTML",
@@ -23,6 +25,7 @@ function ProjectItem({ data }: { data: ProjectType }) {
       BUILT_REACT_JS: "React.js",
       BUILT_NEXT_JS: "Next.js",
       BUILT_SPRING_JAR: "Spring boot",
+      BUILT_NODE_JS: "Node.js",
     },
   };
   const { icon, tooltip } = projectType;

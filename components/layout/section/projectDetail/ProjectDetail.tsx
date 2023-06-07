@@ -20,7 +20,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
   );
   const matches = useMediaQuery("(max-width: 480px)");
 
-  const whiteList = ["BUILT_NEXT_JS", "BUILT_SPRING_JAR"];
+  const whiteList = ["BUILT_NEXT_JS", "BUILT_SPRING_JAR", "BUILT_NODE_JS"];
 
   const { isLoading: containerIsLoading, data: containerData } = useQuery<
     string,
@@ -59,6 +59,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
     BUILT_REACT_JS: "React.js",
     BUILT_NEXT_JS: "Next.js",
     BUILT_SPRING_JAR: "Spring boot",
+    BUILT_NODE_JS: "Node.js",
   };
 
   return (
