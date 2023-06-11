@@ -1,11 +1,13 @@
+"use client";
+
 import SettingForm from "@/components/layout/section/setting/SettingForm";
 import ErrorSnackbar from "@/components/snackbar/errorSnackbar";
 import { NextSeo, NextSeoProps } from "next-seo";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userIsLogin } from "@/store/atoms/user/user";
 import NeedLoginModal from "@/components/modals/needLoginModal";
-import { useEffect } from "react";
 import { headerTitleState } from "@/store/atoms/layout/headerTitle";
+import { useEffect } from "react";
 
 export default function Setting() {
   const login = useRecoilValue(userIsLogin);
@@ -18,7 +20,7 @@ export default function Setting() {
 
   useEffect(() => {
     setTitle("프로젝트 세팅");
-  }, []);
+  }, [setTitle]);
 
   return (
     <>

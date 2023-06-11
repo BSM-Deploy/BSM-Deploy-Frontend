@@ -2,7 +2,6 @@ import { ProjectType } from "@/types/project";
 import { getContainerLog } from "@/utils/api/container";
 import { Skeleton, useMediaQuery } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { BiDotsVerticalRounded } from "react-icons/bi";
@@ -11,23 +10,21 @@ import { useOnClickOutside } from "usehooks-ts";
 import ProjectControlModal from "@/components/modals/ProjectControlModal";
 import { projectControlModalState } from "@/store/atoms/modals/projectControlModal";
 
-function ProjectDetailSection({ data }: { data: ProjectType }) {
-  const router = useRouter();
+function ProjectDetailSection({ data, projectId }: { data: ProjectType, projectId: string }) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isView, setIsView] = useState(false);
-  const [projectControlModal, setProjectControlModal] = useRecoilState(
+  const [, setProjectControlModal] = useRecoilState(
     projectControlModalState
   );
   const matches = useMediaQuery("(max-width: 480px)");
 
-  const whiteList = ["BUILT_NEXT_JS", "BUILT_SPRING_JAR"];
+  const whiteList = ["BUILT_NEXT_JS", "BUILT_SPRING_JAR", "BUILT_NODE_JS"];
 
   const { isLoading: containerIsLoading, data: containerData } = useQuery<
     string,
     Error
-  >("container", () => getContainerLog(String(router.query.projectId)), {
-    enabled:
-      router.isReady && data?.isDeploy && whiteList.includes(data.projectType),
+  >("container", () => getContainerLog(projectId), {
+    enabled: data?.isDeploy && whiteList.includes(data.projectType),
     refetchInterval: 3000,
   });
   const ref = useRef(null);
@@ -59,11 +56,12 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
     BUILT_REACT_JS: "React.js",
     BUILT_NEXT_JS: "Next.js",
     BUILT_SPRING_JAR: "Spring boot",
+    BUILT_NODE_JS: "Node.js",
   };
 
   return (
     <>
-      <div className="main-section py-28 px-60 mobile:p-10 mobile:pb-20 flex gap-10 mobile:gap-0 flex-col h-full overflow-y-auto mobile:break-all">
+      <div className="main-section py-28 px-60 mobile:p-10 flex gap-10 mobile:gap-0 flex-col overflow-y-auto mobile:break-all">
         <div className="flex justify-between items-center relative">
           <h1 className="text-6xl font-bold mobile:text-4xl">{data?.name}</h1>
           <div ref={ref}>
@@ -225,7 +223,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
           </div>
         </div>
         {whiteList.includes(data.projectType) && (
-          <div className="relative w-full h-96 mt-6 bg-black rounded-xl">
+          <div className="relative w-full h-96 mt-6 bg-black rounded-xl mobile:mb-[120px]">
             <div className="mobile:text-[10px] terminal-font text-[15px] text-textLightGray p-8 w-full h-full overflow-auto whitespace-pre">
               {containerData}
             </div>

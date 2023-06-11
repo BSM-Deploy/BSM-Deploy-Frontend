@@ -13,7 +13,7 @@ function SettingModal() {
     setMount(true);
     setIsDarkMode(localStorage.theme === "dark");
     return () => setMount(false);
-  }, []);
+  }, [setIsDarkMode]);
 
   const changeTheme = () => {
     if (localStorage.theme === "dark") {

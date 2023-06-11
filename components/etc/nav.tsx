@@ -1,13 +1,13 @@
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { Construction, Settings } from "@mui/icons-material";
 import HomeIcon from '@mui/icons-material/Home';
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Nav() {
   const router = useRouter();
 
   return (
-    <div className="absolute bottom-0 w-full">
+    <nav className="mobile:grid-navbar fixed bottom-0 w-full">
       <BottomNavigation
         showLabels
         onChange={(event, newValue) => {
@@ -18,6 +18,6 @@ export default function Nav() {
         <BottomNavigationAction label="메인화면" value={""} icon={<HomeIcon />} />
         <BottomNavigationAction label="프로젝트 생성" value={"setting"} icon={<Settings />} />
       </BottomNavigation>
-    </div>
+    </nav>
   );
 }

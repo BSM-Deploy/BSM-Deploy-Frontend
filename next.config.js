@@ -2,14 +2,14 @@
 
 const securityHeaders = [
   {
-    key: 'X-XSS-Protection',
-    value: '1; mode=block'
+    key: "X-XSS-Protection",
+    value: "1; mode=block",
   },
   {
-    key: 'X-Content-Type-Options',
-    value: 'nosniff'
-  }
-]
+    key: "X-Content-Type-Options",
+    value: "nosniff",
+  },
+];
 
 const nextConfig = {
   reactStrictMode: false,
@@ -21,9 +21,10 @@ const nextConfig = {
       {
         source: "/:path*",
         headers: securityHeaders,
-      }
-    ]
+      },
+    ];
   },
+  experimental: { appDir: true },
 };
 
 module.exports = nextConfig;

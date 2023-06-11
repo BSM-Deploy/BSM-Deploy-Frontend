@@ -19,7 +19,7 @@ import { openSidebarState } from "@/store/atoms/modals/openSideBar";
 
 function Sidebar() {
   const openSidebar = useRecoilValue(openSidebarState);
-  const [login, setLogin] = useRecoilState(userIsLogin);
+  const [, setLogin] = useRecoilState(userIsLogin);
   const [mount, setMount] = useState(false);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ function Sidebar() {
 
   return (
     <aside
-      className={`mobile:translate-x-[-100%] fixed top-[54px] z-30 w-[250px] inline-block h-full min-h-screen bg-lightBackground dark:bg-leeBlack p-[0.5rem] ${
+      className={`grid-sidebar mobile:translate-x-[-100%] fixed top-[54px] z-30 w-[250px] inline-block h-full bg-lightBackground dark:bg-leeBlack ${
         openSidebar && "!translate-x-[0%]"
       } duration-300`}
     >
@@ -78,7 +78,7 @@ function Sidebar() {
           <div className={`${isView ? "animate-down" : "animate-up"}`}>
             {userDropdown && (
               <>
-                <a href="https://auth.bssm.kro.kr/user" target="_blank">
+                <Link href="https://auth.bssm.kro.kr/user" target="_blank">
                   <SidebarItems
                     name="내 정보"
                     isDropdownMenu
@@ -90,7 +90,7 @@ function Sidebar() {
                       />
                     }
                   />
-                </a>
+                </Link>
                 <div
                   onClick={() => {
                     logoutMutation.mutate();

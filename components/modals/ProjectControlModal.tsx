@@ -5,7 +5,7 @@ import { cancelDeploy, deployProject } from "@/utils/api/deploy";
 import { deleteProject } from "@/utils/api/project";
 import { Modal } from "@mui/material";
 import { AxiosError } from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { MdClear } from "react-icons/md";
 import { useMutation } from "react-query";

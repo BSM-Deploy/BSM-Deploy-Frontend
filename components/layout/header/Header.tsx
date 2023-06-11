@@ -14,7 +14,7 @@ function Header({ title }: { title?: string }) {
   return (
     <>
       <header
-        className="z-50 dark:bg-leeBlack bg-lightBackground p-[5px] mobile:relative h-[54px] flex items-center gap-2 fixed top-0 w-full"
+        className="grid-header z-50 dark:bg-leeBlack bg-lightBackground p-[5px] h-[54px] flex items-center gap-2 fixed top-0 w-full"
       >
         <Link
           href="/"
