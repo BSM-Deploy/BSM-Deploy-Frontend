@@ -1,6 +1,6 @@
-import { NextRouter, useRouter } from "next/router"
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
-export default function CancelButton({ router }: { router: NextRouter }) {
+export default function CancelButton({ router }: { router: AppRouterInstance }) {
   return (
     <>
       <input

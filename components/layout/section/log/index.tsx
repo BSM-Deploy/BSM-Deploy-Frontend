@@ -1,25 +1,22 @@
 import { getContainerLog } from "@/utils/api/container";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { useQuery } from "react-query";
 
-export default function LogSection() {
-
-  const router = useRouter()
+export default function LogSection({ id }: { id: string }) {
+  const searchParams = useSearchParams();
 
   const { isLoading: containerIsLoading, data: containerData } = useQuery<
     string,
     Error
-  >("container", () => getContainerLog(String(router.query?.projectId)), {
-    enabled:
-      router.isReady,
+  >("container", () => getContainerLog(id), {
     refetchInterval: 3000,
   });
 
-  return(
+  return (
     <div className="main-container bg-black">
       <div className="terminal-font text-[15px] text-textLightGray p-8 w-full h-full overflow-auto whitespace-pre">
         {containerData}
       </div>
     </div>
-  )
-};
+  );
+}

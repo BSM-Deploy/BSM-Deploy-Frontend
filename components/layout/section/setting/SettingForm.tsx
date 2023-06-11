@@ -3,7 +3,7 @@ import { openSnackbarState } from "@/store/atoms/snackbar/openSnackbar";
 import { SettingType } from "@/types/setting";
 import { makeProject } from "@/utils/api/project";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useForm, useWatch } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
@@ -70,7 +70,7 @@ export default function SettingForm() {
     <>
       <form
         onSubmit={handleSubmit(onSubmit, onError)}
-        className="main-container flex-col"
+        className="main-container flex-col mobile:top-0"
       >
         <div className="max-w-[500px] max-h-[80px] w-full h-full mb-[50px] relative flex items-center">
           <input

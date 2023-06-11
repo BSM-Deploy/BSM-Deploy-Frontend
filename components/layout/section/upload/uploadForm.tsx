@@ -1,5 +1,5 @@
 import useFileDrop from "@/hooks/useFileDrop";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import CancelButton from "../../button/cancelButton";
 import SubmitButton from "../../button/submitButton";
@@ -18,9 +18,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { Modal } from "@mui/material";
 
-export default function UploadForm() {
+export default function UploadForm({ id }: { id: string }) {
   const router = useRouter();
-  const id = router.query.index as string;
   const [type, setType] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string | undefined>("");
   const [modal, setModal] = useState(false);
@@ -32,10 +31,6 @@ export default function UploadForm() {
   const { progressManagement, zip } = useReadFolder({
     type: type,
   });
-
-  useEffect(() => {
-    console.log(zip)
-  }, [zip])
 
   useEffect(() => {
     (async () => {
@@ -95,7 +90,7 @@ export default function UploadForm() {
   };
 
   return (
-    <div className="main-container flex-col relative">
+    <div className="main-container flex-col mobile:top-0">
       {!isLoading && !fail && (
         <>
           <ExampleModal type={type} />
@@ -104,7 +99,7 @@ export default function UploadForm() {
             <label
               ref={labelRef}
               htmlFor="upload"
-              className={`dark:border-white relative flex flex-col items-center justify-center w-[60rem] h-[60rem] rounded-4xl border-dotted border-2 border-black ${
+              className={`dark:border-white relative flex flex-col items-center justify-center w-[60rem] h-[60rem] mobile:w-[300px] mobile:h-[300px] rounded-4xl border-dotted border-2 border-black ${
                 isDragActive && "dragStyle"
               }`}
             >
@@ -146,13 +141,18 @@ export default function UploadForm() {
           />
           <p className="text-6xl font-bold mt-10">배포 실패</p>
           <div className="flex gap-10 mt-32">
-          <button className="blue-button w-[200px] h-[50px]" onClick={() => setFail(false)}>다시 업로드하기</button>
-          <button
-            onClick={() => setModal(true)}
-            className="blue-button w-[200px] h-[50px]"
-          >
-            로그 보기
-          </button>
+            <button
+              className="blue-button w-[200px] h-[50px]"
+              onClick={() => setFail(false)}
+            >
+              다시 업로드하기
+            </button>
+            <button
+              onClick={() => setModal(true)}
+              className="blue-button w-[200px] h-[50px]"
+            >
+              로그 보기
+            </button>
           </div>
           <Modal open={modal} onClose={() => setModal(false)}>
             <div className="mobile:text-[10px] terminal-font text-[15px] bg-black absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[80%] h-[60%] text-textLightGray p-8 overflow-auto whitespace-pre">

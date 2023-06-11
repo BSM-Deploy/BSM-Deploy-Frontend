@@ -1,3 +1,5 @@
+"use client";
+
 import ProjectSection from "@/components/layout/section/project/Project";
 import NeedLoginModal from "@/components/modals/needLoginModal";
 import { headerTitleState } from "@/store/atoms/layout/headerTitle";
@@ -12,6 +14,7 @@ function Project() {
     title: "프로젝트",
     description: "프로젝트들을 모아보는 페이지입니다.",
   };
+
   const setTitle = useSetRecoilState(headerTitleState);
 
   useEffect(() => {

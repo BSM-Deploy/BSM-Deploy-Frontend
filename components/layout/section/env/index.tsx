@@ -3,24 +3,22 @@ import Editor, { Monaco } from "@monaco-editor/react";
 import type monaco from "monaco-editor";
 import { isDarkModeState } from "@/store/atoms/layout/isDarkMode";
 import { useRecoilValue } from "recoil";
-import { useRouter } from "next/router";
 import { useMutation, useQuery } from "react-query";
 import { envUpdate, getProject } from "@/utils/api/project";
 import { AxiosError } from "axios";
 import { ExceptionType } from "@/types/exception";
 import useException from "@/hooks/useException";
 import { ProjectType } from "@/types/project";
+import { useRouter } from "next/navigation";
 
-function EnvSection() {
+function EnvSection({ id }: { id: string }) {
   const isDarkMode = useRecoilValue(isDarkModeState);
-  const router = useRouter();
+
   const editorRef: React.MutableRefObject<monaco.editor.IStandaloneCodeEditor | null> =
     useRef(null);
-
-  const { data, isSuccess } = useQuery<ProjectType, Error>(
-    "project",
-    () => getProject(String(router.query.projectId)),
-    { enabled: router.isReady }
+  const router = useRouter();
+  const { data, isSuccess } = useQuery<ProjectType, Error>("project", () =>
+    getProject(id)
   );
 
   function handleEditorDidMount(
@@ -34,7 +32,7 @@ function EnvSection() {
 
   const { mutate } = useMutation(envUpdate, {
     onSuccess: (data) => {
-      router.push(`/project/${router.query?.projectId}`);
+      router.push(`/project/${id}`);
     },
     onError: (error: AxiosError) => {
       exceptionHandler(error.response?.data as ExceptionType, "domainPrefix");
@@ -55,7 +53,7 @@ function EnvSection() {
       )}
       <div className="flex gap-10">
         <button
-          onClick={() => router.push(`/project/${router.query?.projectId}`)}
+          onClick={() => router.push(`/project/${id}`)}
           className="hover:bg-lighterGray dark:hover:bg-darkHover duration-200 w-[100px] h-[60px] text-[20px] rounded-[20px] bg-deepGrayButton text-white"
         >
           취소
@@ -63,7 +61,7 @@ function EnvSection() {
         <button
           onClick={() =>
             mutate({
-              projectId: Number(router.query?.projectId),
+              projectId: Number(id),
               envVar: String(editorRef.current?.getValue()),
             })
           }
