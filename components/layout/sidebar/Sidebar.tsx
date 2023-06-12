@@ -113,7 +113,7 @@ function Sidebar() {
           </div>
         </>
       ) : (
-        <a href={process.env.BSM_OAUTH_URI}>
+        <a href={process.env.NEXT_PUBLIC_BSM_OAUTH_URI}>
           <SidebarItems
             name="로그인"
             Icon={
