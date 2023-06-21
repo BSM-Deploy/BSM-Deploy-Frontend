@@ -43,11 +43,9 @@ function ProjectSection() {
             <span className="text-5xl font-bold dark:text-textLightGray">
               프로젝트가 없습니다!
             </span>
-            {/* <Link> */}
             <Link href="setting" className="make-project-button">
               프로젝트 생성하기
             </Link>
-            {/* </Link> */}
           </div>
         ))}
     </div>

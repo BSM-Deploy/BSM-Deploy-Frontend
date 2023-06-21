@@ -143,4 +143,12 @@
   .terminal-font{
     font-family: 'Courier New', Courier, monospace;
   }
+
+  .icon-style{
+    color: #E8EAED;
+  }
+
+  .icon-darkStyle{
+    color: #202124;
+  }
 }

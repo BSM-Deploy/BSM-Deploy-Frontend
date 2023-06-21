@@ -3,14 +3,14 @@ import { projectControlModalState } from "@/store/atoms/modals/projectControlMod
 import { ProjectType } from "@/types/project";
 import { cancelDeploy, deployProject } from "@/utils/api/deploy";
 import { deleteProject } from "@/utils/api/project";
-import { Modal } from "@mui/material";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { MdClear } from "react-icons/md";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 import { ExceptionType } from "@/types/exception";
+import Modal from "@mui/material/Modal/Modal";
+import { BigXIcon } from "@/public";
 
 function ProjectControlModal({ data }: { data: ProjectType }) {
   const [projectControlModal, setProjectControlModal] = useRecoilState(
@@ -79,7 +79,7 @@ function ProjectControlModal({ data }: { data: ProjectType }) {
           className="gray-button absolute top-4 right-4"
           onClick={() => closeModal()}
         >
-          <MdClear className="dark:text-textLightGray" size={44} />
+          <BigXIcon />
         </button>
         {modalType === "DEPLOY_PROJECT" ? (
           <div className="flex items-center justify-center gap-[17.5px] mt-[25px]">

@@ -1,32 +1,38 @@
 import { ProjectType } from "@/types/project";
 import { getContainerLog } from "@/utils/api/container";
-import { Skeleton, useMediaQuery } from "@mui/material";
 import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { useQuery } from "react-query";
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useRecoilState } from "recoil";
 import { useOnClickOutside } from "usehooks-ts";
 import ProjectControlModal from "@/components/modals/ProjectControlModal";
 import { projectControlModalState } from "@/store/atoms/modals/projectControlModal";
+import Skeleton from "@mui/material/Skeleton/Skeleton";
+import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
+import { MiniVerticalDotsIcon, VerticalDotsIcon } from "@/public";
 
-function ProjectDetailSection({ data, projectId }: { data: ProjectType, projectId: string }) {
+function ProjectDetailSection({
+  data,
+  projectId,
+}: {
+  data: ProjectType;
+  projectId: string;
+}) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isView, setIsView] = useState(false);
-  const [, setProjectControlModal] = useRecoilState(
-    projectControlModalState
-  );
+  const [, setProjectControlModal] = useRecoilState(projectControlModalState);
   const matches = useMediaQuery("(max-width: 480px)");
 
   const whiteList = ["BUILT_NEXT_JS", "BUILT_SPRING_JAR", "BUILT_NODE_JS"];
 
-  const { isLoading: containerIsLoading, data: containerData } = useQuery<
-    string,
-    Error
-  >("container", () => getContainerLog(projectId), {
-    enabled: data?.isDeploy && whiteList.includes(data.projectType),
-    refetchInterval: 3000,
-  });
+  const { data: containerData } = useQuery<string, Error>(
+    "container",
+    () => getContainerLog(projectId),
+    {
+      enabled: data?.isDeploy && whiteList.includes(data.projectType),
+      refetchInterval: 3000,
+    }
+  );
   const ref = useRef(null);
 
   useOnClickOutside(ref, () => {
@@ -65,11 +71,11 @@ function ProjectDetailSection({ data, projectId }: { data: ProjectType, projectI
         <div className="flex justify-between items-center relative">
           <h1 className="text-6xl font-bold mobile:text-4xl">{data?.name}</h1>
           <div ref={ref}>
-            <BiDotsVerticalRounded
-              size={matches ? 30 : 40}
-              className="cursor-pointer mobile:text-[30px]"
-              onClick={() => toggleMenu()}
-            />
+            {matches ? (
+              <MiniVerticalDotsIcon onClick={() => toggleMenu()} />
+            ) : (
+              <VerticalDotsIcon onClick={() => toggleMenu()} />
+            )}
             {isOpenMenu && (
               <ul
                 className={`absolute flex flex-col text-center top-[5rem] text-[15px] right-0 z-50 ${

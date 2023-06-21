@@ -2,9 +2,10 @@
 
 import React from "react";
 import { useQuery } from "react-query";
-import { Backdrop, CircularProgress } from "@mui/material";
 import { login } from "@/utils/api/auth";
 import { useRouter, useSearchParams } from "next/navigation";
+import Backdrop from "@mui/material/Backdrop/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 
 function Oauth() {
   const router = useRouter();

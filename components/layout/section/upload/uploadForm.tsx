@@ -1,5 +1,5 @@
 import useFileDrop from "@/hooks/useFileDrop";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CancelButton from "../../button/cancelButton";
 import SubmitButton from "../../button/submitButton";
@@ -16,7 +16,7 @@ import { AxiosError } from "axios";
 import { ExceptionType } from "@/types/exception";
 import CircularProgress from "@mui/material/CircularProgress";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
-import { Modal } from "@mui/material";
+import Modal from "@mui/material/Modal/Modal";
 
 export default function UploadForm({ id }: { id: string }) {
   const router = useRouter();

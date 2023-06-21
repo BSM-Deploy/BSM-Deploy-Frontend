@@ -1,15 +1,15 @@
 import Link from "next/link";
 import React from "react";
-import { Settings } from "@mui/icons-material";
 import { settingModalState } from "@/store/atoms/modals/settingModal";
 import { useRecoilState } from "recoil";
 import MenuIcon from "@mui/icons-material/Menu";
 import { openSidebarState } from "@/store/atoms/modals/openSideBar";
 import SettingModal from "@/components/modals/SettingModal";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 function Header({ title }: { title?: string }) {
-  const [settingModal, setSettingModal] = useRecoilState(settingModalState);
-  const [openSidebar, setOpenSidebar] = useRecoilState(openSidebarState);
+  const [, setSettingModal] = useRecoilState(settingModalState);
+  const [, setOpenSidebar] = useRecoilState(openSidebarState);
 
   return (
     <>
@@ -32,7 +32,7 @@ function Header({ title }: { title?: string }) {
           className="mobile:absolute mobile:right-[5px] !w-[44px] !h-[44px] gray-button"
           onClick={() => setSettingModal(true)}
         >
-          <Settings className="dark:text-textLightGray !text-[30px]" />
+          <SettingsIcon className="dark:text-textLightGray !text-[30px]" />
         </div>
         <div className="dark:text-textLightGray text-center w-[calc(100%-198.48px)] mobile:w-full text-[20px] font-bold cursor-default">
           {title}

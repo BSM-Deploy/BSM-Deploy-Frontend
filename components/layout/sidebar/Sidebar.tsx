@@ -3,12 +3,10 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import SidebarItems from "./SidebarItem";
 import { useQuery, useMutation } from "react-query";
-import {
-  Logout,
-  PersonOutline,
-  Construction,
-  Settings,
-} from "@mui/icons-material";
+import LogoutIcon from '@mui/icons-material/Logout';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { logout } from "@/utils/api/auth";
 import useException from "@/hooks/useException";
 import { AxiosError } from "axios";
@@ -41,6 +39,7 @@ function Sidebar() {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       window.location.href = "/";
+      setLogin(false)
     },
     onError: (err: AxiosError) => {
       exceptionHandler(err.response?.data as ExceptionType);
@@ -84,7 +83,7 @@ function Sidebar() {
                     isDropdownMenu
                     index={1}
                     Icon={
-                      <PersonOutline
+                      <PersonOutlineIcon
                         fontSize="large"
                         className="dark:text-textDarkGray"
                       />
@@ -101,7 +100,7 @@ function Sidebar() {
                     isDropdownMenu
                     index={2}
                     Icon={
-                      <Logout
+                      <LogoutIcon
                         fontSize="large"
                         className="dark:text-textDarkGray"
                       />
@@ -113,11 +112,11 @@ function Sidebar() {
           </div>
         </>
       ) : (
-        <a href={process.env.BSM_OAUTH_URI}>
+        <a href={process.env.NEXT_PUBLIC_BSM_OAUTH_URI}>
           <SidebarItems
             name="로그인"
             Icon={
-              <PersonOutline
+              <PersonOutlineIcon
                 fontSize="large"
                 className="dark:text-textDarkGray"
               />
@@ -130,7 +129,7 @@ function Sidebar() {
         <SidebarItems
           name="내 프로젝트"
           Icon={
-            <Construction fontSize="large" className="dark:text-textDarkGray" />
+            <ConstructionIcon fontSize="large" className="dark:text-textDarkGray" />
           }
         />
       </Link>
@@ -138,7 +137,7 @@ function Sidebar() {
         <SidebarItems
           name="프로젝트 만들기"
           Icon={
-            <Settings fontSize="large" className="dark:text-textDarkGray" />
+            <SettingsIcon fontSize="large" className="dark:text-textDarkGray" />
           }
         />
       </Link>
