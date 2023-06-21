@@ -3,7 +3,7 @@ import { openSnackbarState } from "@/store/atoms/snackbar/openSnackbar";
 import { SettingType } from "@/types/setting";
 import { makeProject } from "@/utils/api/project";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useForm, useWatch } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
@@ -70,9 +70,9 @@ export default function SettingForm() {
     <>
       <form
         onSubmit={handleSubmit(onSubmit, onError)}
-        className="main-container flex-col"
+        className="main-container flex-col mobile:top-0"
       >
-        <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
+        <div className="max-w-[500px] max-h-[80px] w-full h-full mb-[50px] relative flex items-center">
           <input
             type="text"
             id="input"
@@ -84,24 +84,24 @@ export default function SettingForm() {
               required: "프로젝트 이름이 비었습니다.",
               minLength: {
                 value: 2,
-                message: "프로젝트 이름은 2자 이상이여야합니다.",
+                message: "프로젝트 이름은 2자 이상이어야 합니다.",
               },
               maxLength: {
                 value: 16,
-                message: "프로젝트 이름은 16자 이하여야합니다.",
+                message: "프로젝트 이름은 16자 이하여야 합니다.",
               },
             })}
           ></input>
           <label
             htmlFor="input"
-            className={`absolute duration-200 cursor-text left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle ${
+            className={`absolute duration-200 cursor-text text-[20px] left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle ${
               nameWatcher !== "" ? "validTextStyle" : ""
             }`}
           >
             프로젝트 이름
           </label>
         </div>
-        <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
+        <div className="max-w-[500px] max-h-[80px] w-full h-full mb-[50px] relative flex items-center">
           <input
             type="text"
             className={`setting-input peer focus:hover:shadow-none ${
@@ -113,11 +113,11 @@ export default function SettingForm() {
               required: "도메인 접두사가 비었습니다.",
               minLength: {
                 value: 3,
-                message: "도메인 접두사는 3자 이상이여야합니다.",
+                message: "도메인 접두사는 3자 이상이어야 합니다.",
               },
               maxLength: {
                 value: 63,
-                message: "도메인 접두사는 63자 이하여야합니다.",
+                message: "도메인 접두사는 63자 이하여야 합니다.",
               },
               pattern: {
                 value: /^[a-zA-Z0-9-]+$/,
@@ -128,14 +128,14 @@ export default function SettingForm() {
           ></input>
           <label
             htmlFor="input2"
-            className={`absolute duration-200 cursor-text left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle ${
+            className={`absolute duration-200 cursor-text text-[20px] left-10 peer-focus:textStyle peer-valid:peer-focus:textStyle ${
               domainPrefixWatcher !== "" ? "validTextStyle " : ""
             }`}
           >
             도메인 접두사
           </label>
         </div>
-        <div className="w-[30%] h-[10%] mb-[50px] relative flex items-center">
+        <div className="max-w-[500px] max-h-[80px] w-full h-full mb-[50px] relative flex items-center">
           <select
             id="select"
             {...register("projectType", {
@@ -149,13 +149,15 @@ export default function SettingForm() {
           >
             <option value={"SINGLE_HTML"}>Single HTML</option>
             <option value={"MULTIPLE_FILE"}>Multiple File</option>
-            <option value={"BUILT_REACT_JS"}>Built React.js</option>
-            <option value={"BUILT_NEXT_JS"}>Built Next.js</option>
+            <option value={"BUILT_REACT_JS"}>React.js</option>
+            <option value={"BUILT_NEXT_JS"}>Next.js</option>
+            <option value={"BUILT_SPRING_JAR"}>Spring boot</option>
+            <option value={"BUILT_NODE_JS"}>Node.js</option>
           </select>
           <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 peer-focus:arrowStyle" />
           <label
             htmlFor="select"
-            className={`absolute duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 peer-focus:peer-valid:textStyle peer-focus:textStyle ${
+            className={`absolute text-[20px] duration-200 dark:bg-lightGray bg-lightBlock z-10 left-10 peer-focus:peer-valid:textStyle peer-focus:textStyle ${
               projectTypeWatcher !== "" &&
               "validTextStyle dark:!bg-darkGray bg-white"
             }`}

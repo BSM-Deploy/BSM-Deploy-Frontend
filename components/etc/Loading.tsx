@@ -1,7 +1,8 @@
 import React from "react";
-import { Backdrop, CircularProgress } from "@mui/material";
 import { useRecoilState } from "recoil";
 import { loadingState } from "@/store/atoms/loading/loading";
+import Backdrop from "@mui/material/Backdrop/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 
 function Loading() {
   const [loading, setLoading] = useRecoilState(loadingState);

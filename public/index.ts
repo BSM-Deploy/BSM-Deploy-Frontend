@@ -1,0 +1,10 @@
+export { default as NextJsIcon } from './images/nextjs.svg';
+export { default as HtmlIcon } from './images/html.svg';
+export { default as NodeJsIcon } from './images/nodejs.svg';
+export { default as ReactJsIcon } from './images/reactjs.svg';
+export { default as SpringBootIcon } from './images/springboot.svg';
+export { default as DeployIcon } from './images/deploy.svg';
+export { default as NonDeployIcon } from './images/nondeploy.svg';
+export { default as VerticalDotsIcon } from './images/verticalDots.svg';
+export { default as MiniVerticalDotsIcon } from './images/miniVerticalDots.svg';
+export { default as BigXIcon } from './images/bigX.svg';

@@ -5,12 +5,10 @@ import { useCallback, useState } from "react";
 export default function useReadFolder({ type }: { type?: string }) {
   const [zip, setZip] = useState<any>(new JSZip());
 
-  // item: FileSystemFileEntry or FileSystemDirectoryEntry
   const traverseFileTree = useCallback(
     (item: any, folder: JSZip, root: string) => {
       return new Promise((resolve, reject) => {
         if (type === "BUILT_REACT_JS") {
-          console.log(item);
           if (item.name === "build") {
             const dirReader = item.createReader();
             dirReader.readEntries((entries: any) => {
@@ -32,7 +30,6 @@ export default function useReadFolder({ type }: { type?: string }) {
             });
           }
         } else if (item.isFile) {
-          // Get file
           if (type === "BUILT_NEXT_JS") {
             if (checkFile(item, root)) {
               item.file((file: any) => {
@@ -45,7 +42,6 @@ export default function useReadFolder({ type }: { type?: string }) {
             });
           }
         } else if (item.isDirectory) {
-          // Get folder contentsm
           if (type === "BUILT_NEXT_JS") {
             if (checkFolder(item, root)) {
               const dirReader = item.createReader();
@@ -78,7 +74,12 @@ export default function useReadFolder({ type }: { type?: string }) {
         const dirReader = folder?.createReader();
         dirReader?.readEntries(async (entries: any) => {
           for (let i = 0; i < entries.length; i++) {
-            if (type === "BUILT_REACT_JS") {
+            if (type === "BUILT_NODE_JS") {
+              if (entries[i].name !== "node_modules") {
+                await traverseFileTree(entries[i], z, root);
+              }
+            }
+            else if (type === "BUILT_REACT_JS") {
               if (entries[i].fullPath.includes(`${root}/build`)) {
                 await traverseFileTree(entries[i], z, root);
               }
@@ -96,7 +97,6 @@ export default function useReadFolder({ type }: { type?: string }) {
   const progressManagement = useCallback(
     async (folder: FileSystemDirectoryEntry) => {
       const z = new JSZip();
-      console.log(folder?.name);
       setZip(await readFolder(folder, z, folder?.name));
     },
     [readFolder]

@@ -8,13 +8,15 @@ import Link from "next/link";
 
 function ProjectSection() {
   const projectQuery = useQuery("projects", () => getProjectList());
-  console.log(projectQuery.data);
   return (
-    <div className="main-section p-52 overflow-y-auto h-full">
+    <div className="mobile:grid-main main-section p-52 overflow-y-auto">
       {projectQuery.isSuccess &&
         (projectQuery.data?.size !== 0 ? (
-          <div className="flex flex-wrap gap-12">
-            <Link href="/setting" className="make-project-button absolute top-16 right-16">
+          <div className="flex flex-wrap gap-12 mobile:justify-center">
+            <Link
+              href="/setting"
+              className="make-project-button absolute top-16 right-16 text-[15px]"
+            >
               프로젝트 생성하기
             </Link>
             {projectQuery.data?.list.map((project: ProjectType) => (
@@ -41,9 +43,9 @@ function ProjectSection() {
             <span className="text-5xl font-bold dark:text-textLightGray">
               프로젝트가 없습니다!
             </span>
-            {/* <Link> */}
-            <Link href="setting" className="make-project-button">프로젝트 생성하기</Link>
-            {/* </Link> */}
+            <Link href="setting" className="make-project-button">
+              프로젝트 생성하기
+            </Link>
           </div>
         ))}
     </div>

@@ -1,7 +1,7 @@
 import { errorMessageState } from "@/store/atoms/layout/error";
 import { openSnackbarState } from "@/store/atoms/snackbar/openSnackbar";
-import { Alert } from "@mui/material";
-import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert/Alert";
+import Snackbar from "@mui/material/Snackbar/Snackbar";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 const snackbarStyle = {

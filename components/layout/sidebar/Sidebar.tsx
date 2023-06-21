@@ -3,22 +3,23 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import SidebarItems from "./SidebarItem";
 import { useQuery, useMutation } from "react-query";
-import {
-  Logout,
-  PersonOutline,
-  Construction,
-  Settings,
-} from "@mui/icons-material";
+import LogoutIcon from '@mui/icons-material/Logout';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { logout } from "@/utils/api/auth";
 import useException from "@/hooks/useException";
 import { AxiosError } from "axios";
 import { ExceptionType } from "@/types/exception";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { userIsLogin } from "@/store/atoms/user/user";
+import { openSidebarState } from "@/store/atoms/modals/openSideBar";
 
 function Sidebar() {
-  const [login, setLogin] = useRecoilState(userIsLogin)
+  const openSidebar = useRecoilValue(openSidebarState);
+  const [, setLogin] = useRecoilState(userIsLogin);
   const [mount, setMount] = useState(false);
+
   useEffect(() => {
     setMount(true);
     return () => setMount(false);
@@ -26,8 +27,8 @@ function Sidebar() {
   const userQuery = useQuery("user", () => getUserInfo(), {
     enabled: mount && localStorage.accessToken !== undefined,
     onSuccess: () => {
-      setLogin(true)
-    }
+      setLogin(true);
+    },
   });
   const [userDropdown, setUserDropdown] = useState(false);
   const [isView, setIsView] = useState(false);
@@ -37,11 +38,12 @@ function Sidebar() {
     onSuccess: () => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
-      window.location.reload();
+      window.location.href = "/";
+      setLogin(false)
     },
     onError: (err: AxiosError) => {
-      exceptionHandler(err.response?.data as ExceptionType)
-    }
+      exceptionHandler(err.response?.data as ExceptionType);
+    },
   });
 
   const toggleMenu = () => {
@@ -57,7 +59,11 @@ function Sidebar() {
   };
 
   return (
-    <aside className="fixed top-[54px] z-30 w-100 inline-block h-full min-h-screen bg-lightBackground dark:bg-leeBlack p-[0.5rem]">
+    <aside
+      className={`grid-sidebar mobile:translate-x-[-100%] fixed top-[54px] z-30 w-[250px] inline-block h-full bg-lightBackground dark:bg-leeBlack ${
+        openSidebar && "!translate-x-[0%]"
+      } duration-300`}
+    >
       {userQuery.isSuccess ? (
         <>
           <div onClick={toggleMenu}>
@@ -71,19 +77,19 @@ function Sidebar() {
           <div className={`${isView ? "animate-down" : "animate-up"}`}>
             {userDropdown && (
               <>
-                <a href="https://auth.bssm.kro.kr/user" target="_blank">
+                <Link href="https://auth.bssm.kro.kr/user" target="_blank">
                   <SidebarItems
                     name="내 정보"
                     isDropdownMenu
                     index={1}
                     Icon={
-                      <PersonOutline
+                      <PersonOutlineIcon
                         fontSize="large"
                         className="dark:text-textDarkGray"
                       />
                     }
                   />
-                </a>
+                </Link>
                 <div
                   onClick={() => {
                     logoutMutation.mutate();
@@ -94,7 +100,7 @@ function Sidebar() {
                     isDropdownMenu
                     index={2}
                     Icon={
-                      <Logout
+                      <LogoutIcon
                         fontSize="large"
                         className="dark:text-textDarkGray"
                       />
@@ -106,11 +112,11 @@ function Sidebar() {
           </div>
         </>
       ) : (
-        <a href="https://auth.bssm.kro.kr/oauth?clientId=347a7232&redirectURI=http://localhost:3000/oauth/bsm">
+        <a href={process.env.NEXT_PUBLIC_BSM_OAUTH_URI}>
           <SidebarItems
             name="로그인"
             Icon={
-              <PersonOutline
+              <PersonOutlineIcon
                 fontSize="large"
                 className="dark:text-textDarkGray"
               />
@@ -123,7 +129,7 @@ function Sidebar() {
         <SidebarItems
           name="내 프로젝트"
           Icon={
-            <Construction fontSize="large" className="dark:text-textDarkGray" />
+            <ConstructionIcon fontSize="large" className="dark:text-textDarkGray" />
           }
         />
       </Link>
@@ -131,7 +137,7 @@ function Sidebar() {
         <SidebarItems
           name="프로젝트 만들기"
           Icon={
-            <Settings fontSize="large" className="dark:text-textDarkGray" />
+            <SettingsIcon fontSize="large" className="dark:text-textDarkGray" />
           }
         />
       </Link>

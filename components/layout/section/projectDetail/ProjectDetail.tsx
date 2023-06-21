@@ -1,31 +1,38 @@
 import { ProjectType } from "@/types/project";
 import { getContainerLog } from "@/utils/api/container";
-import { Skeleton } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { useQuery } from "react-query";
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useRecoilState } from "recoil";
 import { useOnClickOutside } from "usehooks-ts";
 import ProjectControlModal from "@/components/modals/ProjectControlModal";
 import { projectControlModalState } from "@/store/atoms/modals/projectControlModal";
+import Skeleton from "@mui/material/Skeleton/Skeleton";
+import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
+import { MiniVerticalDotsIcon, VerticalDotsIcon } from "@/public";
 
-function ProjectDetailSection({ data }: { data: ProjectType }) {
-  const router = useRouter();
+function ProjectDetailSection({
+  data,
+  projectId,
+}: {
+  data: ProjectType;
+  projectId: string;
+}) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isView, setIsView] = useState(false);
-  const [projectControlModal, setProjectControlModal] = useRecoilState(
-    projectControlModalState
+  const [, setProjectControlModal] = useRecoilState(projectControlModalState);
+  const matches = useMediaQuery("(max-width: 480px)");
+
+  const whiteList = ["BUILT_NEXT_JS", "BUILT_SPRING_JAR", "BUILT_NODE_JS"];
+
+  const { data: containerData } = useQuery<string, Error>(
+    "container",
+    () => getContainerLog(projectId),
+    {
+      enabled: data?.isDeploy && whiteList.includes(data.projectType),
+      refetchInterval: 3000,
+    }
   );
-  const { isLoading: containerIsLoading, data: containerData } = useQuery<
-    string,
-    Error
-  >("container", () => getContainerLog(String(router.query.projectId)), {
-    enabled:
-      router.isReady && data?.projectType === "BUILT_NEXT_JS" && data.isDeploy,
-    refetchInterval: 3000,
-  });
   const ref = useRef(null);
 
   useOnClickOutside(ref, () => {
@@ -54,24 +61,24 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
     MULTIPLE_FILE: "다중 파일",
     BUILT_REACT_JS: "React.js",
     BUILT_NEXT_JS: "Next.js",
+    BUILT_SPRING_JAR: "Spring boot",
+    BUILT_NODE_JS: "Node.js",
   };
-
-  // containerIsLoading ? setLoading(true) : setLoading(false);
 
   return (
     <>
-      <div className="main-section py-28 px-60 flex gap-10 flex-col h-full overflow-y-auto">
+      <div className="main-section py-28 px-60 mobile:p-10 flex gap-10 mobile:gap-0 flex-col overflow-y-auto mobile:break-all">
         <div className="flex justify-between items-center relative">
-          <h1 className="text-6xl font-bold">{data?.name}</h1>
+          <h1 className="text-6xl font-bold mobile:text-4xl">{data?.name}</h1>
           <div ref={ref}>
-            <BiDotsVerticalRounded
-              size={40}
-              className="cursor-pointer"
-              onClick={() => toggleMenu()}
-            />
+            {matches ? (
+              <MiniVerticalDotsIcon onClick={() => toggleMenu()} />
+            ) : (
+              <VerticalDotsIcon onClick={() => toggleMenu()} />
+            )}
             {isOpenMenu && (
               <ul
-                className={`absolute flex flex-col text-center top-[5rem] right-0 z-50 ${
+                className={`absolute flex flex-col text-center top-[5rem] text-[15px] right-0 z-50 ${
                   isView ? "animate-down" : "animate-up"
                 }`}
               >
@@ -103,6 +110,14 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
                     >
                       배포 취소하기
                     </li>
+                    {whiteList.includes(data.projectType) && (
+                      <Link
+                        href={`/project/${data.id}/env`}
+                        className="rounded-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button"
+                      >
+                        환경 변수 추가하기
+                      </Link>
+                    )}
                     <li
                       className="rounded-b-xl rounded-t-none cursor-pointer !bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button"
                       onClick={() => {
@@ -132,6 +147,14 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
                     >
                       배포하기
                     </li>
+                    {whiteList.includes(data.projectType) && (
+                      <Link
+                        href={`/project/${data.id}/env`}
+                        className="rounded-none cursor-pointer bg-lightBlock text-text dark:!bg-textDarkGray dark:hover:!bg-darkHover make-project-button"
+                      >
+                        환경 변수 추가하기
+                      </Link>
+                    )}
                     <li
                       className="rounded-b-xl rounded-t-none cursor-pointer !bg-red hover:!bg-lightHover dark:hover:!bg-darkHover make-project-button"
                       onClick={() => {
@@ -154,7 +177,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
         <hr className="my-6 dark:border-white border-text" />
         <div className="flex flex-wrap">
           {data.isDeploy ? (
-            <div className="w-[50rem] h-[27rem] overflow-hidden">
+            <div className="w-[500px] h-[270px] overflow-hidden">
               <iframe
                 src={`https://${data?.domainPrefix}.bssm.kro.kr`}
                 width={1920}
@@ -163,7 +186,7 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
               />
             </div>
           ) : (
-            <div className="relative">
+            <div className="relative overflow-hidden">
               <Skeleton variant="rounded" className="bg-lighterGray">
                 <iframe
                   src={`https://${data?.domainPrefix}.bssm.kro.kr`}
@@ -179,29 +202,43 @@ function ProjectDetailSection({ data }: { data: ProjectType }) {
           )}
           <div className="p-12 flex flex-col gap-10 justify-center">
             <div className="gap-5 flex flex-col">
-              <h3 className="font-bold dark:text-textDarkGray">DOMAIN</h3>
+              <h3 className="font-bold text-[15px] dark:text-textDarkGray">
+                DOMAIN
+              </h3>
               {data.isDeploy ? (
                 <Link
                   href={`https://${data?.domainPrefix}.bssm.kro.kr`}
                   target="_blank"
                 >
                   <span
-                    className={"text-4xl"}
+                    className={"text-[22.5px]"}
                   >{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
                 </Link>
               ) : (
-                <span className="text-4xl cursor-not-allowed text-textDarkGray">{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
+                <span className="text-[22.5px] cursor-not-allowed text-textDarkGray">{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
               )}
             </div>
             <div className="gap-5 flex flex-col">
-              <h3 className="font-bold dark:text-textDarkGray">TYPE</h3>
-              <span className="text-4xl">{projectType[data.projectType]}</span>
+              <h3 className="font-bold text-[15px] dark:text-textDarkGray">
+                TYPE
+              </h3>
+              <span className="text-[22.5px]">
+                {projectType[data.projectType]}
+              </span>
             </div>
           </div>
         </div>
-        {data?.projectType === "BUILT_NEXT_JS" && data.isDeploy && (
-          <div className="w-full rounded-xl bg-black text-textLightGray p-8 h-96 mt-6 overflow-auto whitespace-pre">
-            {containerData}
+        {whiteList.includes(data.projectType) && (
+          <div className="relative w-full h-96 mt-6 bg-black rounded-xl mobile:mb-[120px]">
+            <div className="mobile:text-[10px] terminal-font text-[15px] text-textLightGray p-8 w-full h-full overflow-auto whitespace-pre">
+              {containerData}
+            </div>
+            <Link
+              href={`/project/${data.id}/log`}
+              className="right-0 absolute cursor-pointer"
+            >
+              전체 화면으로 보기
+            </Link>
           </div>
         )}
       </div>

@@ -8,9 +8,10 @@ module.exports = {
   ],
   theme: {
     screens: {
-      'tablet': '640px',
-      'laptop': '1024px',
-      'desktop': '1240px',
+      mobile: { min: "0px", max: "480px" },
+      tablet: { min: "480px", max: "800px" },
+      laptop: { min: "800px", max: "1536px" },
+      desktop: { min: "1536px", max: "1920px" },
     },
     extend: {
       keyframes: {
@@ -27,15 +28,25 @@ module.exports = {
           from: { transform: "translateY(0)", opacity: "1" },
           to: { transform: "translateY(-30px)", opacity: "0" },
         },
+        leftToRight: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
+        rightToLeft: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
       },
       animation: {
         clickAnimation: "clickAnimation 0.3s ease-in-out",
         down: "down .15s ease-in-out",
         up: "up .15s ease-in-out",
+        leftToRight: "leftToRight .3s ease-in-out forwards",
+        rightToLeft: "rightToLeft .3s ease-in-out",
       },
 
       colors: {
-        leeBlack: '#1a1a1a',
+        leeBlack: "#1a1a1a",
         blue: "#61CDFE",
         accentBlue: "#1188BB",
         red: "#E88676",
@@ -65,6 +76,7 @@ module.exports = {
         in: "0 0 0 0.2rem #61CDFE inset",
         inWhite: "0 0 0 0.2rem #ffffff inset",
         inBlack: "0 0 0 0.2rem #000000 inset",
+        main: ".1rem .1rem .5rem rgba(0,0,0,.15)",
       },
       transitionDuration: {
         250: "250ms",

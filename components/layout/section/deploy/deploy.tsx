@@ -1,6 +1,4 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { useMutation } from "react-query";
@@ -8,10 +6,10 @@ import { deployProject } from "@/utils/api/deploy";
 import useException from "@/hooks/useException";
 import { AxiosError } from "axios";
 import { ExceptionType } from "@/types/exception";
+import { useRouter } from "next/navigation";
 
-export default function DeploySection() {
+export default function DeploySection({ id }: { id: string }) {
   const router = useRouter();
-  const id = router.query.index as string;
 
   const { exceptionHandler } = useException();
 

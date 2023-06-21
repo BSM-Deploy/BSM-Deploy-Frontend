@@ -11,14 +11,10 @@ export default function Example() {
   }
 
   return(
-    <div onClick={openModal}>
+    <div onClick={openModal} className='absolute right-0 top-0 cursor-pointer'>
       <ErrorOutlineIcon sx={{
-        cursor: 'pointer',
         color: '#61CDFE',
         fontSize: 60,
-        position: 'absolute',
-        right: 0,
-        top: 0
       }} />
     </div>    
   )
