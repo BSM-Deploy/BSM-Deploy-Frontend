@@ -6,7 +6,7 @@ import React from "react";
 
 interface EnvProps {
   params: {
-    id: string;
+    projectId: string;
   };
 }
 
@@ -19,7 +19,7 @@ function Env(props: EnvProps) {
   return (
     <>
       <NextSeo {...seoConfig} />
-      <EnvSection id={props.params.id} />
+      <EnvSection id={props.params.projectId} />
     </>
   );
 }

@@ -7,7 +7,8 @@ import { useRecoilState } from "recoil";
 
 export const Refresh = () => {
   const [, setNeedLoginModalState] = useRecoilState(needLoginModalState);
-  const refreshMutation = useMutation(() => refresh());
+  const refreshMutation = useMutation(() => refresh(), { retry: false });
+  
   const onResponse = (res: AxiosResponse): AxiosResponse => {
     setNeedLoginModalState(false);
     return res;
@@ -20,11 +21,15 @@ export const Refresh = () => {
     if (response && response.status === 401) {
       setNeedLoginModalState(true)
     }
-    if (localStorage.refreshToken && response && response.status === 401) {  
+    const { response, config } = err;
+    const originalRequest = config as InternalAxiosRequestConfig;
+    if (localStorage.refreshToken && response && response.status === 401) {
       refreshMutation.mutate();
       if (refreshMutation.isSuccess) {
-        setNeedLoginModalState(false)
-        localStorage.setItem("accessToken", refreshMutation.data.accessToken);
+        const newToken = refreshMutation.data.accessToken;
+        localStorage.setItem("accessToken", newToken);
+        originalRequest.headers["BSM-DEPLOY-TOKEN"] = newToken;
+        return instance(originalRequest);
       } else if (refreshMutation.isError) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
