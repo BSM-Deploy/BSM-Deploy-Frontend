@@ -1,9 +1,9 @@
 import { exampleModalState } from "@/store/atoms/modals/exampleModal";
-import { Modal } from "@mui/material";
 import { useRecoilState } from "recoil";
 import ExampleIcon from "../icons/exampleIcon";
 import ExampleData from "../../utils/data/example.json";
 import { useEffect, useState } from "react";
+import Modal from "@mui/material/Modal/Modal";
 
 interface ExampleDataType{
   id: number;

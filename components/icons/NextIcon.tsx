@@ -1,8 +1,12 @@
 import React from "react";
-import { SiNextdotjs } from "react-icons/si";
+import { NextJsIcon } from "@/public";
 
 function NextIcon() {
-  return <SiNextdotjs className="text-textLightGray dark:text-text w-8 h-8" />;
+  return (
+    <div className="icon-style dark:icon-darkStyle w-8 h-8">
+      <NextJsIcon />
+    </div>
+  );
 }
 
 export default NextIcon;

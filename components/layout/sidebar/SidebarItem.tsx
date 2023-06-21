@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import Image from "next/image";
-import { ExpandMoreRounded } from "@mui/icons-material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function SidebarItems({
   profileImg,
@@ -21,7 +21,7 @@ function SidebarItems({
 }) {
   return (
     <div 
-      className={`relative cursor-pointer [&:hover>svg]:text-accentBlue [&:hover>span]:text-accentBlue dark:[&:hover>svg]:text-blue dark:[&:hover>span]:text-blue dark:[&:hover>span>svg]:text-blue ${
+      className={`relative mb-2 cursor-pointer [&:hover>svg]:text-accentBlue [&:hover>span]:text-accentBlue dark:[&:hover>svg]:text-blue dark:[&:hover>span]:text-blue dark:[&:hover>span>svg]:text-blue ${
         isOpenDropdown && "[&>svg]:rotate-180"
       } rounded-lg ${
         isDropdownMenu ? "w-[calc(100%-1.5rem)]" : "w-full"
@@ -47,7 +47,7 @@ function SidebarItems({
         {name}
       </span>
       {isDropdown && (
-        <ExpandMoreRounded
+        <ExpandMoreIcon
           sx={{ fontSize: "32px" }}
           className="text-sidebarLightText dark:text-textDarkGray absolute right-6 duration-250 transition-all"
         />

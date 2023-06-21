@@ -84,11 +84,11 @@ export default function SettingForm() {
               required: "프로젝트 이름이 비었습니다.",
               minLength: {
                 value: 2,
-                message: "프로젝트 이름은 2자 이상이여야합니다.",
+                message: "프로젝트 이름은 2자 이상이어야 합니다.",
               },
               maxLength: {
                 value: 16,
-                message: "프로젝트 이름은 16자 이하여야합니다.",
+                message: "프로젝트 이름은 16자 이하여야 합니다.",
               },
             })}
           ></input>
@@ -113,11 +113,11 @@ export default function SettingForm() {
               required: "도메인 접두사가 비었습니다.",
               minLength: {
                 value: 3,
-                message: "도메인 접두사는 3자 이상이여야합니다.",
+                message: "도메인 접두사는 3자 이상이어야 합니다.",
               },
               maxLength: {
                 value: 63,
-                message: "도메인 접두사는 63자 이하여야합니다.",
+                message: "도메인 접두사는 63자 이하여야 합니다.",
               },
               pattern: {
                 value: /^[a-zA-Z0-9-]+$/,
@@ -149,10 +149,10 @@ export default function SettingForm() {
           >
             <option value={"SINGLE_HTML"}>Single HTML</option>
             <option value={"MULTIPLE_FILE"}>Multiple File</option>
-            <option value={"BUILT_REACT_JS"}>Built React.js</option>
-            <option value={"BUILT_NEXT_JS"}>Built Next.js</option>
-            <option value={"BUILT_SPRING_JAR"}>Built Spring boot</option>
-            <option value={"BUILT_NODE_JS"}>Built Node.js</option>
+            <option value={"BUILT_REACT_JS"}>React.js</option>
+            <option value={"BUILT_NEXT_JS"}>Next.js</option>
+            <option value={"BUILT_SPRING_JAR"}>Spring boot</option>
+            <option value={"BUILT_NODE_JS"}>Node.js</option>
           </select>
           <KeyboardArrowDownIcon className="!w-[30px] !h-[30px] absolute right-10 transition-all ease-in-out duration-300 peer-focus:arrowStyle" />
           <label

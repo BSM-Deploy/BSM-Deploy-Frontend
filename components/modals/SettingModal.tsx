@@ -1,9 +1,9 @@
-import { Modal } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { MdClear } from "react-icons/md";
 import { settingModalState } from "@/store/atoms/modals/settingModal";
 import { isDarkModeState } from "@/store/atoms/layout/isDarkMode";
+import Modal from "@mui/material/Modal/Modal";
+import { BigXIcon } from "@/public";
 
 function SettingModal() {
   const [settingModal, setSettingModal] = useRecoilState(settingModalState);
@@ -36,7 +36,7 @@ function SettingModal() {
           className="gray-button absolute top-4 right-4"
           onClick={() => setSettingModal(false)}
         >
-          <MdClear className="dark:text-textLightGray" size={44} />
+          <BigXIcon />
         </button>
         <div>
           <h3 className="text-[#606164] dark:text-textDarkGray text-[16px] px-6 pt-8 pb-4 font-bold">

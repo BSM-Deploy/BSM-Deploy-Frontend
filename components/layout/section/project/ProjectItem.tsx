@@ -2,12 +2,12 @@ import MultipleHtml from "@/components/icons/MultipleHtml";
 import NextIcon from "@/components/icons/NextIcon";
 import ReactIcon from "@/components/icons/ReactIcon";
 import SingleHtml from "@/components/icons/SingleHtml";
-import { MdClear, MdCheck } from "react-icons/md";
 import { ProjectType } from "@/types/project";
-import { Tooltip } from "@mui/material";
 import React from "react";
 import SpringBoot from "@/components/icons/SpringBoot";
 import Nodejs from "@/components/icons/Nodejs";
+import Tooltip from "@mui/material/Tooltip/Tooltip";
+import { DeployIcon, NonDeployIcon } from "@/public";
 
 function ProjectItem({ data }: { data: ProjectType }) {
   const projectType = {
@@ -45,9 +45,9 @@ function ProjectItem({ data }: { data: ProjectType }) {
       <Tooltip title={data.isDeploy ? "배포됨" : "배포되지 않음"} arrow>
         <div className="absolute bottom-8 right-8">
           {data.isDeploy ? (
-            <MdCheck className="text-[22.5px] dark:text-textLightGray text-textDarkGray" />
+            <DeployIcon />
           ) : (
-            <MdClear className="text-[22.5px] dark:text-textLightGray text-textDarkGray" />
+            <NonDeployIcon />
           )}
         </div>
       </Tooltip>

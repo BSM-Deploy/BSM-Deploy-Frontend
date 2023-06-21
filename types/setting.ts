@@ -1,11 +1,12 @@
-import { SnackbarOrigin } from "@mui/material";
+import { SnackbarOrigin } from "@mui/material/Snackbar/Snackbar";
 
-export interface SettingType{
+
+export interface SettingType {
     name: string;
     domainPrefix: string;
     projectType: string;
 }
 
-export interface SnackbarType extends SnackbarOrigin{
+export interface SnackbarType extends SnackbarOrigin {
     open: boolean
 }

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import type monaco from "monaco-editor";
 import { isDarkModeState } from "@/store/atoms/layout/isDarkMode";
@@ -15,9 +15,9 @@ function EnvSection({ id }: { id: string }) {
   const isDarkMode = useRecoilValue(isDarkModeState);
 
   const editorRef: React.MutableRefObject<monaco.editor.IStandaloneCodeEditor | null> =
-    useRef(null);
+    React.useRef(null);
   const router = useRouter();
-  const { data, isSuccess } = useQuery<ProjectType, Error>("project", () =>
+  const { data } = useQuery<ProjectType, Error>("project", () =>
     getProject(id)
   );
 
@@ -31,7 +31,7 @@ function EnvSection({ id }: { id: string }) {
   const { exceptionHandler } = useException();
 
   const { mutate } = useMutation(envUpdate, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       router.push(`/project/${id}`);
     },
     onError: (error: AxiosError) => {
