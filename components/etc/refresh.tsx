@@ -1,7 +1,7 @@
 import { needLoginModalState } from "@/store/atoms/modals/needLoginModal";
 import { refresh } from "@/utils/api/auth";
 import { instance } from "@/utils/instance";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 
@@ -15,13 +15,10 @@ export const Refresh = () => {
   };
 
   const errorResponse = (err: AxiosError): Promise<AxiosError> => {
-    const _err = err as unknown as AxiosError;
-    const { response } = _err;
-    const originalConfig = _err?.config;
+    const { response, config } = err;
     if (response && response.status === 401) {
       setNeedLoginModalState(true)
     }
-    const { response, config } = err;
     const originalRequest = config as InternalAxiosRequestConfig;
     if (localStorage.refreshToken && response && response.status === 401) {
       refreshMutation.mutate();
