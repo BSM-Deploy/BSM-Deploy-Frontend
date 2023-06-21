@@ -11,24 +11,20 @@ import { logout } from "@/utils/api/auth";
 import useException from "@/hooks/useException";
 import { AxiosError } from "axios";
 import { ExceptionType } from "@/types/exception";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { userIsLogin } from "@/store/atoms/user/user";
+import { useRecoilValue } from "recoil";
 import { openSidebarState } from "@/store/atoms/modals/openSideBar";
 
 function Sidebar() {
   const openSidebar = useRecoilValue(openSidebarState);
-  const [, setLogin] = useRecoilState(userIsLogin);
   const [mount, setMount] = useState(false);
 
   useEffect(() => {
     setMount(true);
     return () => setMount(false);
   }, []);
+  
   const userQuery = useQuery("user", () => getUserInfo(), {
     enabled: mount && localStorage.accessToken !== undefined,
-    onSuccess: () => {
-      setLogin(true);
-    },
   });
   const [userDropdown, setUserDropdown] = useState(false);
   const [isView, setIsView] = useState(false);
@@ -39,7 +35,6 @@ function Sidebar() {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       window.location.href = "/";
-      setLogin(false)
     },
     onError: (err: AxiosError) => {
       exceptionHandler(err.response?.data as ExceptionType);
