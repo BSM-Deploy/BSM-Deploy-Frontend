@@ -5,7 +5,7 @@ import { NextSeo, NextSeoProps } from "next-seo";
 
 interface LogProps {
   params: {
-    id: string;
+    projectId: string;
   };
 }
 
@@ -18,7 +18,7 @@ export default function Log(props: LogProps) {
   return (
     <>
       <NextSeo {...seoConfig} />
-      <LogSection id={props.params.id} />
+      <LogSection id={props.params.projectId} />
     </>
   );
 }

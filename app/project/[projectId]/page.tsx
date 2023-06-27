@@ -20,8 +20,8 @@ function ProjectDetail(props: ProjectDetailProps) {
     "project",
     () => getProject(String(props.params.projectId)),
     {
-      onSuccess: () => {
-        setTitle(String(data?.name));
+      onSuccess: (data) => {
+        setTitle(data?.name);
       },
     }
   );

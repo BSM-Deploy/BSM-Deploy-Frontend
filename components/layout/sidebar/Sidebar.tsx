@@ -23,7 +23,7 @@ function Sidebar() {
     return () => setMount(false);
   }, []);
   
-  const userQuery = useQuery("user", () => getUserInfo(), {
+  const userQuery = useQuery(["user"], () => getUserInfo(), {
     enabled: mount && localStorage.accessToken !== undefined,
   });
   const [userDropdown, setUserDropdown] = useState(false);
