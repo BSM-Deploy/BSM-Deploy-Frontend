@@ -55,9 +55,9 @@ function Sidebar() {
 
   return (
     <aside
-      className={`grid-sidebar mobile:translate-x-[-100%] fixed top-[54px] z-30 w-[250px] inline-block h-full bg-lightBackground dark:bg-leeBlack ${
-        openSidebar && "!translate-x-[0%]"
-      } duration-300`}
+      className={`z-10 duration-300 grid-sidebar mobile:translate-x-[-25rem] w-[25rem] mobile:w-[0px] overflow-x-hidden inline-block h-full bg-lightBackground dark:bg-leeBlack ${
+        openSidebar && "!translate-x-0 !w-[25rem]"
+      }`}
     >
       {userQuery.isSuccess ? (
         <>

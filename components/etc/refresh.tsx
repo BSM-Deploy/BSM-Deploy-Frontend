@@ -7,8 +7,18 @@ import { useRecoilState } from "recoil";
 
 export const Refresh = () => {
   const [, setNeedLoginModalState] = useRecoilState(needLoginModalState);
-  const refreshMutation = useMutation(() => refresh(), { retry: false });
-  
+  const refreshMutation = useMutation(() => refresh(), {
+    onSuccess: (data) => {
+      const accessToken = data.accessToken;
+      localStorage.setItem("accessToken", accessToken);
+    },
+    onError: () => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    },
+    retry: false,
+  });
+
   const onResponse = (res: AxiosResponse): AxiosResponse => {
     setNeedLoginModalState(false);
     return res;
@@ -17,20 +27,14 @@ export const Refresh = () => {
   const errorResponse = (err: AxiosError): Promise<AxiosError> => {
     const { response, config } = err;
     if (response && response.status === 401) {
-      setNeedLoginModalState(true)
+      setNeedLoginModalState(true);
     }
     const originalRequest = config as InternalAxiosRequestConfig;
     if (localStorage.refreshToken && response && response.status === 401) {
       refreshMutation.mutate();
-      if (refreshMutation.isSuccess) {
-        const newToken = refreshMutation.data.accessToken;
-        localStorage.setItem("accessToken", newToken);
-        originalRequest.headers["BSM-DEPLOY-TOKEN"] = newToken;
-        return instance(originalRequest);
-      } else if (refreshMutation.isError) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-      }
+      originalRequest.headers["BSM-DEPLOY-TOKEN"] =
+        localStorage.getItem("accessToken");
+      return instance(originalRequest);
     }
 
     return Promise.reject(err);

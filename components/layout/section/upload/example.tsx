@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 
 export default function Example() {
 
-  const [exampleModal, setExampleModal] = useRecoilState(exampleModalState);
+  const [, setExampleModal] = useRecoilState(exampleModalState);
 
   const openModal = () => {
     setExampleModal(true)
@@ -14,7 +14,7 @@ export default function Example() {
     <div onClick={openModal} className='absolute right-0 top-0 cursor-pointer'>
       <ErrorOutlineIcon sx={{
         color: '#61CDFE',
-        fontSize: 60,
+        fontSize: 50,
       }} />
     </div>    
   )

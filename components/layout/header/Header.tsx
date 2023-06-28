@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import MenuIcon from "@mui/icons-material/Menu";
 import { openSidebarState } from "@/store/atoms/modals/openSideBar";
 import SettingModal from "@/components/modals/SettingModal";
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from "@mui/icons-material/Settings";
 
 function Header({ title }: { title?: string }) {
   const [, setSettingModal] = useRecoilState(settingModalState);
@@ -13,9 +13,7 @@ function Header({ title }: { title?: string }) {
 
   return (
     <>
-      <header
-        className="grid-header z-50 dark:bg-leeBlack bg-lightBackground p-[5px] h-[54px] flex items-center gap-2 fixed top-0 w-full"
-      >
+      <header className="grid-header dark:bg-leeBlack bg-lightBackground p-[5px] h-[54px] flex items-center gap-2 w-full">
         <Link
           href="/"
           className="mobile:hidden gray-button text-[20px] font-bold h-full tracking-tight w-[144.48px]"
@@ -34,7 +32,7 @@ function Header({ title }: { title?: string }) {
         >
           <SettingsIcon className="dark:text-textLightGray !text-[30px]" />
         </div>
-        <div className="dark:text-textLightGray text-center w-[calc(100%-198.48px)] mobile:w-full text-[20px] font-bold cursor-default">
+        <div className="dark:text-textLightGray text-center absolute left-1/2 translate-x-[-50%] text-[20px] font-bold cursor-default">
           {title}
         </div>
       </header>

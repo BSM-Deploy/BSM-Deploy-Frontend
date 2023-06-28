@@ -7,8 +7,8 @@ import { headerTitleState } from "@/store/atoms/layout/headerTitle";
 import Nav from "../etc/nav";
 import { openSidebarState } from "@/store/atoms/modals/openSideBar";
 import NeedLoginModal from "../modals/needLoginModal";
-import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
 import { needLoginModalState } from "@/store/atoms/modals/needLoginModal";
+import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
 
 function Layout({ children }: { children: ReactNode }) {
   const needLogin = useRecoilValue(needLoginModalState);
@@ -23,10 +23,10 @@ function Layout({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div>
+    <div className="grid-wrap mobile:mobile-grid-wrap">
       <Header title={title} />
       <Sidebar />
-      <main onClick={() => setOpenSidebar(false)}>{children}</main>
+      <main className="w-full h-full overflow-y-auto overflow-x-hidden" onClick={() => setOpenSidebar(false)}>{children}</main>
       {matches && <Nav />}
       {needLogin && <NeedLoginModal />}
     </div>

@@ -8,3 +8,5 @@ export { default as NonDeployIcon } from './images/nondeploy.svg';
 export { default as VerticalDotsIcon } from './images/verticalDots.svg';
 export { default as MiniVerticalDotsIcon } from './images/miniVerticalDots.svg';
 export { default as BigXIcon } from './images/bigX.svg';
+export { default as NonProjectIcon } from './images/noproject.svg';
+export { default as UploadFolderIcon } from './images/uploadfolder.svg';
