@@ -1,9 +1,10 @@
 import { exampleModalState } from '@/store/atoms/modals/exampleModal';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery';
 import { useRecoilState } from 'recoil';
 
 export default function Example() {
-
+  const matches = useMediaQuery("(max-width: 480px)");
   const [, setExampleModal] = useRecoilState(exampleModalState);
 
   const openModal = () => {
@@ -14,7 +15,7 @@ export default function Example() {
     <div onClick={openModal} className='absolute right-0 top-0 cursor-pointer'>
       <ErrorOutlineIcon sx={{
         color: '#61CDFE',
-        fontSize: 50,
+        fontSize: matches ? 50 : 60,
       }} />
     </div>    
   )

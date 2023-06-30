@@ -61,5 +61,5 @@ module.exports = nextConfig;
 //       },
 //     }),
 //   ],
-//   nextConfig
+//   nextConfig,
 // );

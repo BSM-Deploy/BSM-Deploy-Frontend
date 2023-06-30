@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import CancelButton from "../../button/cancelButton";
 import SubmitButton from "../../button/submitButton";
 import useReadFolder from "@/hooks/useReadFolder";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getProject, uploadProject } from "@/utils/api/project";
 import JSZip from "jszip";
 import UploadIcon from "./uploadIcon";
@@ -32,14 +32,11 @@ export default function UploadForm({ id }: { id: string }) {
     type: type,
   });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const result = await getProject(id);
-        setType(result.projectType);
-      } catch (err) {}
-    })();
-  }, [id]);
+  useQuery(["getProject"], () => getProject(id), {
+    onSuccess: (data) => {
+      setType(data.projectType);
+    },
+  });
 
   useEffect(() => {
     if (items[0]) {

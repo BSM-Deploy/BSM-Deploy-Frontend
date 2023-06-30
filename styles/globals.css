@@ -4,13 +4,13 @@
 
 @layer base {
   @font-face {
-    font-family: 'Noto Sans KR';
+    font-family: 'Noto Sans CJK';
     src: url('../public/font/NotoSansKR-Regular.woff2');
   }
   
   html {
     font-size: 10px;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Sans CJK', sans-serif;
     height: 100%;
     @apply tablet:text-[7px] laptop:text-[8px] desktop:text-[10px]
   }
