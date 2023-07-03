@@ -5,7 +5,6 @@ const withPWA = require("next-pwa");
 const CompressionPlugin = require("compression-webpack-plugin");
 const isProduction = process.env.NODE_ENV === "production";
 
-
 const securityHeaders = [
   {
     key: "X-XSS-Protection",
@@ -48,7 +47,7 @@ const config = {
 
 const nextConfig = withPWA({
   dest: "public",
-  disable: !isProduction,
+  // disable: !isProduction,
   runtimeCaching: [],
 })(config);
 
