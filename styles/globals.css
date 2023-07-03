@@ -4,17 +4,19 @@
 
 @layer base {
   @font-face {
-    font-family: 'Noto Sans KR';
-    src: url('../public/font/NotoSansKR-Regular.otf');
+    font-family: 'Noto Sans CJK';
+    src: url('../public/font/NotoSansKR-Regular.woff2');
   }
   
   html {
     font-size: 10px;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Sans CJK', sans-serif;
+    height: 100%;
     @apply tablet:text-[7px] laptop:text-[8px] desktop:text-[10px]
   }
   body {
     font-size: 1.5rem;
+    height: 100%;
     @apply text-text dark:text-textLightGray bg-lightBackground dark:bg-black overflow-hidden;
   }
 
@@ -42,20 +44,16 @@
 }
 
 @layer components {
-  .mobile-layout{
-    @apply w-full h-full left-0
-  }
-
   .gray-button {
     @apply active:scale-90 dark:hover:bg-darkHover hover:bg-lightHover duration-250 rounded-xl dark:text-textLightGray cursor-pointer inline-flex items-center justify-center;
   }
 
   .main-section {
-    @apply mobile:grid-main rounded-tl-2xl mobile:rounded-none absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray w-[calc(100vw-250px)] h-[calc(100vh-54px)] mobile:mobile-layout dark:text-white shadow-main;
+    @apply rounded-tl-2xl mobile:rounded-none bg-lightBack dark:bg-darkGray w-full h-full dark:text-white shadow-main mobile:w-screen;
   }
 
   .main-container {
-    @apply mobile:grid-main rounded-tl-2xl mobile:rounded-none absolute top-[54px] left-[250px] bg-lightBack dark:bg-darkGray flex items-center justify-center w-[calc(100vw-250px)] h-[calc(100vh-54px)] mobile:mobile-layout font-bold text-4xl dark:text-white;
+    @apply mobile:w-screen rounded-tl-2xl mobile:rounded-none bg-lightBack dark:bg-darkGray flex items-center justify-center w-full h-full font-bold dark:text-white;
   }
 
   .grid-wrap{
@@ -145,10 +143,14 @@
   }
 
   .icon-style{
-    color: #E8EAED;
+    color: #E8EAED !important;
   }
 
   .icon-darkStyle{
-    color: #202124;
+    color: #202124 !important;
+  }
+
+  .deploy-color{
+    color: #A8AAAD !important;
   }
 }

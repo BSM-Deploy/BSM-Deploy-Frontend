@@ -11,24 +11,20 @@ import { logout } from "@/utils/api/auth";
 import useException from "@/hooks/useException";
 import { AxiosError } from "axios";
 import { ExceptionType } from "@/types/exception";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { userIsLogin } from "@/store/atoms/user/user";
+import { useRecoilValue } from "recoil";
 import { openSidebarState } from "@/store/atoms/modals/openSideBar";
 
 function Sidebar() {
   const openSidebar = useRecoilValue(openSidebarState);
-  const [, setLogin] = useRecoilState(userIsLogin);
   const [mount, setMount] = useState(false);
 
   useEffect(() => {
     setMount(true);
     return () => setMount(false);
   }, []);
-  const userQuery = useQuery("user", () => getUserInfo(), {
+  
+  const userQuery = useQuery(["user"], () => getUserInfo(), {
     enabled: mount && localStorage.accessToken !== undefined,
-    onSuccess: () => {
-      setLogin(true);
-    },
   });
   const [userDropdown, setUserDropdown] = useState(false);
   const [isView, setIsView] = useState(false);
@@ -39,7 +35,6 @@ function Sidebar() {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       window.location.href = "/";
-      setLogin(false)
     },
     onError: (err: AxiosError) => {
       exceptionHandler(err.response?.data as ExceptionType);
@@ -60,9 +55,9 @@ function Sidebar() {
 
   return (
     <aside
-      className={`grid-sidebar mobile:translate-x-[-100%] fixed top-[54px] z-30 w-[250px] inline-block h-full bg-lightBackground dark:bg-leeBlack ${
-        openSidebar && "!translate-x-[0%]"
-      } duration-300`}
+      className={`z-10 duration-300 grid-sidebar mobile:translate-x-[-25rem] w-[25rem] mobile:w-[0px] overflow-x-hidden inline-block h-full bg-lightBackground dark:bg-leeBlack ${
+        openSidebar && "!translate-x-0 !w-[25rem]"
+      }`}
     >
       {userQuery.isSuccess ? (
         <>

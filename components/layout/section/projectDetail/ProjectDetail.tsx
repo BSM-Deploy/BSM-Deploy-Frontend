@@ -8,8 +8,7 @@ import { useOnClickOutside } from "usehooks-ts";
 import ProjectControlModal from "@/components/modals/ProjectControlModal";
 import { projectControlModalState } from "@/store/atoms/modals/projectControlModal";
 import Skeleton from "@mui/material/Skeleton/Skeleton";
-import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
-import { MiniVerticalDotsIcon, VerticalDotsIcon } from "@/public";
+import { VerticalDotsIcon } from "@/public";
 
 function ProjectDetailSection({
   data,
@@ -21,7 +20,6 @@ function ProjectDetailSection({
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isView, setIsView] = useState(false);
   const [, setProjectControlModal] = useRecoilState(projectControlModalState);
-  const matches = useMediaQuery("(max-width: 480px)");
 
   const whiteList = ["BUILT_NEXT_JS", "BUILT_SPRING_JAR", "BUILT_NODE_JS"];
 
@@ -71,11 +69,9 @@ function ProjectDetailSection({
         <div className="flex justify-between items-center relative">
           <h1 className="text-6xl font-bold mobile:text-4xl">{data?.name}</h1>
           <div ref={ref}>
-            {matches ? (
-              <MiniVerticalDotsIcon onClick={() => toggleMenu()} />
-            ) : (
+            <div className="w-[40px] h-[40px] mobile:w-[30px] mobile:h-[30px] cursor-pointer">
               <VerticalDotsIcon onClick={() => toggleMenu()} />
-            )}
+            </div>
             {isOpenMenu && (
               <ul
                 className={`absolute flex flex-col text-center top-[5rem] text-[15px] right-0 z-50 ${

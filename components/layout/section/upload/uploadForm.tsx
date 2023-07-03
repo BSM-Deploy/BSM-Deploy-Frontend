@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import CancelButton from "../../button/cancelButton";
 import SubmitButton from "../../button/submitButton";
 import useReadFolder from "@/hooks/useReadFolder";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getProject, uploadProject } from "@/utils/api/project";
 import JSZip from "jszip";
 import UploadIcon from "./uploadIcon";
@@ -32,14 +32,11 @@ export default function UploadForm({ id }: { id: string }) {
     type: type,
   });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const result = await getProject(id);
-        setType(result.projectType);
-      } catch (err) {}
-    })();
-  }, [id]);
+  useQuery(["getProject"], () => getProject(id), {
+    onSuccess: (data) => {
+      setType(data.projectType);
+    },
+  });
 
   useEffect(() => {
     if (items[0]) {
@@ -139,23 +136,23 @@ export default function UploadForm({ id }: { id: string }) {
               color: "#61CDFE",
             }}
           />
-          <p className="text-6xl font-bold mt-10">배포 실패</p>
+          <p className="text-6xl font-bold mt-10 mobile:text-5xl">배포 실패</p>
           <div className="flex gap-10 mt-32">
             <button
-              className="blue-button w-[200px] h-[50px]"
+              className="blue-button w-[200px] h-[50px] mobile:w-[130px]"
               onClick={() => setFail(false)}
             >
               다시 업로드하기
             </button>
             <button
               onClick={() => setModal(true)}
-              className="blue-button w-[200px] h-[50px]"
+              className="blue-button w-[200px] h-[50px] mobile:w-[130px]"
             >
               로그 보기
             </button>
           </div>
           <Modal open={modal} onClose={() => setModal(false)}>
-            <div className="mobile:text-[10px] terminal-font text-[15px] bg-black absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[80%] h-[60%] text-textLightGray p-8 overflow-auto whitespace-pre">
+            <div className="terminal-font text-[15px] bg-black absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[80%] h-[60%] text-textLightGray p-8 overflow-auto whitespace-pre">
               {errorMsg}
             </div>
           </Modal>

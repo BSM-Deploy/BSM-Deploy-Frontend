@@ -3,7 +3,7 @@ import React from "react";
 
 function ReactIcon() {
   return (
-    <div className="icon-style dark:icon-darkStyle w-8 h-8">
+    <div className="icon-style dark:icon-darkStyle">
       <ReactJsIcon />
     </div>
   );

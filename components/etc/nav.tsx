@@ -9,7 +9,7 @@ export default function Nav() {
   const router = useRouter();
 
   return (
-    <nav className="mobile:grid-navbar fixed bottom-0 w-full">
+    <nav className="mobile:grid-nav w-screen">
       <BottomNavigation
         showLabels
         onChange={(event, newValue) => {

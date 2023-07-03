@@ -12,13 +12,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang="kr">
-      <head></head>
+      <head>
+        <title>BSM-Deploy</title>
+      </head>
       <body>
         <RecoilRoot>
           <QueryClientProvider client={queryClient}>
-            <Loading />
-            <Refresh />
-            <Layout>{children}</Layout>
+              <Loading />
+              <Refresh />
+              <Layout>{children}</Layout>
           </QueryClientProvider>
         </RecoilRoot>
       </body>

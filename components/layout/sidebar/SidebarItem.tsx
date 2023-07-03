@@ -36,6 +36,7 @@ function SidebarItems({
             fill
             alt={`${name}의 프로필사진`}
             className="rounded-full"
+            sizes="10"
           />
         </div>
       ) : (

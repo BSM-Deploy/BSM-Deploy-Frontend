@@ -45,9 +45,11 @@ function ProjectItem({ data }: { data: ProjectType }) {
       <Tooltip title={data.isDeploy ? "배포됨" : "배포되지 않음"} arrow>
         <div className="absolute bottom-8 right-8">
           {data.isDeploy ? (
-            <DeployIcon />
+            <DeployIcon className="deploy-color dark:icon-style" />
           ) : (
-            <NonDeployIcon />
+            <div className="deploy-color dark:icon-style">
+              <NonDeployIcon />
+            </div>
           )}
         </div>
       </Tooltip>

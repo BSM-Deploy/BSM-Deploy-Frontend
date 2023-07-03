@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 
 const withPlugins = require("next-compose-plugins");
+const withPWA = require("next-pwa");
 const CompressionPlugin = require("compression-webpack-plugin");
+const isProduction = process.env.NODE_ENV === "production";
+
 
 const securityHeaders = [
   {
@@ -18,7 +21,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
-const nextConfig = {
+const config = {
   reactStrictMode: false,
   images: {
     domains: ["auth.bssm.kro.kr"],
@@ -35,25 +38,36 @@ const nextConfig = {
   experimental: { appDir: true },
   webpack: (config) => {
     config.plugins.push(new CompressionPlugin());
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"],
+    });
     return config;
   },
 };
 
-module.exports = withPlugins(
-  [
-    withBundleAnalyzer({
-      compress: true,
-      webpack: (config, { webpack }) => {
-        const prod = process.env.NODE_ENV === "production";
-        const plugins = [...config.plugins];
-        return {
-          ...config,
-          mode: prod ? "production" : "development",
-          devtool: prod ? "hidden-source-map" : "eval",
-          plugins,
-        };
-      },
-    }),
-  ],
-  nextConfig
-);
+const nextConfig = withPWA({
+  dest: "public",
+  disable: !isProduction,
+  runtimeCaching: [],
+})(config);
+
+module.exports = nextConfig;
+
+// module.exports = withPlugins(
+//   [
+//     withBundleAnalyzer({
+//       compress: true,
+//       webpack: (config, { webpack }) => {
+//         const plugins = [...config.plugins];
+//         return {
+//           ...config,
+//           mode: isProduction ? "production" : "development",
+//           devtool: isProduction ? "hidden-source-map" : "eval",
+//           plugins,
+//         };
+//       },
+//     }),
+//   ],
+//   nextConfig,
+// );

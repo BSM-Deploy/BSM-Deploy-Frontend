@@ -3,13 +3,13 @@ import React from "react";
 import { useQuery } from "react-query";
 import ProjectItem from "./ProjectItem";
 import { ProjectType } from "@/types/project";
-import Image from "next/image";
 import Link from "next/link";
+import { NonProjectIcon } from "@/public";
 
 function ProjectSection() {
   const projectQuery = useQuery("projects", () => getProjectList());
   return (
-    <div className="mobile:grid-main main-section p-52 overflow-y-auto">
+    <div className="mobile:grid-main main-section p-52 overflow-y-auto relative">
       {projectQuery.isSuccess &&
         (projectQuery.data?.size !== 0 ? (
           <div className="flex flex-wrap gap-12 mobile:justify-center">
@@ -34,12 +34,7 @@ function ProjectSection() {
           </div>
         ) : (
           <div className="flex flex-col justify-center items-center gap-12">
-            <Image
-              src={"./images/noproject.svg"}
-              alt="프로젝트 없음"
-              width={400}
-              height={100}
-            />
+            <NonProjectIcon />
             <span className="text-5xl font-bold dark:text-textLightGray">
               프로젝트가 없습니다!
             </span>

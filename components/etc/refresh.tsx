@@ -1,34 +1,43 @@
+import { needLoginModalState } from "@/store/atoms/modals/needLoginModal";
 import { refresh } from "@/utils/api/auth";
 import { instance } from "@/utils/instance";
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { useMutation } from "react-query";
+import { useRecoilState } from "recoil";
 
 export const Refresh = () => {
-  const refreshMutation = useMutation(() => refresh(), { retry: false });
+  const [, setNeedLoginModalState] = useRecoilState(needLoginModalState);
+  const refreshMutation = useMutation(() => refresh(), {
+    onSuccess: (data) => {
+      const accessToken = data.accessToken;
+      localStorage.setItem("accessToken", accessToken);
+    },
+    onError: () => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    },
+    retry: false,
+  });
+
   const onResponse = (res: AxiosResponse): AxiosResponse => {
+    setNeedLoginModalState(false);
     return res;
   };
 
   const errorResponse = (err: AxiosError): Promise<AxiosError> => {
-    console.log(err);
     const { response, config } = err;
+    if (response && response.status === 401) {
+      setNeedLoginModalState(true);
+    }
     const originalRequest = config as InternalAxiosRequestConfig;
     if (localStorage.refreshToken && response && response.status === 401) {
       refreshMutation.mutate();
-      if (refreshMutation.isSuccess) {
-        console.log(refreshMutation);
-        const newToken = refreshMutation.data.accessToken;
-        localStorage.setItem("accessToken", newToken);
-        originalRequest.headers["BSM-DEPLOY-TOKEN"] = newToken;
-        return instance(originalRequest);
-      } else if (refreshMutation.isError) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-      }
+      originalRequest.headers["BSM-DEPLOY-TOKEN"] =
+        localStorage.getItem("accessToken");
+      return instance(originalRequest);
     }
 
-    // return Promise.reject(err);
-    throw err;
+    return Promise.reject(err);
   };
 
   instance.interceptors.response.use(onResponse, errorResponse);
