@@ -10,6 +10,8 @@ import { projectControlModalState } from "@/store/atoms/modals/projectControlMod
 import Skeleton from "@mui/material/Skeleton/Skeleton";
 import { VerticalDotsIcon } from "@/public";
 
+type whiteListType = "BUILT_NEXT_JS" | "BUILT_SPRING_JAR" | "BUILT_NODE_JS";
+
 function ProjectDetailSection({
   data,
   projectId,
@@ -61,6 +63,12 @@ function ProjectDetailSection({
     BUILT_NEXT_JS: "Next.js",
     BUILT_SPRING_JAR: "Spring boot",
     BUILT_NODE_JS: "Node.js",
+  };
+
+  const portByProject = {
+    BUILT_NEXT_JS: 3000,
+    BUILT_SPRING_JAR: 8080,
+    BUILT_NODE_JS: 3000,
   };
 
   return (
@@ -214,13 +222,26 @@ function ProjectDetailSection({
                 <span className="text-[22.5px] cursor-not-allowed text-textDarkGray">{`https://${data?.domainPrefix}.bssm.kro.kr`}</span>
               )}
             </div>
-            <div className="gap-5 flex flex-col">
-              <h3 className="font-bold text-[15px] dark:text-textDarkGray">
-                TYPE
-              </h3>
-              <span className="text-[22.5px]">
-                {projectType[data.projectType]}
-              </span>
+            <div className="gap-20 flex">
+              <div className="gap-5 flex flex-col">
+                <h3 className="font-bold text-[15px] dark:text-textDarkGray">
+                  TYPE
+                </h3>
+                <span className="text-[22.5px]">
+                  {projectType[data.projectType]}
+                </span>
+              </div>
+              {whiteList.includes(data.projectType) && (
+                <div className="gap-5 flex flex-col">
+                  <h3 className="font-bold text-[15px] dark:text-textDarkGray">
+                    PORT
+                  </h3>
+                  <span className="text-[22.5px]">
+                    {portByProject[data.projectType as whiteListType]} →{" "}
+                    443
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>
