@@ -22,7 +22,7 @@ export default function Main() {
       </p>
       <Link
         href={"/setting"}
-        className="w-[180px] h-[60px] mt-[120px] text-[22.5px] mobile:w-[130px] mobile:h-[45px] mobile:text-[15px] blue-button"
+        className="text-black w-[180px] h-[60px] mt-[120px] text-[22.5px] mobile:w-[130px] mobile:h-[45px] mobile:text-[15px] blue-button"
       >
         시작하기{" "}
         <ArrowForwardIcon className="ml-[12.5px] w-[25px] h-[25px] mobile:w-[20px] mobile:h-[20px]" />

@@ -5,6 +5,8 @@
   "background_color": "#fafafa",
   "display": "standalone",
   "start_url": "/",
+  "scope": "/",
+  "description": "BSM Deploy는 정적/동적 사이트의 배포를 도와주는 서비스입니다.",
   "icons": [
     {
       "src": "icons/icon-48x48.png",

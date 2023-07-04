@@ -1,9 +1,13 @@
 /** @type {import('next').NextConfig} */
 
-const withPlugins = require("next-compose-plugins");
-const withPWA = require("next-pwa");
 const CompressionPlugin = require("compression-webpack-plugin");
 const isProduction = process.env.NODE_ENV === "production";
+const withPWA = require("next-pwa")({
+  dest: "public",
+  disable: !isProduction,
+  register: true,
+  skipWaiting: true,
+});
 
 const securityHeaders = [
   {
@@ -16,9 +20,9 @@ const securityHeaders = [
   },
 ];
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
+// const withBundleAnalyzer = require("@next/bundle-analyzer")({
+//   enabled: process.env.ANALYZE === "true",
+// });
 
 const config = {
   reactStrictMode: false,
@@ -45,11 +49,7 @@ const config = {
   },
 };
 
-const nextConfig = withPWA({
-  dest: "public",
-  // disable: !isProduction,
-  runtimeCaching: [],
-})(config);
+const nextConfig = withPWA(config);
 
 module.exports = nextConfig;
 
