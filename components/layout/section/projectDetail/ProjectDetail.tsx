@@ -1,8 +1,8 @@
 import { ProjectType } from "@/types/project";
 import { getContainerLog } from "@/utils/api/container";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
-import { useQuery } from "react-query";
+import React, { useEffect, useRef, useState } from "react";
+import { useQuery, useQueryClient } from "react-query";
 import { useRecoilState } from "recoil";
 import { useOnClickOutside } from "usehooks-ts";
 import ProjectControlModal from "@/components/modals/ProjectControlModal";
@@ -19,18 +19,25 @@ function ProjectDetailSection({
   data: ProjectType;
   projectId: string;
 }) {
+  const queryClient = useQueryClient();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isView, setIsView] = useState(false);
   const [, setProjectControlModal] = useRecoilState(projectControlModalState);
+  const [refetchInterval, setRefetchInterval] = useState(3000);
 
   const whiteList = ["BUILT_NEXT_JS", "BUILT_SPRING_JAR", "BUILT_NODE_JS"];
 
-  const { data: containerData } = useQuery<string, Error>(
+  const { data: containerData, refetch } = useQuery<string, Error>(
     "container",
     () => getContainerLog(projectId),
     {
-      enabled: data?.isDeploy && whiteList.includes(data.projectType),
-      refetchInterval: 3000,
+      enabled: whiteList.includes(data.projectType),
+      refetchInterval: refetchInterval,
+      onError: () => {
+        setRefetchInterval(Infinity);
+        queryClient.setQueryData("container", "");
+      },
+      retry: false,
     }
   );
   const ref = useRef(null);
@@ -237,8 +244,7 @@ function ProjectDetailSection({
                     PORT
                   </h3>
                   <span className="text-[22.5px]">
-                    {portByProject[data.projectType as whiteListType]} →{" "}
-                    443
+                    {portByProject[data.projectType as whiteListType]} → 443
                   </span>
                 </div>
               )}
