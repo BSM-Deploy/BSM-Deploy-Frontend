@@ -80,7 +80,7 @@ export default function useReadFolder({ type }: { type?: string }) {
               }
             }
             else if (type === "BUILT_REACT_JS") {
-              if (entries[i].fullPath.includes(`${root}/build`)) {
+              if (entries[i].fullPath.includes(`${root}/build`) || entries[i].fullPath.includes(`${root}/public`)) {
                 await traverseFileTree(entries[i], z, root);
               }
             } else {

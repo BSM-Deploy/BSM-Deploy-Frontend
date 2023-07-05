@@ -139,14 +139,14 @@ export default function UploadForm({ id }: { id: string }) {
           <p className="text-6xl font-bold mt-10 mobile:text-5xl">배포 실패</p>
           <div className="flex gap-10 mt-32">
             <button
-              className="blue-button w-[200px] h-[50px] mobile:w-[130px]"
+              className="blue-button w-[200px] h-[50px] mobile:w-[130px] text-[20px] mobile:text-[15px]"
               onClick={() => setFail(false)}
             >
               다시 업로드하기
             </button>
             <button
               onClick={() => setModal(true)}
-              className="blue-button w-[200px] h-[50px] mobile:w-[130px]"
+              className="blue-button w-[200px] h-[50px] mobile:w-[130px] text-[20px] mobile:text-[15px]"
             >
               로그 보기
             </button>
