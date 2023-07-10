@@ -71,18 +71,6 @@ export const exampleData = {
       name: "index.html"
     },
     {
-      id: 12,
-      type: "file",
-      depth: 1,
-      name: "logo192.png"
-    },
-    {
-      id: 13,
-      type: "file",
-      depth: 1,
-      name: "logo512.png"
-    },
-    {
       id: 14,
       type: "file",
       depth: 1,
@@ -99,6 +87,24 @@ export const exampleData = {
       type: "folder",
       depth: 1,
       name: "static"
+    },
+    {
+      id: 33,
+      type: "folder",
+      depth: 0,
+      name: "public"
+    },
+    {
+      id: 12,
+      type: "file",
+      depth: 1,
+      name: "image192.png"
+    },
+    {
+      id: 13,
+      type: "file",
+      depth: 1,
+      name: "image512.png"
     }
   ],
   BUILT_NEXT_JS: [
@@ -222,6 +228,6 @@ export const exampleDescription = {
     description: "Spring boot 프로젝트를 빌드한 후 jar 파일 업로드"
   },
   "BUILT_NODE_JS": {
-    description: "프로젝트 내에서 TypeScript 혹은 Next.js를 사용하고 있다면 빌드한 후 프로젝트 폴더 업로드 아니라면 그냥 프로젝트 폴더 업로드"
+    description: "프로젝트 내에서 TypeScript 혹은 Next.js를 사용하고 있다면 빌드한 후 프로젝트 폴더 업로드 아니라면 프로젝트 폴더 업로드"
   },
 }
