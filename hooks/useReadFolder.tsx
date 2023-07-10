@@ -1,5 +1,4 @@
 import { checkFile, checkFolder, checkNextProject } from "@/utils/functions/validation";
-import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { useCallback, useState } from "react";
 
@@ -127,9 +126,6 @@ export default function useReadFolder({ type }: { type?: string }) {
           }
         }
       });
-      z.generateAsync({type: 'blob', compression: "DEFLATE"}).then((content) => {
-        saveAs(content, "test.zip");
-      })
       setZip(z);
     },
     [type]
