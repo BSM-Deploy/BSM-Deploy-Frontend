@@ -1,4 +1,5 @@
-import { checkFile, checkFolder } from "@/utils/functions/validation";
+import { checkFile, checkFolder, checkNextProject } from "@/utils/functions/validation";
+import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { useCallback, useState } from "react";
 
@@ -78,9 +79,11 @@ export default function useReadFolder({ type }: { type?: string }) {
               if (entries[i].name !== "node_modules") {
                 await traverseFileTree(entries[i], z, root);
               }
-            }
-            else if (type === "BUILT_REACT_JS") {
-              if (entries[i].fullPath.includes(`${root}/build`) || entries[i].fullPath.includes(`${root}/public`)) {
+            } else if (type === "BUILT_REACT_JS") {
+              if (
+                entries[i].fullPath.includes(`${root}/build`) ||
+                entries[i].fullPath.includes(`${root}/public`)
+              ) {
                 await traverseFileTree(entries[i], z, root);
               }
             } else {
@@ -94,7 +97,7 @@ export default function useReadFolder({ type }: { type?: string }) {
     [traverseFileTree, type]
   );
 
-  const progressManagement = useCallback(
+  const dragAndDropFolderUpload = useCallback(
     async (folder: FileSystemDirectoryEntry) => {
       const z = new JSZip();
       setZip(await readFolder(folder, z, folder?.name));
@@ -102,8 +105,49 @@ export default function useReadFolder({ type }: { type?: string }) {
     [readFolder]
   );
 
+  const clickFolderUpload = useCallback(
+    (folder: File[], root: string) => {
+      const z = new JSZip();
+      folder.forEach((file) => {
+        if (type === "BUILT_NODE_JS") {
+          if (!file.webkitRelativePath.includes("node_modules")) {
+            clickUploadReadFiles(z, file);
+          }
+        } else if (type === "BUILT_REACT_JS") {
+          if (
+            file.webkitRelativePath.includes(`${root}/build`) ||
+            file.webkitRelativePath.includes(`${root}/public`)
+          ) {
+            clickUploadReadFiles(z, file);
+          }
+        }
+        else if(type === "BUILT_NEXT_JS"){
+          if(checkNextProject(file.webkitRelativePath, root)){
+            clickUploadReadFiles(z, file);
+          }
+        }
+      });
+      z.generateAsync({type: 'blob', compression: "DEFLATE"}).then((content) => {
+        saveAs(content, "test.zip");
+      })
+      setZip(z);
+    },
+    [type]
+  );
+
+  const clickUploadReadFiles = (z: JSZip, file: File) => {
+    const path = file.webkitRelativePath.split("/");
+    let newPath = "";
+    for (let i = 1; i < path.length; i++) {
+      newPath += path[i] + "/";
+    }
+    newPath = newPath.substring(0, newPath.length - 1);
+    z.file(newPath, file);
+  };
+
   return {
-    progressManagement,
+    dragAndDropFolderUpload,
+    clickFolderUpload,
     zip,
   };
 }

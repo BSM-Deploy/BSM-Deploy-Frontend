@@ -24,11 +24,13 @@ export default function UploadForm({ id }: { id: string }) {
   const [errorMsg, setErrorMsg] = useState<string | undefined>("");
   const [modal, setModal] = useState(false);
   const [fail, setFail] = useState(false);
+  const [uploadFiles, setUploadFiles] = useState<File[]>([]);
+  const [uploadFileName, setUploadFileName] = useState("");
 
   const { exceptionHandler } = useException();
   const { files, items, fileName, inputRef, isDragActive, labelRef } =
-    useFileDrop();
-  const { progressManagement, zip } = useReadFolder({
+    useFileDrop({ type: type || "" });
+  const { dragAndDropFolderUpload, clickFolderUpload, zip } = useReadFolder({
     type: type,
   });
 
@@ -39,12 +41,24 @@ export default function UploadForm({ id }: { id: string }) {
   });
 
   useEffect(() => {
+    if (uploadFiles.length > 0) {
+      if (uploadFiles.length === 1) {
+        setUploadFileName(uploadFiles[0].name);
+      } else {
+        const name = uploadFiles[0].webkitRelativePath.split("/")[0];
+        setUploadFileName(name);
+        clickFolderUpload(uploadFiles, name);
+      }
+    }
+  }, [uploadFiles, clickFolderUpload]);
+
+  useEffect(() => {
     if (items[0]) {
-      progressManagement(
+      dragAndDropFolderUpload(
         items[0].webkitGetAsEntry() as FileSystemDirectoryEntry
       );
     }
-  }, [files, items, progressManagement]);
+  }, [items, dragAndDropFolderUpload]);
 
   const { mutate, isLoading } = useMutation(uploadProject, {
     onSuccess: () => {
@@ -78,6 +92,8 @@ export default function UploadForm({ id }: { id: string }) {
 
     if (files.length > 0) {
       data.append("file", files[0]);
+    } else if (uploadFiles.length === 1) {
+      data.append("file", uploadFiles[0]);
     } else {
       const zipFile = await makeZipFile(zip);
       data.append("file", zipFile as Blob);
@@ -87,12 +103,21 @@ export default function UploadForm({ id }: { id: string }) {
   };
 
   return (
-    <div className="main-container flex-col mobile:top-0">
+    <div className="main-container flex-col mobile:top-0 relative">
       {!isLoading && !fail && (
         <>
           <ExampleModal type={type} />
+          <Example />
           <div>
-            <input ref={inputRef} type="file" id="upload" hidden disabled />
+            <input
+              ref={inputRef}
+              type="file"
+              id="upload"
+              hidden
+              onChange={(e) =>
+                setUploadFiles(Array.from(e.target.files as FileList))
+              }
+            />
             <label
               ref={labelRef}
               htmlFor="upload"
@@ -100,9 +125,8 @@ export default function UploadForm({ id }: { id: string }) {
                 isDragActive && "dragStyle"
               }`}
             >
-              <Example />
-              {fileName !== "" ? (
-                <FileIcon type={type} name={fileName} />
+              {fileName !== "" || uploadFileName !== "" ? (
+                <FileIcon type={type} name={fileName} name2={uploadFileName} />
               ) : (
                 <UploadIcon />
               )}

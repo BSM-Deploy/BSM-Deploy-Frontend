@@ -12,7 +12,7 @@ export default function Example() {
   }
 
   return(
-    <div onClick={openModal} className='absolute right-0 top-0 cursor-pointer'>
+    <div onClick={openModal} className='z-10 absolute right-10 top-10 cursor-pointer'>
       <ErrorOutlineIcon sx={{
         color: '#61CDFE',
         fontSize: matches ? 50 : 60,
